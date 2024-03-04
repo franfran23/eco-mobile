@@ -1,5 +1,6 @@
 from flask import Flask, url_for, request, redirect, render_template
 from flask_socketio import SocketIO, emit
+from flask_cors import CORS
 # import mysql.connector
 
 '''
@@ -15,6 +16,7 @@ cursor = db.cursor()'''
 
 app = Flask(__name__)
 socketio = SocketIO(app)
+CORS(app)
 
 # FLASK SERVER
 @app.route('/')
@@ -37,5 +39,5 @@ def handle_message(message):
 
 
 if __name__ == '__main__':
-	socketio.run(app, debug=True, allow_unsafe_werkzeug=True)
+	socketio.run(app, debug=True, use_reloader=True, allow_unsafe_werkzeug=True)
 	
