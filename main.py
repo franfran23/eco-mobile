@@ -24,12 +24,13 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=30)
 
 def check_credentials(username, password):
 	# check, les identifiants dans la db
-	return False
+	return username=='username' and password=='pwd'
 
 # FLASK SERVER
 @app.route('/')
 def index():
-	return render_template('index.html')
+	message = request.args.get('message') or ''
+	return render_template('index.html', message=message)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
