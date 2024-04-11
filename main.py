@@ -1,7 +1,9 @@
-from flask import Flask, url_for, request, redirect, render_template
+from flask import Flask, url_for, request, redirect, render_template, session
 # from flask_socketio import SocketIO, emit
 # from flask_cors import CORS
 # import mysql.connector
+
+from datetime import timedelta
 
 '''
 def connect_db(host='localhost', user='root', password='', db=None):
@@ -11,17 +13,32 @@ def connect_db(host='localhost', user='root', password='', db=None):
 		password=password,
 		database=db)
 
-db = connect_db(user='testuser', password='testuser', db='suivi_medical')
+db = connect_db(user='testuser', password='testuser', db='eco-mobile')
 cursor = db.cursor()'''
 
 app = Flask(__name__)
+app.secret_key = 'SECRET KEY'
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=30)
 ## socketio = SocketIO(app)
 ## CORS(app)
+
+def check_credentials(username, password):
+	# check, les identifiants dans la db
+	return False
 
 # FLASK SERVER
 @app.route('/')
 def index():
-	return render_template('test chat.html')
+	return render_template('index.html')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+	if request.method == 'POST':
+		if check_credentials(request.form['username'], request.form['password']):
+			session['logged_in'] = True
+			return redirect(url_for('index'), message="Logged in")
+
+	return render_template('login.html')
 
 # SOCKETIO SERVER
 '''
