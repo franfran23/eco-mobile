@@ -21,7 +21,7 @@ CORS(app)
 # FLASK SERVER
 @app.route('/')
 def index():
-	return open('index.html', 'r', encoding='utf').read()
+	return open('index.html', 'r', encoding='utf-8').read()
 
 # SOCKETIO SERVER
 @socketio.on('connect')
