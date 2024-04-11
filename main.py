@@ -57,6 +57,6 @@ def handle_message(message):
 '''
 
 if __name__ == '__main__':
-	app.run(app, debug=True, use_reloader=True)
+	app.run(app, debug=True)
 	# socketio.run(app, debug=True, use_reloader=True, allow_unsafe_werkzeug=True)
 	
