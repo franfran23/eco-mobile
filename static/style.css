@@ -29,7 +29,7 @@ header {
 }
 
 /* change apparence des boutons */
-button {
+.button {
     text-decoration: none;
     padding: 10px;
     font-family: arial;
@@ -39,7 +39,7 @@ button {
     box-shadow: 2px 3px 12px #444444;
 }
 
-button:hover {
+.button:hover {
     padding: 10px;
     color: #FFFFFF;
     background-color: #9bbb59;
