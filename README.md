@@ -4,7 +4,7 @@
 login.html
 
 
-formulaire de connection: 
+formulaire de connexion: 
 
   -identifiant (name="username")
   
