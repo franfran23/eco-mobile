@@ -1,4 +1,10 @@
 # Requêtes SQL pour la table "emploi du temps" :
-SELECT nom FROM emploi du temps WHERE temps libre = 'horaire à définir'
+CREATE TABLE emploi du temps 
+SELECT nom FROM emploi du temps WHERE temps libre = 'horaire à définir';
 # Requêtes SQL pour la table "zone" :
-SELECT nom FROM zone WHERE zone = 'endroit à définir'
+CREATE TABLE zone
+SELECT nom FROM zone WHERE zone = 'endroit à définir';
+# Requêtes SQL pour la table "identifiant" :
+CREATE TABLE identifiant
+SELECT password FROM identifiant WHERE username = 'personne à définir';
+INSERT INTO identifiant VALUES ('nom à définir','prénom à définir','numéro de téléphone à définir','e-mail à définir','mot de passe à définir');
