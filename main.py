@@ -53,15 +53,17 @@ def index():
 		username = 'Connected as ' + str(username)
 	return render_template('index.html', message=message, connexion=username)
 
-@app.route('/signin', methods=['POST'])
+@app.route('/signin', methods=['GET', 'POST'])
 def signin():
-	nom = request.form['nom']
-	prenom = request.form['prenom']
-	username = request.form['email']
-	numero = request.form['numero']
-	password = generate_password_hash(request.form['password'])
+	if request.method == 'POST':
+		nom = request.form['nom']
+		prenom = request.form['prenom']
+		username = request.form['email']
+		numero = request.form['numero']
+		password = generate_password_hash(request.form['password'])
 
-	# requète sql
+		# requète sql
+	return render_template('inscription.html')
 
 
 
