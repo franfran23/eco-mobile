@@ -27,3 +27,21 @@ header {
     height: 35px;
     width: 35px;
 }
+
+/* change apparence des boutons */
+.button {
+    text-decoration: none;
+    padding: 10px;
+    font-family: arial;
+    font-size: 1em;
+    color: #000000;
+    background-color: #ffffff;
+    box-shadow: 2px 3px 12px #444444;
+}
+
+.button:hover {
+    padding: 10px;
+    color: #FFFFFF;
+    background-color: #9bbb59;
+    box-shadow: 1px 1px 4px #777777;
+}
