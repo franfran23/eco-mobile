@@ -1,0 +1,4 @@
+# Requêtes SQL pour la table "emploi du temps" :
+SELECT nom FROM emploi du temps WHERE temps libre = 'horaire à définir'
+# Requêtes SQL pour la table "zone" :
+SELECT nom FROM zone WHERE zone = 'endroit à définir'
