@@ -2,8 +2,9 @@ from flask import Flask, url_for, request, redirect, render_template, make_respo
 # from flask_socketio import SocketIO, emit
 # from flask_cors import CORS
 # import mysql.connector
-
-from datetime import timedelta
+import sqlite3
+from werkzeug.security import generate_password_hash, check_password_hash
+import secrets
 
 '''
 def connect_db(host='localhost', user='root', password='', db=None):
@@ -12,19 +13,34 @@ def connect_db(host='localhost', user='root', password='', db=None):
 		user=user,
 		password=password,
 		database=db)
+'''
+def connect_db(name='db.sqlite'):
+	connection = sqlite3.connect(name)
+	return connection
 
-db = connect_db(user='testuser', password='testuser', db='eco-mobile')
-cursor = db.cursor()'''
+def gen_db():
+	tables = ['CREATE TABLE test']
+	for table in tables:
+		try:
+			cursor.execute(table)
+		except:
+			pass
+	db.commit()
+
+db = connect_db()
+cursor = db.cursor()
+
+gen_db()
 
 app = Flask(__name__)
-app.secret_key = 'SECRET KEY'
+app.secret_key = secrets.token_hex(16)
 ## socketio = SocketIO(app)
 ## CORS(app)
 
 def check_credentials(username, password):
 	# check, les identifiants dans la db
 	return True # test
-	return username=='username' and password=='pwd'
+	return check_password_hash(hashed_pwd, password)
 
 # FLASK SERVER
 @app.route('/')
@@ -36,6 +52,18 @@ def index():
 	else:
 		username = 'Connected as ' + str(username)
 	return render_template('index.html', message=message, connexion=username)
+
+@app.route('/signin', methods=['POST'])
+def signin():
+	nom = request.form['nom']
+	prenom = request.form['prenom']
+	username = request.form['email']
+	numero = request.form['numero']
+	password = generate_password_hash(request.form['password'])
+
+	# requète sql
+
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
