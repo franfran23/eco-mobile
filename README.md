@@ -2,9 +2,15 @@
 
 
 login.html
- 
+
+
 formulaire de connection: 
-  -identifiant (name="username") 
+
+  -identifiant (name="username")
+  
   -mot de passe (name=("password") 
+  
   -bouton submit 
+  
   -méthode post 
+  
