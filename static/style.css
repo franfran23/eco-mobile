@@ -13,8 +13,16 @@ header {
     justify-content: center;
 }
 
+/* definition taille des logos */
 .logo {
     height: 100px;
     width: 100px;
 }
-    
+.user {
+    height: 100px;
+    width: 100px;
+}
+.search {
+    height: 50px;
+    width: 50px;
+}
