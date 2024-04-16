@@ -62,7 +62,8 @@ def signin():
 		numero = request.form['numero']
 		password = generate_password_hash(request.form['password'])
 
-		# requète sql
+		# requête sql
+		return redirect('/?message=Signed In Successfully')
 	return render_template('inscription.html')
 
 
