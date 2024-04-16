@@ -1,4 +1,4 @@
-from flask import Flask, url_for, request, redirect, render_template, session
+from flask import Flask, url_for, request, redirect, render_template, make_response
 # from flask_socketio import SocketIO, emit
 # from flask_cors import CORS
 # import mysql.connector
@@ -18,28 +18,44 @@ cursor = db.cursor()'''
 
 app = Flask(__name__)
 app.secret_key = 'SECRET KEY'
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=30)
 ## socketio = SocketIO(app)
 ## CORS(app)
 
 def check_credentials(username, password):
 	# check, les identifiants dans la db
+	return True # test
 	return username=='username' and password=='pwd'
 
 # FLASK SERVER
 @app.route('/')
 def index():
 	message = request.args.get('message') or ''
-	return render_template('index.html', message=message)
+	username = request.cookies.get('username') or ''
+	if username == '':
+		username = 'Not Connected'
+	else:
+		username = 'Connected as ' + str(username)
+	return render_template('index.html', message=message, connexion=username)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 	if request.method == 'POST':
-		if check_credentials(request.form['username'], request.form['password']):
-			session['logged_in'] = True
-			return redirect(url_for('index'), message="Logged in")
+		data = request.form
+		username = data.get('username')
+		password = data.get('password')
+		if check_credentials(username, password):
+			response = make_response(render_template('index.html', message='Login Successful'))
+			response.set_cookie('username', username)
+			return response
+		return render_template('index.html', message='Invalid username or password')
 
 	return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+	response = make_response(redirect('/?message=Logout Successful'))
+	response.delete_cookie('username')
+	return response
 
 # SOCKETIO SERVER
 '''
