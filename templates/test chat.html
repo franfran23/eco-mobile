@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,6 +15,7 @@
         }
     </style>
 </head>
+
 <body>
     <h1>Real-Time Chat</h1>
     <div id="messages"></div>
@@ -31,7 +33,7 @@
         }
 
         // Receive message
-        socket.on('message', function(message) {
+        socket.on('message', function (message) {
             var messageElement = document.createElement('div');
             messageElement.textContent = message;
             document.getElementById('messages').appendChild(messageElement);
@@ -40,4 +42,5 @@
         });
     </script>
 </body>
+
 </html>
