@@ -45,6 +45,17 @@ db, cursor = connect_db()
 
 gen_db()
 
+def get_username(request):
+	try:
+		cookie = request.cookies.get('username')
+		if cookie is not None:
+			username = fernet.decrypt(cookie.encode('utf-8')).decode('utf-8')
+		else:
+			username = ''
+	except InvalidToken:
+		username = ''
+	return username
+
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
 ## socketio = SocketIO(app)
@@ -58,7 +69,6 @@ def check_credentials(username, password):
 		data = cursor.fetchone()
 		hashed_pwd = data[0]
 		status = bool(data[1])
-		print('status', status)
 		if status:
 			valid_auth = check_password_hash(hashed_pwd, password)
 			if valid_auth:
@@ -75,14 +85,7 @@ def check_credentials(username, password):
 def index():
 	message = request.args.get('message') or ''
 	
-	try:
-		cookie = request.cookies.get('username')
-		if cookie is not None:
-			username = fernet.decrypt(cookie.encode('utf-8')).decode('utf-8')
-		else:
-			username = ''
-	except InvalidToken:
-		username = ''
+	username = get_username(request)
 	
 	if username == '':
 		username = 'Not Connected'
