@@ -1,4 +1,5 @@
 from flask import Flask, url_for, request, redirect, render_template, make_response
+from random import randint
 # from flask_socketio import SocketIO, emit
 # from flask_cors import CORS
 # import mysql.connector
@@ -6,7 +7,7 @@ import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 import secrets
 from cryptography.fernet import Fernet, InvalidToken
-cle = '_XB2fwMJpusNiZrnXZ8KLwHdL1_ld8G8XbAKJHZuMzk=' # Fernet.generate_key()
+cle = '_XB2fwMJpusNiZrnXZ8KLwHdL1_ld8G8XbAKJHZuMzk=' # Fernet.generate_key() # une nouvelle clé déconnectera toutes les sessions utilisateurs en cours
 fernet = Fernet(cle)
 
 '''
@@ -31,7 +32,7 @@ def gen_db():
     password VARCHAR(255), -- Longueur maximale pour le mot de passe
     creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     last_login TIMESTAMP,
-    status BOOLEAN DEFAULT 1, -- TRUE pour activé, FALSE pour désactivé
+    status BOOLEAN DEFAULT 0, -- TRUE pour activé, FALSE pour désactivé
     is_admin BOOLEAN DEFAULT 0 -- TRUE pour administrateur, FALSE pour utilisateur standard
 );''']
 	for table in tables:
@@ -45,30 +46,23 @@ db, cursor = connect_db()
 
 gen_db()
 
-def get_username(request):
-	try:
-		cookie = request.cookies.get('username')
-		if cookie is not None:
-			username = fernet.decrypt(cookie.encode('utf-8')).decode('utf-8')
-		else:
-			username = ''
-	except InvalidToken:
-		username = ''
-	return username
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
 ## socketio = SocketIO(app)
 ## CORS(app)
 
+
+
+
 def check_credentials(username, password):
-	# check, les identifiants dans la db
+	# check les identifiants dans la db
 	db, cursor = connect_db()
 	try:
 		cursor.execute(f'SELECT password, status FROM identifiants WHERE username = "{username}";')
 		data = cursor.fetchone()
 		hashed_pwd = data[0]
-		status = bool(data[1])
+		status = bool(str(data[1])[0])
 		if status:
 			valid_auth = check_password_hash(hashed_pwd, password)
 			if valid_auth:
@@ -80,6 +74,27 @@ def check_credentials(username, password):
 		pass
 	return False
 
+COOKIE_NAME = 'eco-mobile_login'
+def get_username(request): # get username from crypted cookie
+	try:
+		cookie = request.cookies.get(COOKIE_NAME)
+		if cookie is not None:
+			username = fernet.decrypt(cookie.encode('utf-8')).decode('utf-8')
+		else:
+			username = None
+	except InvalidToken:
+		username = None
+	return username
+
+
+def send_email(username, code):
+	# send an email with the random code inside
+	# (return if it works or not)
+	print('code:', code)
+
+
+
+
 # FLASK SERVER
 @app.route('/')
 def index():
@@ -87,7 +102,7 @@ def index():
 	
 	username = get_username(request)
 	
-	if username == '':
+	if username is None:
 		username = 'Not Connected'
 	else:
 		username = 'Connected as ' + str(username)
@@ -95,9 +110,9 @@ def index():
 
 
 @app.route('/signup', methods=['GET', 'POST'])
-def signin():
-	db, cursor = connect_db()
+def signup():
 	if request.method == 'POST':
+		db, cursor = connect_db()
 		nom = request.form['nom']
 		prenom = request.form['prenom']
 		username = request.form['email']
@@ -108,11 +123,33 @@ def signin():
 		if int(cursor.fetchone()[0]) > 0:
 			return redirect('/?message=Un utilisateur a déjà été créé avec cette addresse mail. Veuillez ressayer.')
 		
-		cursor.execute(f'INSERT INTO identifiants (nom, prenom, numero, username, password) VALUES ("{nom}","{prenom}","{numero}","{username}","{password}");')
+		code = str(randint(1000, 9999))
+		send_email(username, code)
+		cursor.execute(f'INSERT INTO identifiants (nom, prenom, numero, username, password, status) VALUES ("{nom}","{prenom}","{numero}","{username}","{password}", "{"0"+generate_password_hash(code)}");')
 		db.commit()
-		return redirect('/?message=Signed In Successfully')
+		return redirect(f'/verif?username={username}')
 	
 	return render_template('inscription.html')
+
+@app.route('/verif', methods=['GET', 'POST'])
+def verif():
+	if request.method == 'POST':
+		username = request.form['username']
+		code = request.form['code']
+		db, cursor = connect_db()
+		cursor.execute(f'SELECT status from identifiants WHERE username = "{username}";')
+		status = cursor.fetchone()[0]
+		if status[0] == '0':
+			hashed_code = status[1:]
+			if check_password_hash(hashed_code, code):
+				cursor.execute(f'UPDATE identifiants SET status = 1 WHERE username = "{username}";')
+				db.commit()
+				return redirect('/?message=Votre compte à bien été activé, vous pouvez vous connecter')
+			return redirect('/?message=Le code que vous avez entré est incorrecte, veuillez réessayer.')
+		else:
+			return redirect('/?message=Erreur à l\'inscription, veuillez contacter un administrateur.')
+	
+	return render_template('verif.html', username=request.args.get('username'))
 
 
 
@@ -123,7 +160,7 @@ def login():
 		password = request.form['password']
 		if check_credentials(username, password):
 			response = make_response(redirect('/?message=Login Successful'))
-			response.set_cookie('username', fernet.encrypt(username.encode('utf-8')).decode('utf-8'), secure=True, httponly=True)
+			response.set_cookie(COOKIE_NAME, fernet.encrypt(username.encode('utf-8')).decode('utf-8'), secure=True, httponly=True)
 			return response
 		return redirect('/?message=Invalid username or password (Maybe your account is disabled. If the issue persist, please contact an administrator)')
 
@@ -132,7 +169,7 @@ def login():
 @app.route('/logout')
 def logout():
 	response = make_response(redirect('/?message=Logout Successful'))
-	response.delete_cookie('username')
+	response.delete_cookie(COOKIE_NAME)
 	return response
 
 # SOCKETIO SERVER
