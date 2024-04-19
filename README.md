@@ -25,6 +25,7 @@ cette page contiendra un formulaire post avec un élément caché nommé "userna
 - [ ] (si les messages doivent être cryptés dans la db, trouver un format pour générer les clés, ex: utiliser les id des utilisateurs comme graine de génération d'une clé (le résultat sera toujours le même))
 
 ## DataBase
+(créer un fichier .txt avec toutes les requêtes de création de tables, une par ligne)  
 - Ecrire les requêtes sql pour:
   - créer la table horaires:
     - id unique auto incrémenté
