@@ -11,12 +11,12 @@ format de l'adresse mail pour le code de validation à définir (pour garder une
 
 # todo list
 ## frontend
-[x] page d'accueil  
-[x] page de connexion  
-[x] page d'inscription  
-[] page de messagerie  
+- [x] page d'accueil  
+- [x] page de connexion  
+- [x] page d'inscription  
+- [ ] page de messagerie  
 
 ## backend
-[x] système de login
-[x] système d'inscription (update en cours mais fonctionnel)
-[] messagerie  
+- [x] système de login
+- [x] système d'inscription (update en cours mais fonctionnel)
+- [ ] messagerie  
