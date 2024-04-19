@@ -7,7 +7,7 @@ import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 import secrets
 from cryptography.fernet import Fernet, InvalidToken
-cle = '_XB2fwMJpusNiZrnXZ8KLwHdL1_ld8G8XbAKJHZuMzk=' # Fernet.generate_key() # une nouvelle clé déconnectera toutes les sessions utilisateurs en cours
+cle = ENCRIPTION_KEY # Fernet.generate_key() # une nouvelle clé déconnectera toutes les sessions utilisateurs en cours
 fernet = Fernet(cle)
 
 '''
