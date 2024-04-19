@@ -7,8 +7,25 @@ import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 import secrets
 from cryptography.fernet import Fernet, InvalidToken
-cle = '_XB2fwMJpusNiZrnXZ8KLwHdL1_ld8G8XbAKJHZuMzk=' # Fernet.generate_key() # une nouvelle clé déconnectera toutes les sessions utilisateurs en cours
-fernet = Fernet(cle)
+
+from gen_keys import generate_fernet_key
+MASTER_KEY = '_XB2fwMJpusNiZrnXZ8KLwHdL1_ld8G8XbAKJHZuMzk=' # Fernet.generate_key() # une nouvelle clé déconnectera toutes les sessions utilisateurs en cours
+
+# pour encrypter les cookies (de session)
+cookies_seed = 'cookies' # graine de génération de la clé de cryptage des cookies # on définira une vraie clé plus tard # une nouvelle clé déconnectera toutes les sessions utilisateurs en cours
+cookies_key = generate_fernet_key(MASTER_KEY, cookies_seed) # clé de cryptage des cookies
+# print('cookies key', cookies_key) #
+cookies_fernet = Fernet(cookies_key)
+
+def get_messages_fernet(id1, id2):
+	'''renvoie l'objet fernet créé avec la clé unique pour la disscussion entre user1 et user2 (prend les id des utilisateurs en entrée)'''
+	# pour encrypter les messages entre user1 et user2
+	if id1 > id2: # par ordre croissant
+		id1, id2 = id2, id1
+	messages_seed = str(id1 + id2)
+	messages_key = generate_fernet_key(MASTER_KEY, messages_seed)
+	messages_fernet = Fernet(messages_key)
+	return messages_fernet
 
 '''
 def connect_db(host='localhost', user='root', password='', db=None):
@@ -79,7 +96,7 @@ def get_username(request): # get username from crypted cookie
 	try:
 		cookie = request.cookies.get(COOKIE_NAME)
 		if cookie is not None:
-			username = fernet.decrypt(cookie.encode('utf-8')).decode('utf-8')
+			username = cookies_fernet.decrypt(cookie.encode('utf-8')).decode('utf-8')
 		else:
 			username = None
 	except InvalidToken:
@@ -160,7 +177,7 @@ def login():
 		password = request.form['password']
 		if check_credentials(username, password):
 			response = make_response(redirect('/?message=Login Successful'))
-			response.set_cookie(COOKIE_NAME, fernet.encrypt(username.encode('utf-8')).decode('utf-8'), secure=True, httponly=True)
+			response.set_cookie(COOKIE_NAME, cookies_fernet.encrypt(username.encode('utf-8')).decode('utf-8'), secure=True, httponly=True)
 			return response
 		return redirect('/?message=Invalid username or password (Maybe your account is disabled. If the issue persist, please contact an administrator)')
 
