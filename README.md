@@ -44,6 +44,6 @@ cette page contiendra un formulaire post avec un élément caché nommé "userna
     - id unique autoincrémenté
     - nom de la zone (ex: Tourcoing Nord-Est) (les zones seront dabord définies manuellement, puis éventuellement automatisées avec une API google Maps par exemple)
 
-  - Récupérer les n derniers messages entre user1 et user2
+  - Récupérer les n derniers messages entre user1 et user2 (donc triés par date)
 
 
