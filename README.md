@@ -3,7 +3,7 @@
 
 format de l'adresse mail pour le code de validation à définir (pour garder une cohérence avec une éventuelle adresse de contact) --> demander au client 
 
-la table contact ne sera peut être pas nécéssaire
+la table contact ne sera peut être pas nécéssaire (ou alors pour stocker les clés de déchiffrage des messages entre user1 et user2 (dans ce cas (user1, user2) sera la clé principale et la clé de lecture des messages sera cryptée avec la masterkey)
 
 # todo list
 ## frontend
