@@ -6,8 +6,8 @@ def connect_db(name='db.sqlite'):
 	connection = sqlite3.connect(name)
 	return connection, connection.cursor()
 
-NEW_MASTER_KEY = '_XB2fwMJpusNiZrnXZ8KLwHdL1_ld8G8XbAKJHZuMzk='
-OLD_MASTER_KEY = '95vvTD9f0rVk7vSNH3zfzr7ZQl7b49QqXaIA_soPKQk='
+NEW_MASTER_KEY = ''
+OLD_MASTER_KEY = ''
 
 db, cursor = connect_db()
 
