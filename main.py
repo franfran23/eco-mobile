@@ -8,7 +8,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import secrets
 from cryptography.fernet import Fernet, InvalidToken
 
-from gen_keys import generate_fernet_key
+from cryptage import generate_fernet_key, get_messages_fernet
 MASTER_KEY = '_XB2fwMJpusNiZrnXZ8KLwHdL1_ld8G8XbAKJHZuMzk=' # Fernet.generate_key() # une nouvelle clé déconnectera toutes les sessions utilisateurs en cours
 
 # pour encrypter les cookies (de session)
@@ -17,15 +17,6 @@ cookies_key = generate_fernet_key(MASTER_KEY, cookies_seed) # clé de cryptage d
 # print('cookies key', cookies_key) #
 cookies_fernet = Fernet(cookies_key)
 
-def get_messages_fernet(id1, id2):
-	'''renvoie l'objet fernet créé avec la clé unique pour la disscussion entre user1 et user2 (prend les id des utilisateurs en entrée)'''
-	# pour encrypter les messages entre user1 et user2
-	if id1 > id2: # par ordre croissant
-		id1, id2 = id2, id1
-	messages_seed = str(id1 + id2)
-	messages_key = generate_fernet_key(MASTER_KEY, messages_seed)
-	messages_fernet = Fernet(messages_key)
-	return messages_fernet
 
 '''
 def connect_db(host='localhost', user='root', password='', db=None):
@@ -41,16 +32,26 @@ def connect_db(name='db.sqlite'):
 
 def gen_db():
 	tables = ['''CREATE TABLE identifiants (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	nom VARCHAR(100),
 	prenom VARCHAR(100),
 	numero VARCHAR(10),
-    username VARCHAR(255), -- Longueur maximale standard pour une adresse e-mail
-    password VARCHAR(255), -- Longueur maximale pour le mot de passe
-    creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    last_login TIMESTAMP,
-    status BOOLEAN DEFAULT 0, -- TRUE pour activé, FALSE pour désactivé
-    is_admin BOOLEAN DEFAULT 0 -- TRUE pour administrateur, FALSE pour utilisateur standard
+	username VARCHAR(255), -- Longueur maximale standard pour une adresse e-mail
+	password VARCHAR(255), -- Longueur maximale pour le mot de passe
+	creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	last_login TIMESTAMP,
+	status BOOLEAN DEFAULT 0, -- TRUE pour activé, FALSE pour désactivé
+	is_admin BOOLEAN DEFAULT 0 -- TRUE pour administrateur, FALSE pour utilisateur standard
+);''',
+'''CREATE TABLE messages (
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	sender INTEGER,
+	receiver INTEGER,
+	message VARCHAR(2048), -- longueur maximum d'un message (crypté)
+	date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	
+	FOREIGN KEY(sender) REFERENCES identifiants(id),
+	FOREIGN KEY(receiver) REFERENCES identifiants(id)
 );''']
 	for table in tables:
 		try:
@@ -70,7 +71,7 @@ app.secret_key = secrets.token_hex(16)
 ## CORS(app)
 
 
-
+# FUNCTIONS
 
 def check_credentials(username, password):
 	# check les identifiants dans la db
@@ -103,11 +104,35 @@ def get_username(request): # get username from crypted cookie
 		username = None
 	return username
 
-
 def send_email(username, code):
 	# send an email with the random code inside
+	# username is an e-mail address
 	# (return if it works or not)
 	print('code:', code)
+
+def save_message(id_sender, id_receiver, message_clair):
+	db, cursor = connect_db()
+	fernet = get_messages_fernet(id_sender, id_receiver, MASTER_KEY) # objet fernet de cryptage entre id1 et id2
+	message = fernet.encrypt(message_clair).decode('utf-8') # cryptage du message, stockage en utf-8
+	cursor.execute(f'INSERT INTO messages (sender, receiver, message) VALUES ({id_sender}, {id_receiver}, "{message}");')
+	db.commit()
+
+def get_message(message_id):
+	'''renvoie le message décrypté (prend l'id du message en paramètre)'''
+	db, cursor = connect_db()
+	cursor.execute(f'SELECT message, sender, receiver FROM messages WHERE id = {message_id};')
+	data = cursor.fetchone()
+	if data is None:
+		return 'Wrong id'
+	crypted_message = data[0].encode('utf-8')
+	id_sender = data[1]
+	id_receiver = data[2]
+	
+	fernet = get_messages_fernet(id_sender, id_receiver, MASTER_KEY)
+	try:
+		return fernet.decrypt(crypted_message).decode('utf-8')
+	except InvalidToken:
+		return ''
 
 
 
@@ -188,6 +213,21 @@ def logout():
 	response = make_response(redirect('/?message=Logout Successful'))
 	response.delete_cookie(COOKIE_NAME)
 	return response
+
+
+# developpement test
+'''
+@app.route('/save')
+def save_msg():
+	message = request.args.get('msg')
+	save_message(1, 2, message.encode('utf-8'))
+	return 'done'
+@app.route('/see')
+def see():
+	id = int(request.args.get('id'))
+	return get_message(id)
+'''
+
 
 # SOCKETIO SERVER
 '''
