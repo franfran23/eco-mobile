@@ -7,6 +7,17 @@
 	<link rel="stylesheet" type="text/css" href="/static/style.css" />
 	<link rel="icon" type="image/png" href="/static/Images/logo.ico">
 	<title>Home Page</title>
+	<script>
+		function submitForm() {
+			document.getElementById("searchForm").submit();
+		}
+
+		document.getElementById("searchInput").addEventListener("keyup", function(event) {
+			if (event.key === "Enter") {
+				submitForm();
+			}
+		});
+	</script>
 
 	<header>
 		<nav>
