@@ -41,16 +41,16 @@ def connect_db(name='db.sqlite'):
 
 def gen_db():
 	tables = ['''CREATE TABLE identifiants (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	nom VARCHAR(100),
 	prenom VARCHAR(100),
 	numero VARCHAR(10),
-    username VARCHAR(255), -- Longueur maximale standard pour une adresse e-mail
-    password VARCHAR(255), -- Longueur maximale pour le mot de passe
-    creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    last_login TIMESTAMP,
-    status BOOLEAN DEFAULT 0, -- TRUE pour activé, FALSE pour désactivé
-    is_admin BOOLEAN DEFAULT 0 -- TRUE pour administrateur, FALSE pour utilisateur standard
+	username VARCHAR(255), -- Longueur maximale standard pour une adresse e-mail
+	password VARCHAR(255), -- Longueur maximale pour le mot de passe
+	creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	last_login TIMESTAMP,
+	status BOOLEAN DEFAULT 0, -- TRUE pour activé, FALSE pour désactivé
+	is_admin BOOLEAN DEFAULT 0 -- TRUE pour administrateur, FALSE pour utilisateur standard
 );''']
 	for table in tables:
 		try:
