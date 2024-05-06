@@ -20,7 +20,7 @@ cette page contiendra un formulaire post avec un élément caché nommé "userna
 - [x] système de login
 - [x] système d'inscription (update en cours mais fonctionnel)
 - [ ] messagerie
-- [-] update signup pour enregistrer la zone géographique et les horaires de cours
+- [ ] update signup pour enregistrer la zone géographique et les horaires de cours
 - [x] update la requête de création de la table identifiants pour inclure l'id de la zone géographique (quand la table zone sera créée)
 - [x] (si les messages doivent être cryptés dans la db, trouver un format pour générer les clés, ex: utiliser les id des utilisateurs comme graine de génération d'une clé (le résultat sera toujours le même))
 
