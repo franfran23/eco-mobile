@@ -1,5 +1,4 @@
 flask
 pysqlite3
 Werkzeug
-secrets
 cryptography
