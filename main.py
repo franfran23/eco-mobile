@@ -67,14 +67,14 @@ def check_credentials(username, password):
 	# check les identifiants dans la db
 	db, cursor = connect_db()
 	try:
-		cursor.execute(f'SELECT password, status FROM identifiants WHERE username = "{username}";')
+		cursor.execute(f"SELECT password, status FROM identifiants WHERE username = '{username}'';")
 		data = cursor.fetchone()
 		hashed_pwd = data[0]
 		status = bool(str(data[1])[0])
 		if status:
 			valid_auth = check_password_hash(hashed_pwd, password)
 			if valid_auth:
-				cursor.execute(f'UPDATE identifiants SET last_login = CURRENT_TIMESTAMP WHERE username = "{username}";')
+				cursor.execute(f"UPDATE identifiants SET last_login = CURRENT_TIMESTAMP WHERE username = '{username}';")
 				db.commit()
 			return valid_auth
 	except Exception as e:
@@ -125,16 +125,23 @@ def signup():
 		prenom = request.form['prenom']
 		username = request.form['email']
 		numero = request.form['numero'][:10]
+		zone = request.form['zone']
 		password = generate_password_hash(request.form['password'])
 		
-		cursor.execute(f'SELECT COUNT(*) FROM identifiants WHERE username = "{username}";')
+		cursor.execute(f"SELECT COUNT(*) FROM identifiants WHERE username = '{username}';")
 		if int(cursor.fetchone()[0]) > 0:
 			return redirect('/?message=Un utilisateur a déjà été créé avec cette addresse mail. Veuillez ressayer.')
 		
 		code = str(randint(1000, 9999))
 		send_email(username, code)
-		cursor.execute(f'INSERT INTO identifiants (nom, prenom, numero, username, password, status) VALUES ("{nom}","{prenom}","{numero}","{username}","{password}", "{"0"+generate_password_hash(code)}");')
+		cursor.execute(f"SELECT id FROM zone WHERE name = '{zone}';")
+		data = cursor.fetchone()
+		if data is None:
+			return redirect('/?message=Une erreur est survenue, veuillez réessayer.')
+		
+		cursor.execute(f"INSERT INTO identifiants (nom, prenom, numero, zone, username, password, status) VALUES ('{nom}','{prenom}','{numero}','{zone}','{username}','{password}', '{'0'+generate_password_hash(code)}');")
 		db.commit()
+
 		return redirect(f'/verif?username={username}')
 	
 	return render_template('inscription.html')
@@ -145,12 +152,12 @@ def verif():
 		username = request.form['username']
 		code = request.form['code']
 		db, cursor = connect_db()
-		cursor.execute(f'SELECT status from identifiants WHERE username = "{username}";')
+		cursor.execute(f"SELECT status from identifiants WHERE username = '{username}';")
 		status = cursor.fetchone()[0]
 		if status[0] == '0':
 			hashed_code = status[1:]
 			if check_password_hash(hashed_code, code):
-				cursor.execute(f'UPDATE identifiants SET status = 1 WHERE username = "{username}";')
+				cursor.execute(f"UPDATE identifiants SET status = 1 WHERE username = '{username}';")
 				db.commit()
 				return redirect('/?message=Votre compte à bien été activé, vous pouvez vous connecter')
 			return redirect('/?message=Le code que vous avez entré est incorrecte, veuillez réessayer.')
