@@ -13,12 +13,12 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 1000px;
+    width: 100%;
 }
 
 nav {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     list-style: none;
   }
 
@@ -32,8 +32,8 @@ nav {
     width: 80px;
 }
 .search {
-    height: 35px;
-    width: 35px;
+    height: 25px;
+    width: 25px;
 }
 
 /* change apparence des boutons */
@@ -47,6 +47,7 @@ nav {
     border-radius: 24px;
     box-shadow: 2px 3px 12px #444444;
     border: none;
+    padding: 5px;
 }
 
 .button:hover {
@@ -56,6 +57,7 @@ nav {
     box-shadow: 1px 1px 4px #777777;
 }
 
+/*
 form {
     margin: 0 auto;
     width: 400px;
@@ -63,4 +65,5 @@ form {
     border: 1px solid rgb(33, 52, 34);
     border-radius: 1em;
     background: linear-gradient(rgb(56 86 57), rgb(33, 52, 34));
-  }
+}  
+*/
