@@ -47,10 +47,9 @@ nav {
     border-radius: 24px;
     box-shadow: 2px 3px 12px #444444;
     border: none;
-    padding: 5px;
 }
 
-.button:hover {
+button:hover {
     padding: 10px;
     color: #FFFFFF;
     background-color: #9bbb59;
