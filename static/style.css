@@ -14,6 +14,13 @@ header {
     justify-content: center;
 }
 
+nav {
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+    width: 500px;
+  }
+
 /* definition taille des logos */
 .logo {
     height: 100px;
@@ -47,3 +54,12 @@ header {
     background-color: #9bbb59;
     box-shadow: 1px 1px 4px #777777;
 }
+
+form {
+    margin: 0 auto;
+    width: 400px;
+    padding: 1em;
+    border: 1px solid rgb(33, 52, 34);
+    border-radius: 1em;
+    background: linear-gradient(rgb(56 86 57), rgb(33, 52, 34));
+  }
