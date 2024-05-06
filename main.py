@@ -36,12 +36,15 @@ def gen_db():
 	nom VARCHAR(100),
 	prenom VARCHAR(100),
 	numero VARCHAR(10),
+	zone INTEGER,
 	username VARCHAR(255), -- Longueur maximale standard pour une adresse e-mail
 	password VARCHAR(255), -- Longueur maximale pour le mot de passe
 	creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	last_login TIMESTAMP,
 	status BOOLEAN DEFAULT 0, -- TRUE pour activé, FALSE pour désactivé
-	is_admin BOOLEAN DEFAULT 0 -- TRUE pour administrateur, FALSE pour utilisateur standard
+	is_admin BOOLEAN DEFAULT 0, -- TRUE pour administrateur, FALSE pour utilisateur standard
+		   
+	FOREIGN KEY(zone) REFERENCES zone(id)
 );''']
 	for table in tables:
 		try:
