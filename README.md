@@ -13,7 +13,7 @@ la table contact ne sera peut être pas nécéssaire (ou alors pour stocker les 
 - [ ] page de messagerie
 - [ ] Il faudra ajouter une page avec un message ({{ }}, formatage python) et un input pour un nombre entier: code de vérification par email (verif.html ?)
 cette page contiendra un formulaire post avec un élément caché nommé "username" dont la valeur sera {{ username }}. L'input pour le code aura le nom "code"
-- [ ] Update de inscription.html pour ajouter la sélection de la zone géographique et des horaires de cours
+- [ ] Update de inscription.html pour ajouter la sélection de la zone géographique (name="zone") et des horaires de cours (à voir comment c'est mis en place)
 
 
 ## backend
