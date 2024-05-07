@@ -201,7 +201,7 @@ def chat():
 	sender = get_username(request)
 	if sender is None:
 		return redirect('/?message=Vous n\'êtes pas connecté.')
-	receiver = request.args.get('contact') or None
+	receiver = request.args.get('contact') or ''
 	if receiver is None:
 		pass
 		# sélection du contact le plus récent
