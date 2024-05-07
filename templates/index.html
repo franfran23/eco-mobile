@@ -7,23 +7,35 @@
 	<link rel="stylesheet" type="text/css" href="/static/style.css" />
 	<link rel="icon" type="image/png" href="/static/Images/logo.ico">
 	<title>Home Page</title>
+	<script>
+		function submitForm() {
+			document.getElementById("searchForm").submit();
+		}
+
+		document.getElementById("searchInput").addEventListener("keyup", function(event) {
+			if (event.key === "Enter") {
+				submitForm();
+			}
+		});
+	</script>
 
 	<header>
 		<nav>
 			<img src="/static/Images/logo.png" class="logo" alt="Logo" />
-			<a href= "/templates/index.html"><button class="button">Home Page</button></a>
-			<a href= "/templates/test Chat.html"><button class="button">Messages</button></a>
-			<div class="info-message">{{ message }}</div>
-			<div class="info-message">{{ connexion }}</div>
-			<div>
-				<input type="text" class="button" placeholder="rechercher un itinérarire" />
-				<img src="/static/Images/search.png" class="search" />
-			</div>
+			<a href= "/"><button class="button">Home Page</button></a>
+			<a href= "/message"><button class="button">Messages</button></a>
+			<form id = "searchForm" action="" method="GET">
+				<input id="searchInput" name="search" type="text" class="searchInput" placeholder="entrer un itinéraire">
+				<img class="search icon" src="/static/Images/search.png" alt="search" onclick="submitForm()">
+			</form>
 			<img src="/static/Images/user.png" class="user" alt="User" />
 		</nav>
 	</header>
 </head>
 
-<body></body>
+<body>
+	<div class="info-message">{{ message }}</div>
+	<div class="info-message">{{ connexion }}</div>
+</body>
 
 </html>
