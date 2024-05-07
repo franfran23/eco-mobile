@@ -69,7 +69,7 @@ nav {
     border: none;
 }
 
-#searchMessage{
+#messageInput{
     width: 80%;
     position: absolute;
     left: 50%;
@@ -87,6 +87,10 @@ nav {
 #backHome{
    position: relative;
    top: 20px;
+}
+
+.messages{
+    width: 80%;
 }
 
 /*
