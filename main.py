@@ -204,7 +204,7 @@ def chat():
 	receiver = request.args.get('contact') or ''
 	sender, receiver = sorted([sender, receiver])
 	session['room'] = sender + receiver
-	return render_template('chat.html')
+	return render_template('chat.html', name=receiver)
 
 # SOCKETIO SERVER
 
