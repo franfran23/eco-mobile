@@ -49,7 +49,7 @@ def gen_db():
 	for table in tables:
 		try:
 			cursor.execute(table)
-		except:
+		except Exception as e:
 			pass
 	db.commit()
 
@@ -216,7 +216,7 @@ def handle_connect():
 
 @socketio.on('disconnect')
 def handle_disconnect():
-	print('Disconnected')
+	print('Disconnected', session['room'])
 
 @socketio.on('message')
 def handle_message(message):
