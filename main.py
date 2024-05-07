@@ -205,10 +205,6 @@ def chat():
 	if receiver is None:
 		pass
 		# sélection du contact le plus récent
-	db, cursor = connect_db()
-	cursor.execute(f"SELECT COUNT(*) FROM identifiants WHERE username = '{receiver}';")
-	if cursor.fetchone()[0] == 0:
-		return redirect('/?message=Ce contact n\'existe pas.')
 	sender, receiver = sorted([sender, receiver])
 	session['room'] = sender + receiver
 	return render_template('chat.html', name=receiver)
