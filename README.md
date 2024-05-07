@@ -7,9 +7,9 @@ la table contact ne sera peut être pas nécéssaire (ou alors pour stocker les 
 
 # todo list
 ## frontend
-- [x] page d'accueil  
-- [x] page de connexion  
-- [x] page d'inscription  
+- [ ] page d'accueil  
+- [ ] page de connexion  
+- [ ] page d'inscription  
 - [ ] page de messagerie
 - [ ] Il faudra ajouter une page avec un message ({{ }}, formatage python) et un input pour un nombre entier: code de vérification par email (verif.html ?)
 cette page contiendra un formulaire post avec un élément caché nommé "username" dont la valeur sera {{ username }}. L'input pour le code aura le nom "code"

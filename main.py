@@ -118,31 +118,35 @@ def index():
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
 	if request.method == 'POST':
-		db, cursor = connect_db()
-		nom = request.form['nom']
-		prenom = request.form['prenom']
-		username = request.form['email']
-		numero = request.form['numero'][:10]
-		zone = request.form['zone']
-		password = generate_password_hash(request.form['password'])
-		
-		cursor.execute(f"SELECT COUNT(*) FROM identifiants WHERE username = '{username}';")
-		if int(cursor.fetchone()[0]) > 0:
-			return redirect('/?message=Un utilisateur a déjà été créé avec cette addresse mail. Veuillez ressayer.')
-		
-		# vérifie l'existence de la zone
-		cursor.execute(f"SELECT id FROM zone WHERE name = '{zone}';")
-		data = cursor.fetchone()
-		if data is None:
-			return redirect('/?message=Une erreur est survenue, veuillez réessayer.')
+		try:
+			db, cursor = connect_db()
+			nom = request.form['nom']
+			prenom = request.form['prenom']
+			username = request.form['email']
+			numero = request.form['numero'][:10]
+			zone = request.form['zone']
+			password = generate_password_hash(request.form['password'])
+			
+			cursor.execute(f"SELECT COUNT(*) FROM identifiants WHERE username = '{username}';")
+			if int(cursor.fetchone()[0]) > 0:
+				return redirect('/?message=Un utilisateur a déjà été créé avec cette addresse mail. Veuillez ressayer.')
+			
+			# vérifie l'existence de la zone
+			cursor.execute(f"SELECT id FROM zone WHERE name = '{zone}';")
+			data = cursor.fetchone()
+			if data is None:
+				return redirect('/?message=Une erreur est survenue, veuillez réessayer.')
 
-		code = str(randint(1000, 9999))
-		send_email(username, code)
-		
-		cursor.execute(f"INSERT INTO identifiants (nom, prenom, numero, zone, username, password, status) VALUES ('{nom}','{prenom}','{numero}','{zone}','{username}','{password}', '{'0'+generate_password_hash(code)}');")
-		db.commit()
+			code = str(randint(1000, 9999))
+			send_email(username, code)
+			
+			cursor.execute(f"INSERT INTO identifiants (nom, prenom, numero, zone, username, password, status) VALUES ('{nom}','{prenom}','{numero}','{zone}','{username}','{password}', '{'0'+generate_password_hash(code)}');")
+			db.commit()
 
-		return redirect(f'/verif?username={username}')
+			return redirect(f'/verif?username={username}')
+		except Exception as e:
+			print('error dans le traitement de l\'inscription de', username, ': ', e)
+			return redirect('/?message=An error has occured.')
 	
 	return render_template('inscription.html')
 
