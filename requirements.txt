@@ -3,3 +3,4 @@ flask_socketio
 pysqlite3
 Werkzeug
 cryptography
+gevent
