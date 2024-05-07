@@ -198,9 +198,9 @@ def logout():
 
 @app.route('/chat')
 def chat():
-	sender = get_username(request)
-	receiver = request.args.get('contact')
-	sender, receiver = sorted([sender, receiver])
+	sender = get_username(request) or ''
+	receiver = request.args.get('contact') or ''
+	sender, receiver = sorted((sender, receiver))
 	session['room'] = sender + receiver
 	return render_template('chat.html')
 
