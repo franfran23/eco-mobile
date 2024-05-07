@@ -11,11 +11,7 @@ from cryptography.fernet import Fernet, InvalidToken
 from cryptage import *
 MASTER_KEY = '_XB2fwMJpusNiZrnXZ8KLwHdL1_ld8G8XbAKJHZuMzk=' # Fernet.generate_key() # une nouvelle clé déconnectera toutes les sessions utilisateurs en cours
 
-# pour encrypter les cookies (de session)
-cookies_seed = 'cookies' # graine de génération de la clé de cryptage des cookies # on définira une vraie clé plus tard # une nouvelle clé déconnectera toutes les sessions utilisateurs en cours
-cookies_key = generate_fernet_key(MASTER_KEY, cookies_seed) # clé de cryptage des cookies
-# print('cookies key', cookies_key) #
-cookies_fernet = Fernet(cookies_key)
+cookies_fernet = get_cookies_fernet(MASTER_KEY)
 
 
 '''
