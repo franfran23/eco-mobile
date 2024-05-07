@@ -49,8 +49,8 @@ def gen_db():
 			pass
 	db.commit()
 
-db, cursor = connect_db()
 
+db, cursor = connect_db()
 gen_db()
 
 
@@ -66,7 +66,7 @@ def check_credentials(username, password):
 	# check les identifiants dans la db
 	db, cursor = connect_db()
 	try:
-		cursor.execute(f"SELECT password, status FROM identifiants WHERE username = '{username}'';")
+		cursor.execute(f"SELECT password, status FROM identifiants WHERE username = '{username}';")
 		data = cursor.fetchone()
 		hashed_pwd = data[0]
 		status = bool(str(data[1])[0])
@@ -106,13 +106,12 @@ def send_email(username, code):
 @app.route('/')
 def index():
 	message = request.args.get('message') or ''
-	
 	username = get_username(request)
-	
 	if username is None:
 		username = 'Not Connected'
 	else:
 		username = 'Connected as ' + str(username)
+	
 	return render_template('index.html', message=message, connexion=username)
 
 
@@ -131,12 +130,14 @@ def signup():
 		if int(cursor.fetchone()[0]) > 0:
 			return redirect('/?message=Un utilisateur a déjà été créé avec cette addresse mail. Veuillez ressayer.')
 		
-		code = str(randint(1000, 9999))
-		send_email(username, code)
+		# vérifie l'existence de la zone
 		cursor.execute(f"SELECT id FROM zone WHERE name = '{zone}';")
 		data = cursor.fetchone()
 		if data is None:
 			return redirect('/?message=Une erreur est survenue, veuillez réessayer.')
+
+		code = str(randint(1000, 9999))
+		send_email(username, code)
 		
 		cursor.execute(f"INSERT INTO identifiants (nom, prenom, numero, zone, username, password, status) VALUES ('{nom}','{prenom}','{numero}','{zone}','{username}','{password}', '{'0'+generate_password_hash(code)}');")
 		db.commit()
@@ -159,11 +160,11 @@ def verif():
 				cursor.execute(f"UPDATE identifiants SET status = 1 WHERE username = '{username}';")
 				db.commit()
 				return redirect('/?message=Votre compte à bien été activé, vous pouvez vous connecter')
-			return redirect('/?message=Le code que vous avez entré est incorrecte, veuillez réessayer.')
+			return redirect('/verif?message=Le code que vous avez entré est incorrecte, veuillez réessayer.')
 		else:
 			return redirect('/?message=Erreur à l\'inscription, veuillez contacter un administrateur.')
 	
-	return render_template('verif.html', username=request.args.get('username'))
+	return render_template('verif.html', username=request.args.get('username'), message=request.args.get('message'))
 
 
 
