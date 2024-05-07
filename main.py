@@ -41,6 +41,10 @@ def gen_db():
 	is_admin BOOLEAN DEFAULT 0, -- TRUE pour administrateur, FALSE pour utilisateur standard
 		   
 	FOREIGN KEY(zone) REFERENCES zone(id)
+);''',
+'''CREATE TABLE zone (
+	id INTEGER PRIMARY KEY AUTOINCREMENT, 
+	name VARCHAR(50)
 );''']
 	for table in tables:
 		try:
