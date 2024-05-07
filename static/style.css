@@ -47,6 +47,7 @@ nav {
     background-color: #ffffff; 
     border-radius: 24px;
     box-shadow: 2px 3px 12px #444444;
+    border: none;
   
 }
 
@@ -58,6 +59,9 @@ nav {
   
 }
 
+.button:onclick {
+    border: none;
+}
 
 .searchInput{
     text-decoration: none;
@@ -94,6 +98,10 @@ nav {
 
 .messages{
     width: 80%;
+}
+
+.username{
+    color: white;
 }
 
 
