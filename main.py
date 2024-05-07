@@ -186,6 +186,11 @@ def logout():
 	remove_cookie(response)
 	return response
 
+
+@app.route('/chat')
+def chat():
+	return render_template('chat.html')
+
 # SOCKETIO SERVER
 '''
 @socketio.on('connect')
