@@ -7,9 +7,29 @@
 	<link rel="stylesheet" type="text/css" href="/static/style.css" />
 	<link rel="icon" type="image/png" href="/static/Images/logo.ico">
 	<title>Messagerie</title>
+	
+	<header>
+		<nav>
+			<a href= "/"><img src="/static/Images/logo.png" class="logo" alt="Logo" /></a>
+			<a href= "/"><button class="button" id="backHome">Retour à la page d'accueil</button></a>
+		</nav>
+	</header>
+
+	<script>
+		function submitForm() {
+			document.getElementById("searchForm").submit();
+		}
+
+		document.getElementById("searchInput").addEventListener("keyup", function(event) {
+			if (event.key === "Enter") {
+				submitForm();
+			}
+		});
+	</script>
 </head>
 
 <body>
+	
 	<div class="info-message">{{ message }}</div>
 	<div class="info-message">{{ connexion }}</div>
     <div class="containerChat">
