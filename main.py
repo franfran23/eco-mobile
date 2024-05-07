@@ -201,7 +201,14 @@ def chat():
 	sender = get_username(request)
 	if sender is None:
 		return redirect('/?message=Vous n\'êtes pas connecté.')
-	receiver = request.args.get('contact') or ''
+	receiver = request.args.get('contact') or None
+	if receiver is None:
+		pass
+		# sélection du contact le plus récent
+	db, cursor = connect_db()
+	cursor.execute(f"SELECT COUNT(*) FROM identifiants WHERE username = '{receiver}';")
+	if cursor.fetchone()[0] == 0:
+		return redirect('/chat?message=Ce contact n\'existe pas.')
 	sender, receiver = sorted([sender, receiver])
 	session['room'] = sender + receiver
 	return render_template('chat.html', name=receiver)
