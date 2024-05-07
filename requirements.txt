@@ -4,3 +4,4 @@ pysqlite3
 Werkzeug
 cryptography
 gevent
+gevent-websocket
