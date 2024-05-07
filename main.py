@@ -1,6 +1,6 @@
-from flask import Flask, url_for, request, redirect, render_template, make_response
+from flask import Flask, url_for, request, redirect, render_template, make_response, session
 from random import randint
-# from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO, emit, join_room
 # from flask_cors import CORS
 # import mysql.connector
 import sqlite3
@@ -41,6 +41,10 @@ def gen_db():
 	is_admin BOOLEAN DEFAULT 0, -- TRUE pour administrateur, FALSE pour utilisateur standard
 		   
 	FOREIGN KEY(zone) REFERENCES zone(id)
+);''',
+'''CREATE TABLE zone (
+	id INTEGER PRIMARY KEY AUTOINCREMENT, 
+	name VARCHAR(50)
 );''']
 	for table in tables:
 		try:
@@ -55,8 +59,9 @@ gen_db()
 
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'secret'
 app.secret_key = secrets.token_hex(16)
-## socketio = SocketIO(app)
+socketio = SocketIO(app, async_mode='gevent')
 ## CORS(app)
 
 
@@ -168,7 +173,7 @@ def verif():
 		else:
 			return redirect('/?message=Erreur à l\'inscription, veuillez contacter un administrateur.')
 	
-	return render_template('verif.html', username=request.args.get('username'), message=request.args.get('message'))
+	return render_template('verif.html', username=request.args.get('username'), message=request.args.get('message') or '')
 
 
 
@@ -193,13 +198,19 @@ def logout():
 
 @app.route('/chat')
 def chat():
+	sender = get_username(request)
+	receiver = request.args.get('contact')
+	sender, receiver = sorted([sender, receiver])
+	session['room'] = sender + receiver
 	return render_template('chat.html')
 
 # SOCKETIO SERVER
-'''
+
 @socketio.on('connect')
 def handle_connect():
 	print('Connected')
+	join_room(session['room'])
+
 
 @socketio.on('disconnect')
 def handle_disconnect():
@@ -208,10 +219,10 @@ def handle_disconnect():
 @socketio.on('message')
 def handle_message(message):
 	print('Received message:', message)
-	emit('message', message, broadcast=True)
-'''
+	emit('message', message, room=session['room'])
+
 
 if __name__ == '__main__':
-	app.run(debug=True)
-	# socketio.run(app, debug=True, use_reloader=True, allow_unsafe_werkzeug=True)
+	# app.run(debug=True)
+	socketio.run(app, debug=True, use_reloader=True, allow_unsafe_werkzeug=True)
 	
