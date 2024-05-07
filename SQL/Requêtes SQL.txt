@@ -1,15 +1,15 @@
     # Requêtes SQL pour la table "zone" :
-CREATE TABLE zone (id_zone PRIMARY KEY NOT NULL, zone VARCHAR(50));
+CREATE TABLE zone (id_zone INT AUTO-INCREMENT PRIMARY KEY NOT NULL, zone VARCHAR(50));
 INSERT INTO zone VALUES ('n°id','zone à définir');
 SELECT nom FROM zone WHERE zone = 'endroit à définir';
     # Requêtes SQL pour la table "identifiant" :
-CREATE TABLE identifiant (id_identifiants INT PRIMARY KEY NOT NULL, nom VARCHAR(30), prenom VARCHAR(20), tel VARCHAR(10), mail VARCHAR(30), mdp VARCHAR(50));
+CREATE TABLE identifiant (id_identifiants INT AUTO-INCREMENT PRIMARY KEY NOT NULL, nom VARCHAR(30), prenom VARCHAR(20), tel VARCHAR(10), mail VARCHAR(30), mdp VARCHAR(50));
 SELECT mdp FROM identifiant WHERE nom = 'personne à définir';
 INSERT INTO identifiant VALUES ('n°id_identifiants à définir','nom à définir','prénom à définir','numéro de téléphone à définir','e-mail à définir','mot de passe à définir');
     # Requêtes SQL pour la table "horaires" :
-CREATE TABLE horaires (id_horaires INT PRIMARY KEY NOT NULL, id_identifiants INT FOREIGN KEY NOT NULL, jour VARCHAR(8), horaire VARCHAR(11), semaine VARCHAR(1));
+CREATE TABLE horaires (id_horaires INT AUTO-INCREMENT PRIMARY KEY NOT NULL, id_identifiants INT FOREIGN KEY NOT NULL, jour VARCHAR(8), horaire VARCHAR(11), semaine VARCHAR(1));
 INSERT INTO horaires VALUES ('n°id à définir','n°id_identifiants à définir','jour de la semaine à définir','horaires à définir du type : XX:XX/XX:XX','semaine à définir : A ou B');
     # Requêtes SQL pour la table "messages" :
-CREATE TABLE messages;
+CREATE TABLE messages (id_messages INT AUTO-INCREMENT PRIMARY KEY NOT NULL, id_identifiants INT FOREIGN KEY NOT NULL, id_identifiants INT FOREIGN KEY NOT NULL, message VARCHAR(100), date VARCHAR(10), heure VARCHAR(5), statut VARCHAR(6));
 INSERT INTO messages VALUES (n°id à définir','n°id_identifiants','n°id_receveur à définir','message à définir','date à définir','heure à définir','statut à définir');
 SELECT message FROM messages WHERE (sender = 'n°id_identifiants à définir' AND receiver = 'n°id_identifiants à définir') OR (sender = 'n°id_identifiants à définir' AND receiver = 'n°id_identifiants à définir') ORDER BY 'date à définir' DESC LIMIT 'nombre à définir';
