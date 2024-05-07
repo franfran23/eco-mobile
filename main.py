@@ -61,7 +61,7 @@ gen_db()
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret'
 app.secret_key = secrets.token_hex(16)
-socketio = SocketIO(app, async_mode='gevent')
+socketio = SocketIO(app, async_mode='gevent', cors_allowed_origins="*")
 ## CORS(app)
 
 
@@ -198,9 +198,11 @@ def logout():
 
 @app.route('/chat')
 def chat():
-	sender = get_username(request) or ''
+	sender = get_username(request)
+	if sender is None:
+		return redirect('/?message=Vous n\'êtes pas connecté.')
 	receiver = request.args.get('contact') or ''
-	sender, receiver = sorted((sender, receiver))
+	sender, receiver = sorted([sender, receiver])
 	session['room'] = sender + receiver
 	return render_template('chat.html')
 
@@ -208,7 +210,7 @@ def chat():
 
 @socketio.on('connect')
 def handle_connect():
-	print('Connected')
+	print('Connected room', session['room'])
 	join_room(session['room'])
 
 
@@ -224,5 +226,5 @@ def handle_message(message):
 
 if __name__ == '__main__':
 	# app.run(debug=True)
-	socketio.run(app, debug=True, use_reloader=True, allow_unsafe_werkzeug=True)
+	socketio.run(app, debug=True)
 	
