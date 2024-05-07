@@ -1,6 +1,6 @@
-from flask import Flask, url_for, request, redirect, render_template, make_response
+from flask import Flask, url_for, request, redirect, render_template, make_response, session
 from random import randint
-# from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO, emit, join_room
 # from flask_cors import CORS
 # import mysql.connector
 import sqlite3
@@ -11,11 +11,7 @@ from cryptography.fernet import Fernet, InvalidToken
 from cryptage import *
 MASTER_KEY = '_XB2fwMJpusNiZrnXZ8KLwHdL1_ld8G8XbAKJHZuMzk=' # Fernet.generate_key() # une nouvelle clé déconnectera toutes les sessions utilisateurs en cours
 
-# pour encrypter les cookies (de session)
-cookies_seed = 'cookies' # graine de génération de la clé de cryptage des cookies # on définira une vraie clé plus tard # une nouvelle clé déconnectera toutes les sessions utilisateurs en cours
-cookies_key = generate_fernet_key(MASTER_KEY, cookies_seed) # clé de cryptage des cookies
-# print('cookies key', cookies_key) #
-cookies_fernet = Fernet(cookies_key)
+cookies_fernet = get_cookies_fernet(MASTER_KEY)
 
 
 '''
@@ -45,6 +41,10 @@ def gen_db():
 	is_admin BOOLEAN DEFAULT 0, -- TRUE pour administrateur, FALSE pour utilisateur standard
 		   
 	FOREIGN KEY(zone) REFERENCES zone(id)
+);''',
+'''CREATE TABLE zone (
+	id INTEGER PRIMARY KEY AUTOINCREMENT, 
+	name VARCHAR(50)
 );''']
 	for table in tables:
 		try:
@@ -53,14 +53,15 @@ def gen_db():
 			pass
 	db.commit()
 
-db, cursor = connect_db()
 
+db, cursor = connect_db()
 gen_db()
 
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'secret'
 app.secret_key = secrets.token_hex(16)
-## socketio = SocketIO(app)
+socketio = SocketIO(app, async_mode='gevent')
 ## CORS(app)
 
 
@@ -70,7 +71,7 @@ def check_credentials(username, password):
 	# check les identifiants dans la db
 	db, cursor = connect_db()
 	try:
-		cursor.execute(f"SELECT password, status FROM identifiants WHERE username = '{username}'';")
+		cursor.execute(f"SELECT password, status FROM identifiants WHERE username = '{username}';")
 		data = cursor.fetchone()
 		hashed_pwd = data[0]
 		status = bool(str(data[1])[0])
@@ -110,42 +111,47 @@ def send_email(username, code):
 @app.route('/')
 def index():
 	message = request.args.get('message') or ''
-	
 	username = get_username(request)
-	
 	if username is None:
 		username = 'Not Connected'
 	else:
 		username = 'Connected as ' + str(username)
+	
 	return render_template('index.html', message=message, connexion=username)
 
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
 	if request.method == 'POST':
-		db, cursor = connect_db()
-		nom = request.form['nom']
-		prenom = request.form['prenom']
-		username = request.form['email']
-		numero = request.form['numero'][:10]
-		zone = request.form['zone']
-		password = generate_password_hash(request.form['password'])
-		
-		cursor.execute(f"SELECT COUNT(*) FROM identifiants WHERE username = '{username}';")
-		if int(cursor.fetchone()[0]) > 0:
-			return redirect('/?message=Un utilisateur a déjà été créé avec cette addresse mail. Veuillez ressayer.')
-		
-		code = str(randint(1000, 9999))
-		send_email(username, code)
-		cursor.execute(f"SELECT id FROM zone WHERE name = '{zone}';")
-		data = cursor.fetchone()
-		if data is None:
-			return redirect('/?message=Une erreur est survenue, veuillez réessayer.')
-		
-		cursor.execute(f"INSERT INTO identifiants (nom, prenom, numero, zone, username, password, status) VALUES ('{nom}','{prenom}','{numero}','{zone}','{username}','{password}', '{'0'+generate_password_hash(code)}');")
-		db.commit()
+		try:
+			db, cursor = connect_db()
+			nom = request.form['nom']
+			prenom = request.form['prenom']
+			username = request.form['email']
+			numero = request.form['numero'][:10]
+			zone = request.form['zone']
+			password = generate_password_hash(request.form['password'])
+			
+			cursor.execute(f"SELECT COUNT(*) FROM identifiants WHERE username = '{username}';")
+			if int(cursor.fetchone()[0]) > 0:
+				return redirect('/?message=Un utilisateur a déjà été créé avec cette addresse mail. Veuillez ressayer.')
+			
+			# vérifie l'existence de la zone
+			cursor.execute(f"SELECT id FROM zone WHERE name = '{zone}';")
+			data = cursor.fetchone()
+			if data is None:
+				return redirect('/?message=Une erreur est survenue, veuillez réessayer.')
 
-		return redirect(f'/verif?username={username}')
+			code = str(randint(1000, 9999))
+			send_email(username, code)
+			
+			cursor.execute(f"INSERT INTO identifiants (nom, prenom, numero, zone, username, password, status) VALUES ('{nom}','{prenom}','{numero}','{zone}','{username}','{password}', '{'0'+generate_password_hash(code)}');")
+			db.commit()
+
+			return redirect(f'/verif?username={username}')
+		except Exception as e:
+			print('error dans le traitement de l\'inscription de', username, ': ', e)
+			return redirect('/?message=An error has occured.')
 	
 	return render_template('inscription.html')
 
@@ -163,11 +169,11 @@ def verif():
 				cursor.execute(f"UPDATE identifiants SET status = 1 WHERE username = '{username}';")
 				db.commit()
 				return redirect('/?message=Votre compte à bien été activé, vous pouvez vous connecter')
-			return redirect('/?message=Le code que vous avez entré est incorrecte, veuillez réessayer.')
+			return redirect('/verif?message=Le code que vous avez entré est incorrecte, veuillez réessayer.')
 		else:
 			return redirect('/?message=Erreur à l\'inscription, veuillez contacter un administrateur.')
 	
-	return render_template('verif.html', username=request.args.get('username'))
+	return render_template('verif.html', username=request.args.get('username'), message=request.args.get('message') or '')
 
 
 
@@ -189,11 +195,22 @@ def logout():
 	remove_cookie(response)
 	return response
 
+
+@app.route('/chat')
+def chat():
+	sender = get_username(request)
+	receiver = request.args.get('contact')
+	sender, receiver = sorted([sender, receiver])
+	session['room'] = sender + receiver
+	return render_template('chat.html')
+
 # SOCKETIO SERVER
-'''
+
 @socketio.on('connect')
 def handle_connect():
 	print('Connected')
+	join_room(session['room'])
+
 
 @socketio.on('disconnect')
 def handle_disconnect():
@@ -202,10 +219,10 @@ def handle_disconnect():
 @socketio.on('message')
 def handle_message(message):
 	print('Received message:', message)
-	emit('message', message, broadcast=True)
-'''
+	emit('message', message, room=session['room'])
+
 
 if __name__ == '__main__':
-	app.run(debug=True)
-	# socketio.run(app, debug=True, use_reloader=True, allow_unsafe_werkzeug=True)
+	# app.run(debug=True)
+	socketio.run(app, debug=True, use_reloader=True, allow_unsafe_werkzeug=True)
 	

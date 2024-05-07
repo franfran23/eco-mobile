@@ -6,7 +6,16 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<link rel="stylesheet" type="text/css" href="/static/style.css" />
 	<link rel="icon" type="image/png" href="/static/Images/logo.ico">
-	<title>Home Page</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.js"></script>
+	<title>Messagerie</title>
+	
+	<header>
+		<nav>
+			<a href= "/"><img src="/static/Images/logo.png" class="logo" alt="Logo" /></a>
+			<a href= "/"><button class="button" id="backHome">Retour à la page d'accueil</button></a>
+		</nav>
+	</header>
+
 	<script>
 		function submitForm() {
 			document.getElementById("searchForm").submit();
@@ -18,23 +27,18 @@
 			}
 		});
 	</script>
-
-	<header>
-		<nav>
-			<a href= "/"><img src="/static/Images/logo.png" class="logo" alt="Logo" /></a>
-			<a href= "/chat"><button class="button">Messages</button></a>
-			<form id = "searchForm" action="" method="GET">
-				<input id="searchInput" name="search" type="text" class="searchInput" placeholder="entrer un itinéraire ...">
-				<img class="search icon" src="/static/Images/search.png" alt="search" onclick="submitForm()">
-			</form>
-			<img src="/static/Images/user.png" class="user" alt="User" />
-		</nav>
-	</header>
 </head>
 
 <body>
+	
 	<div class="info-message">{{ message }}</div>
 	<div class="info-message">{{ connexion }}</div>
+    <div class="containerChat">
+        <div class="messagesPrec">{{message}}</div>
+		<form>
+        	<input class="searchInput" id="searchMessage" type="text" placeholder="Entrer un message ...">
+		</form>
+    </div>
 </body>
 
 </html>

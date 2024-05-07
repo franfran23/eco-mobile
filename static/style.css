@@ -59,6 +59,39 @@ nav {
 }
 
 
+.searchInput{
+    text-decoration: none;
+    padding: 10px;
+    font-family: arial;
+    font-size: 1em;
+    color: #000000;
+    background-color: #ffffff; 
+    border-radius: 24px;
+    box-shadow: 2px 3px 12px #444444;
+    border: none;
+}
+
+#searchMessage{
+    width: 80%;
+    position: absolute;
+    left: 50%;
+    top: 90%;
+    transform: translate(-50%, -50%);
+}
+
+.containerChat{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80%;
+}
+
+#backHome{
+   position: relative;
+   top: 20px;
+}
+
+/*
 form {
     margin: 65px auto;
     width: 400px;

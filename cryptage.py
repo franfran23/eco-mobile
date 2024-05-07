@@ -46,7 +46,7 @@ def get_messages_fernet(id1, id2, MASTER_KEY):
 
 def get_cookies_fernet(MASTER_KEY):
 	'''renvoie l'élément de cryptage fernet pour les cookies'''
-	cookies_seed = 'cookies'
+	cookies_seed = 'cookies' # graine de génération de la clé de cryptage des cookies # on définira une vraie clé plus tard # une nouvelle clé déconnectera toutes les sessions utilisateurs en cours
 	cookies_key = generate_fernet_key(MASTER_KEY, cookies_seed) # clé de cryptage des cookies
 	cookies_fernet = Fernet(cookies_key)
 	return cookies_fernet
