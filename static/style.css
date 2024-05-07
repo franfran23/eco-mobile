@@ -97,7 +97,7 @@ nav {
 }
 
 
-form {
+.login-form {
     margin: 65px auto;
     width: 400px;
     padding: 2em;
@@ -107,8 +107,8 @@ form {
     margin-top: 15px;
 }
 
-input[type="text"],
-input[type="password"] {
+
+input.login {
     width: 90%;
     padding: 12px;
     margin-top: 15px;
