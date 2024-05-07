@@ -9,28 +9,23 @@
 	<link rel="stylesheet" href="/static/style.css">
 </head>
 
-
-<body>
-	<h1 class="main-title">S'INSCRIRE</h1>
-
-
-</body>
-		<form action="" method="post">
-			<div class="container">
-				<label>Nom : </label>
-				<input type="text" placeholder="Nom" name="nom" required>
-				<label> Prénom : </label>
-				<input type="text" placeholder="Prénom" name="prenom" required><br />
-				<label>Numéro de téléphone : </label>
-				<input type="text" placeholder="Numéro de téléphone" name="numero" required><br />
-				<input type="hidden" name="zone" value="test zone">
-				<label>E-mail : </label>
-				<input type="text" placeholder="E-mail" name="email" required><br />
-				<label>Mot de passe : </label>
-				<input type="password" placeholder="Mot de passe" name="password" required><br />
-				<button type="submit">VALIDER</button><br />
-			</div>
-		</form>
+<center>
+		<body>
+			<h1 class="main-title">S'INSCRIRE</h1>
+			<form action="" method="post" class="login-form">
+				<div class="login">
+					<input type="text"class="login" placeholder="Nom" name="nom" required>
+					<input type="text"class="login" placeholder="Prénom" name="prenom" required><br />
+					<input type="text"class="login" placeholder="Numéro de téléphone" name="numero" required><br />
+					<input type="hidden"class="login" name="zone" value="">
+					<input type="text"class="login" placeholder="E-mail" name="email" required><br />
+					<input type="password"class="login" placeholder="Mot de passe" name="password" required><br />
+					<button type="submit">VALIDER</button><br />
+				</div>
+			</form>
+		</body>
+</center>
+		
 	
 
 </html>
