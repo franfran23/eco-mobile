@@ -100,6 +100,10 @@ nav {
     width: 80%;
 }
 
+.username{
+    color: white;
+}
+
 
 form {
     margin: 65px auto;
