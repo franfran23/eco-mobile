@@ -201,30 +201,30 @@ def chat():
 	sender = get_username(request)
 	if sender is None:
 		return redirect('/?message=Vous n\'êtes pas connecté.')
-	receiver = request.args.get('contact') or ''
+	receiver = request.args.get('contact') or None
 	if receiver is None:
-		pass
+		receiver = 'username'
 		# sélection du contact le plus récent
-	sender, receiver = sorted([sender, receiver])
-	session['room'] = sender + receiver
+	session['send_room'] = receiver
+	session['me'] = sender
 	return render_template('chat.html', name=receiver)
 
 # SOCKETIO SERVER
 
 @socketio.on('connect')
 def handle_connect():
-	print('Connected room', session['room'])
-	join_room(session['room'])
+	print(session['me'], 'connected to room', session['send_room'])
+	join_room(session['send_room'])
 
 
 @socketio.on('disconnect')
 def handle_disconnect():
-	print('Disconnected', session['room'])
+	print(session['me'], 'disconnected', session['send_room'])
 
 @socketio.on('message')
 def handle_message(message):
-	print('Received message:', message)
-	emit('message', message, room=session['room'])
+	print('Received message:', message, 'from', session['me'], 'to', session['send_room'])
+	emit('message', message, room=session['send_room'])
 
 
 if __name__ == '__main__':
