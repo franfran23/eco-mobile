@@ -198,7 +198,7 @@ def logout():
 
 @app.route('/contacts')
 def contacts():
-	return render_template('contacts.html')
+	return render_template('contacts.html', contacts=[["NOM", "Prénom", "username"],])
 
 @app.route('/chat')
 def chat():
