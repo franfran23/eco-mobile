@@ -4,29 +4,29 @@
 <head>
 	<meta charset="UTF-8">
 	<div class="title-container">
-		<title>Contact</title>
+		<title>Classique titre</title>
 	</div>
 	<link rel="stylesheet" href="/static/style.css">
 </head>
 
-
 <body>
-    	<h1 class="main-title">Vos Contact</h1>
-          <a href=" ">
-            <div class="bandeau">
-                Nom:
-                Prénom:
-                Username:
-                E-mail:
-            </div>
-        </a>
+    <h1 class="main-title">vos Contacts</h1>
+    {% for contact in contacts %}
+        <form action="/chat" method="get">
+                <p>Nom: {{ contact[0] }}</p>
+                <p>Prénom: {{ contact[1] }}</p>
+                <p name="contact">Username: {{ contact[2] }}</p>
+                
+
+                <button type="submit">Contacter</button>
+        </form>
+    {% endfor %}
 
 
+   
+
+  
 </body>
 
-
-<footer>
-	<p> eco-mobile</p>
-	<footer />
-
 </html>
+
