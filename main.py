@@ -213,17 +213,17 @@ def chat():
 
 @socketio.on('connect')
 def handle_connect():
-	print(session['me'], 'connecté(e) à l'espace', session['send_room'])
+	print(session['me'], 'connected to room', session['send_room'])
 	join_room(session['send_room'])
 
 
 @socketio.on('disconnect')
 def handle_disconnect():
-	print(session['me'], 'déconnectée', session['send_room'])
+	print(session['me'], 'disconnected', session['send_room'])
 
 @socketio.on('message')
 def handle_message(message):
-	print('Message reçu :', message, 'from', session['me'], 'to', session['send_room'])
+	print('Received message :', message, 'from', session['me'], 'to', session['send_room'])
 	emit('message', message, room=session['send_room'])
 
 
