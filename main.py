@@ -45,7 +45,9 @@ def gen_db():
 '''CREATE TABLE zone (
 	id INTEGER PRIMARY KEY AUTOINCREMENT, 
 	name VARCHAR(50)
-);''']
+);''',
+'''INSERT INTO zone
+VALUES (1, '');''']
 	for table in tables:
 		try:
 			cursor.execute(table)
