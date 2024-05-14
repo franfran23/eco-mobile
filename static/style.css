@@ -65,7 +65,7 @@ nav {
 
 .searchInput{
     text-decoration: none;
-    padding: 10px;
+    padding: 15px;
     font-family: arial;
     font-size: 1em;
     color: #000000;
@@ -76,7 +76,7 @@ nav {
 }
 
 #messageInput{
-    width: 80%;
+    width: 65%;
     position: absolute;
     left: 50%;
     top: 90%;
@@ -150,4 +150,11 @@ h1{
 img.send{
     height: 50px;
     width: 50px;
+}
+
+#sendButton{
+    position: absolute;
+    left: 88%;
+    top: 90%;
+    transform: translate(-50%, -50%);
 }
