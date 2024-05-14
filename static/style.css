@@ -146,3 +146,8 @@ button[type="submit"]:hover {
 h1{
     margin-top:15px;
 }
+
+img.send{
+    height: 50px;
+    width: 50px;
+}
