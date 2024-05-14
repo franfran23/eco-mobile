@@ -150,6 +150,9 @@ h1{
 img.send{
     height: 50px;
     width: 50px;
+    position: relative;
+    top: 2px;
+    left: 1px;
 }
 
 #sendButton{
