@@ -36,9 +36,10 @@
     <div class="containerChat">
     </div>
 	<div id="messages">{{ message }}</div>
+	<form onsubmit="return False"
 		<input class="searchInput" id="messageInput" type="text" placeholder="Entrer un message ...">
-	<button type="submit" onclick="sendMessage()">Send</button>
-
+		<button onclick="sendMessage()">Send</button>
+	</form>
 	<script type="text/javascript">
         var socket = io();
 
