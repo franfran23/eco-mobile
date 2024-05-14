@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+	<meta charset="UTF-8">
+	<div class="title-container">
+		<title>Classique titre</title>
+	</div>
+	<link rel="stylesheet" href="/static/style.css">
+</head>
+
+
+<body>
+    	<h1 class="main-title">Vos Contact</h1>
+          <a href=" ">
+            <div class="bandeau">
+                Nom:
+                Prénom:
+                Username:
+                E-mail:
+            </div>
+        </a>
+
+
+</body>
+
+
+<footer>
+	<p> eco-mobile</p>
+	<footer />
+
+</html>
