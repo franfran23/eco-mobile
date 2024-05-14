@@ -198,7 +198,10 @@ def logout():
 
 @app.route('/contacts')
 def contacts():
-	return render_template('contacts.html', contacts=[["NOM", "Prénom", "username"],])
+	db, cursor = connect_db()
+	cursor.execute("SELECT nom, prenom, username FROM identifiants;")
+	contacts = cursor.fetchall()
+	return render_template('contacts.html', contacts=contacts)
 
 @app.route('/chat')
 def chat():
