@@ -113,9 +113,9 @@ def index():
 	message = request.args.get('message') or ''
 	username = get_username(request)
 	if username is None:
-		username = 'Not Connected'
+		username = 'Déconnecté(e)'
 	else:
-		username = 'Connected as ' + str(username)
+		username = 'Connecté(e) en tant que' + str(username)
 	
 	return render_template('index.html', message=message, connexion=username)
 
@@ -134,13 +134,13 @@ def signup():
 			
 			cursor.execute(f"SELECT COUNT(*) FROM identifiants WHERE username = '{username}';")
 			if int(cursor.fetchone()[0]) > 0:
-				return redirect('/?message=Un utilisateur a déjà été créé avec cette addresse mail. Veuillez ressayer.')
+				return redirect('/?message=Un utilisateur a déjà été créé avec cette adresse mail. Veuillez réessayer.')
 			
 			# vérifie l'existence de la zone
 			cursor.execute(f"SELECT id FROM zone WHERE name = '{zone}';")
 			data = cursor.fetchone()
 			if data is None:
-				return redirect('/?message=Une erreur est survenue, veuillez réessayer.')
+				return redirect('/?message=Une erreur est survenue. Veuillez réessayer.')
 
 			code = str(randint(1000, 9999))
 			send_email(username, code)
@@ -150,8 +150,8 @@ def signup():
 
 			return redirect(f'/verif?username={username}')
 		except Exception as e:
-			print('error dans le traitement de l\'inscription de', username, ': ', e)
-			return redirect('/?message=An error has occured.')
+			print('Erreur dans le traitement de l\'inscription de', username, ': ', e)
+			return redirect('/?message=Une erreur est survenue.')
 	
 	return render_template('inscription.html')
 
@@ -168,10 +168,10 @@ def verif():
 			if check_password_hash(hashed_code, code):
 				cursor.execute(f"UPDATE identifiants SET status = 1 WHERE username = '{username}';")
 				db.commit()
-				return redirect('/?message=Votre compte à bien été activé, vous pouvez vous connecter')
-			return redirect('/verif?message=Le code que vous avez entré est incorrecte, veuillez réessayer.')
+				return redirect('/?message=Votre compte a bien été activé, vous pouvez vous connecter')
+			return redirect('/verif?message=Le code que vous avez entré est incorrect. Veuillez réessayer.')
 		else:
-			return redirect('/?message=Erreur à l\'inscription, veuillez contacter un administrateur.')
+			return redirect('/?message=Erreur à l\'inscription. Veuillez contacter un administrateur.')
 	
 	return render_template('verif.html', username=request.args.get('username'), message=request.args.get('message') or '')
 
@@ -185,13 +185,13 @@ def login():
 		if check_credentials(username, password):
 			response = store_session_cookie(username, MASTER_KEY)
 			return response
-		return redirect('/?message=Invalid username or password (Maybe your account is disabled. If the issue persist, please contact an administrator)')
+		return redirect('/?message=Identifiant et/ou mot de passe invalide(s). Il se peut que votre compte soit désactivé. Dans ce cas, merci de contacter un administrateur.')
 
 	return render_template('login.html')
 
 @app.route('/logout')
 def logout():
-	response = make_response(redirect('/?message=Logged out'))
+	response = make_response(redirect('/?message=Déconnecté(e)'))
 	remove_cookie(response)
 	return response
 
@@ -200,7 +200,7 @@ def logout():
 def chat():
 	sender = get_username(request)
 	if sender is None:
-		return redirect('/?message=Vous n\'êtes pas connecté.')
+		return redirect('/?message=Vous n\'êtes pas connecté(e).')
 	receiver = request.args.get('contact') or None
 	if receiver is None:
 		receiver = 'username'
@@ -223,7 +223,7 @@ def handle_disconnect():
 
 @socketio.on('message')
 def handle_message(message):
-	print('Received message:', message, 'from', session['me'], 'to', session['send_room'])
+	print('Received message :', message, 'from', session['me'], 'to', session['send_room'])
 	emit('message', message, room=session['send_room'])
 
 
