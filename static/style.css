@@ -56,7 +56,6 @@ nav {
     color: #FFFFFF;
     background-color: #9bbb59;
     box-shadow: 1px 1px 4px #777777;
-  
 }
 
 .button:onclick {
@@ -156,8 +155,18 @@ img.send{
 }
 
 #sendButton{
+    background-color: #ffffff; 
+    border-radius: 50px;
+    box-shadow: 2px 3px 12px #444444;
+    border: none;
     position: absolute;
     left: 88%;
     top: 90%;
     transform: translate(-50%, -50%);
+}
+
+#sendButton:hover {
+    color: #FFFFFF;
+    background-color: #9bbb59;
+    box-shadow: 1px 1px 4px #777777;
 }

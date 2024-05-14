@@ -32,7 +32,7 @@
 	<div id="messages">{{ message }}</div>
 	<form onsubmit="return false">
 		<input class="searchInput" id="messageInput" type="text" placeholder="Entrer un message ...">
-		<button id="sendButton" class="button" onclick="sendMessage()"><img src="/static/Images/send.png" class="send"></button>
+		<button id="sendButton" onclick="sendMessage()"><img src="/static/Images/send.png" class="send"></button>
 	</form>
 	<script type="text/javascript">
         var socket = io();
