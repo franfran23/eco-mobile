@@ -115,7 +115,7 @@ def index():
 	if username is None:
 		username = 'Déconnecté(e)'
 	else:
-		username = 'Connecté(e) en tant que' + str(username)
+		username = 'Connecté(e) en tant que ' + str(username)
 	
 	return render_template('index.html', message=message, connexion=username)
 
@@ -195,6 +195,10 @@ def logout():
 	remove_cookie(response)
 	return response
 
+
+@app.route('/contacts')
+def contacts():
+	return render_template('contacts.html')
 
 @app.route('/chat')
 def chat():
