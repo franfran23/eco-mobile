@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <h1 class="main-title">vos Contacts</h1>
+    <h1 class="main-title">Vos Contacts</h1>
     {% for contact in contacts %}
         <form action="/chat" method="get">
                 <p>Nom: {{ contact[0] }}/Prénom: {{ contact[1] }}/Username: {{ contact[2] }}</p>
