@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Contacts</title>
+   
+</head>
+
+<body>
+    <h1 class="main-title">vos Contacts</h1>
+    {% for contact in contacts %}
+        <form action="/chat" method="get">
+                <p>Nom: {{ contact[0] }}</p>
+                <p>Prénom: {{ contact[1] }}</p>
+                <p name="contact">Username: {{ contact[2] }}</p>
+                
+
+                <button type="submit">Contacter</button>
+        </form>
+    {% endfor %}
+
+
+   
+
+  
+</body>
+
+</html>
+
