@@ -174,3 +174,14 @@ img.send{
 a{
     color:#e7e7e7
 }
+
+.formContacts {
+    color: #FFFFFF;
+    margin: 5px;
+    width: 400px;
+    padding: 2em;
+    border-radius: 2em;
+    background: linear-gradient(rgb(56, 86, 57), rgb(33, 52, 34));
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    margin-top: 15px;
+}
