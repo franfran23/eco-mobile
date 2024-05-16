@@ -13,6 +13,8 @@ format de l'adresse mail pour le code de validation à définir (pour garder une
 cette page contiendra un formulaire post avec un élément caché nommé "username" dont la valeur sera {{ username }}. L'input pour le code aura le nom "code"
 - [ ] Update de inscription.html pour ajouter la sélection de la zone géographique (name="zone") et des horaires de cours (à voir comment c'est mis en place)
 
+- [ ] Sauvegarder les messages dans le chat
+- [ ] Les messages dépassent du chat quand il y en as bcp
 
 ## backend
 - [x] système de login
