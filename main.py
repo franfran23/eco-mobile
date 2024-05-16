@@ -3,6 +3,7 @@ from random import randint
 from flask_socketio import SocketIO, emit, join_room
 # from flask_cors import CORS
 # import mysql.connector
+from os.path import exists
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 import secrets
@@ -45,7 +46,10 @@ def gen_db():
 '''CREATE TABLE zone (
 	id INTEGER PRIMARY KEY AUTOINCREMENT, 
 	name VARCHAR(50)
-);''']
+);''',
+'''INSERT INTO zone
+VALUES (1, '') -- for tests
+;''']
 	for table in tables:
 		try:
 			cursor.execute(table)
@@ -64,6 +68,10 @@ app.secret_key = secrets.token_hex(16)
 socketio = SocketIO(app, async_mode='gevent', cors_allowed_origins="*")
 ## CORS(app)
 
+@app.before_request
+def before_request():
+	if not get_username(request) and not (request.path.endswith('.css') or request.path.endswith('.png') or request.path.endswith('.ico') or request.path.startswith('/login') or request.path.startswith('/signup') or request.path.startswith('/verif')):
+		return redirect('/login?message=Veuillez vous connecter pour continuer')
 
 
 
@@ -198,7 +206,10 @@ def logout():
 
 @app.route('/contacts')
 def contacts():
-	return render_template('contacts.html', contacts=[["NOM", "Prénom", "username"],])
+	db, cursor = connect_db()
+	cursor.execute(f"SELECT nom, prenom, username FROM identifiants WHERE username != '{get_username(request)}';")
+	contacts = cursor.fetchall()
+	return render_template('contacts.html', contacts=contacts)
 
 @app.route('/chat')
 def chat():
@@ -209,7 +220,7 @@ def chat():
 	if receiver is None:
 		receiver = 'username'
 		# sélection du contact le plus récent
-	session['send_room'] = receiver
+	session['receiver'] = receiver
 	session['me'] = sender
 	return render_template('chat.html', name=receiver)
 
@@ -217,19 +228,39 @@ def chat():
 
 @socketio.on('connect')
 def handle_connect():
-	print(session['me'], 'connected to room', session['send_room'])
-	join_room(session['send_room'])
+	# print(session['me'], 'connected to', session['receiver'])
+	join_room(session['me'])
 
 
 @socketio.on('disconnect')
 def handle_disconnect():
-	print(session['me'], 'disconnected', session['send_room'])
+	# print(session['me'], 'disconnected', session['receiver'])
+	pass
 
 @socketio.on('message')
-def handle_message(message):
-	print('Received message :', message, 'from', session['me'], 'to', session['send_room'])
-	emit('message', message, room=session['send_room'])
+def handle_message(message: str):
+	# print('Received message :', message, 'from', session['me'], 'to', session['receiver'])
+	emit('message', message, room=session['receiver'])
 
+	# save message
+	db, cursor = connect_db()
+	def get_user_id(username):
+		cursor.execute(f"SELECT id FROM identifiants WHERE username = '{username}';")
+		data = cursor.fetchone()
+		if data is None:
+			print('Error while saving message:')
+			print('From', session['me'], 'to', session['receiver'])
+			print('message:', message)
+			return None
+		return int(data[0])
+	sender_id = get_user_id(session['me'])
+	receiver_id = get_user_id(session['receiver'])
+	if sender_id is None or receiver_id is None:
+		return 'message not saved, error occured'
+	
+	fernet = get_cookies_fernet(sender_id, receiver_id, MASTER_KEY)
+	cursor.execute(f"INSERT INTO messages (message, sender, receiver) VALUES ('{fernet.encrypt(message.encode('utf-8')).decode('utf-8')}', {sender_id}, {receiver_id});")
+	db.commit()
 
 if __name__ == '__main__':
 	# app.run(debug=True)
