@@ -27,7 +27,7 @@
 	
 	<div class="info-message">{{ message }}</div>
 	<div class="info-message">{{ connexion }}</div>
-    <div class="containerChat">
+    <div id="chat-box" class="chat-container">
     </div>
 	<div id="messages">{{ message }}</div>
 	<form onsubmit="return false">
@@ -36,21 +36,27 @@
 	</form>
 	<script type="text/javascript">
         var socket = io();
+		var chatBox = document.getElementById('chat-box');
+
+		function addMessage(message) {
+			var messageElement = document.createElement('div');
+            messageElement.textContent = message;
+            chatBox.appendChild(messageElement);
+            // Scroll to bottom
+            chatBox.scrollTop = chatBox.scrollHeight;
+		}
 
         // Send message
         function sendMessage() {
             var message = document.getElementById('messageInput').value;
             socket.emit('message', message);
             document.getElementById('messageInput').value = ''; // Clear input field
+			addMessage(message);
         }
 
         // Receive message
         socket.on('message', function(message) {
-            var messageElement = document.createElement('div');
-            messageElement.textContent = message;
-            document.getElementById('messages').appendChild(messageElement);
-            // Scroll to bottom
-            document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
+            addMessage(message);
         });
     </script>
 

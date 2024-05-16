@@ -223,7 +223,7 @@ def chat():
 
 @socketio.on('connect')
 def handle_connect():
-	print(session['me'], 'connected to ', session['receiver'])
+	print(session['me'], 'connected to', session['receiver'])
 	join_room(session['me'])
 
 
