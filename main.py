@@ -3,6 +3,7 @@ from random import randint
 from flask_socketio import SocketIO, emit, join_room
 # from flask_cors import CORS
 # import mysql.connector
+from os.path import exists
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 import secrets
@@ -67,6 +68,10 @@ app.secret_key = secrets.token_hex(16)
 socketio = SocketIO(app, async_mode='gevent', cors_allowed_origins="*")
 ## CORS(app)
 
+@app.before_request
+def before_request():
+	if not get_username(request) and not (request.path.endswith('.css') or request.path.endswith('.png') or request.path.endswith('.ico') or request.path.startswith('/login') or request.path.startswith('/signup') or request.path.startswith('/verif')):
+		return redirect('/login?message=Veuillez vous connecter pour continuer')
 
 
 
@@ -253,7 +258,7 @@ def handle_message(message: str):
 	if sender_id is None or receiver_id is None:
 		return 'message not saved, error occured'
 	
-	fernet = get_cookies_fernet(sender_id, receiver_id)
+	fernet = get_cookies_fernet(sender_id, receiver_id, MASTER_KEY)
 	cursor.execute(f"INSERT INTO messages (message, sender, receiver) VALUES ('{fernet.encrypt(message.encode('utf-8')).decode('utf-8')}', {sender_id}, {receiver_id});")
 	db.commit()
 
