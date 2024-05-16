@@ -174,7 +174,7 @@ img.send{
 a{
     color:#e7e7e7
 }
-<<<<<<< HEAD
+
 .Searchinput {
         background-image:url(/static/Images/search.png); background-position:right; background-repeat:no-repeat; background-size: 20px auto; padding-right: 38px; width: 175px; margin-left: 95px;
         text-decoration: none;
@@ -195,7 +195,7 @@ a{
 
 #searchInput{
     margin-right: 10px;
-=======
+}
 
 .formContacts {
     color: #FFFFFF;
@@ -210,5 +210,4 @@ a{
 
 .contactContainer{
     display: flex;
->>>>>>> d5a08cd05cb5af4666a90ead8f553aed61c52b7d
 }
