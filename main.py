@@ -207,7 +207,7 @@ def logout():
 @app.route('/contacts')
 def contacts():
 	db, cursor = connect_db()
-	cursor.execute(f"SELECT nom, prenom, username FROM identifiants WHERE username != '{get_username(request)}' SORT BY last_login;")
+	cursor.execute(f"SELECT nom, prenom, username FROM identifiants WHERE username != '{get_username(request)}' ORDER BY last_login;")
 	contacts = cursor.fetchall()
 	return render_template('contacts.html', contacts=contacts)
 
