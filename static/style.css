@@ -250,6 +250,12 @@ a{
     margin: 5px;
 }
 
+/* Responsive grid contact */
 .contactContainer{
-    display: flex;
+    padding: 15px;
+    display: grid;
+    gap: 20px;
+    /* responsive */
+    grid-template-columns: repeat(auto-fill,
+    minmax(400px, 1fr));
 }
