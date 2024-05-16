@@ -232,10 +232,29 @@ def handle_disconnect():
 	print(session['me'], 'disconnected', session['receiver'])
 
 @socketio.on('message')
-def handle_message(message):
+def handle_message(message: str):
 	print('Received message :', message, 'from', session['me'], 'to', session['receiver'])
 	emit('message', message, room=session['receiver'])
 
+	# save message
+	db, cursor = connect_db()
+	def get_user_id(username):
+		cursor.execute(f"SELECT id FROM identifiants WHERE username = '{username}';")
+		data = cursor.fetchone()
+		if data is None:
+			print('Error while saving message:')
+			print('From', session['me'], 'to', session['receiver'])
+			print('message:', message)
+			return None
+		return int(data[0])
+	sender_id = get_user_id(session['me'])
+	receiver_id = get_user_id(session['receiver'])
+	if sender_id is None or receiver_id is None:
+		return 'message not saved, error occured'
+	
+	fernet = get_cookies_fernet(sender_id, receiver_id)
+	cursor.execute(f"INSERT INTO messages (message, sender, receiver) VALUES ('{fernet.encrypt(message.encode('utf-8')).decode('utf-8')}', {sender_id}, {receiver_id});")
+	db.commit()
 
 if __name__ == '__main__':
 	# app.run(debug=True)
