@@ -215,7 +215,7 @@ def chat():
 	if receiver is None:
 		receiver = 'username'
 		# sélection du contact le plus récent
-	session['send_room'] = receiver
+	session['receiver'] = receiver
 	session['me'] = sender
 	return render_template('chat.html', name=receiver)
 
@@ -223,18 +223,18 @@ def chat():
 
 @socketio.on('connect')
 def handle_connect():
-	print(session['me'], 'connected to room', session['send_room'])
-	join_room(session['send_room'])
+	print(session['me'], 'connected to', session['receiver'])
+	join_room(session['me'])
 
 
 @socketio.on('disconnect')
 def handle_disconnect():
-	print(session['me'], 'disconnected', session['send_room'])
+	print(session['me'], 'disconnected', session['receiver'])
 
 @socketio.on('message')
 def handle_message(message):
-	print('Received message :', message, 'from', session['me'], 'to', session['send_room'])
-	emit('message', message, room=session['send_room'])
+	print('Received message :', message, 'from', session['me'], 'to', session['receiver'])
+	emit('message', message, room=session['receiver'])
 
 
 if __name__ == '__main__':
