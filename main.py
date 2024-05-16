@@ -253,7 +253,7 @@ def handle_message(message: str):
 	if sender_id is None or receiver_id is None:
 		return 'message not saved, error occured'
 	
-	fernet = get_cookies_fernet(sender_id, receiver_id)
+	fernet = get_cookies_fernet(sender_id, receiver_id, MASTER_KEY)
 	cursor.execute(f"INSERT INTO messages (message, sender, receiver) VALUES ('{fernet.encrypt(message.encode('utf-8')).decode('utf-8')}', {sender_id}, {receiver_id});")
 	db.commit()
 
