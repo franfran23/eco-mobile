@@ -5,7 +5,7 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
     color: black;
-    background-color: #388a59;
+    background-color: #3f6d52;
     background-image: url("/static/Images/background.jpg");
 }
 
@@ -62,6 +62,22 @@ nav {
     border: none;
 }
 
+#buttonLog {
+    height: 50px;
+    width: 100px;
+    margin-inline: 10px;
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #42443f; 
+    border-radius:15px;
+    box-shadow: 2px 3px 12px #444444;
+    border: none;
+}
+#buttonLog:hover{
+    background-color: #ffffff;
+    color: #000000;
+}
+
 .searchInput{
     text-decoration: none;
     padding: 15px;
@@ -103,7 +119,8 @@ nav {
     color: white;
 }
 
-
+/* Form vert de base */
+/*
 .login-form {
     margin: 65px auto;
     width: 400px;
@@ -113,7 +130,22 @@ nav {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     margin-top: 15px;
 }
+*/
 
+/* Form en transparence */
+.login-form{
+    width: 400px;
+    background-color: rgba(255,255,255,0.13);
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 40px rgba(8,7,16,0.6);
+    padding: 50px 35px;
+}
 
 input.login {
     width: 90%;
@@ -140,7 +172,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: #0b9a2a;
+    background-color: #4a8544;
 }
 h1{
     margin-top:15px;
@@ -167,12 +199,12 @@ img.send{
 
 #sendButton:hover {
     color: #FFFFFF;
-    background-color: #9bbb59;
+    background-color: #4a8544;
     box-shadow: 1px 1px 4px #777777;
 }
 
 a{
-    color:#e7e7e7
+    color:#363636
 }
 
 .Searchinput {
@@ -198,7 +230,7 @@ a{
 }
 
 .formContacts {
-    color: #FFFFFF;
+    /*color: #FFFFFF;
     margin: 5px;
     width: 400px;
     padding: 2em;
@@ -206,6 +238,16 @@ a{
     background: linear-gradient(rgb(56, 86, 57), rgb(33, 52, 34));
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     margin-top: 15px;
+    */
+    width: 300px;
+    background-color: rgba(255,255,255,0.13);
+    position: flex;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 40px rgba(8,7,16,0.6);
+    padding: 50px 35px;
+    margin: 5px;
 }
 
 .contactContainer{
