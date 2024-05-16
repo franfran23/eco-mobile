@@ -47,7 +47,8 @@ def gen_db():
 	name VARCHAR(50)
 );''',
 '''INSERT INTO zone
-VALUES (1, '');''']
+VALUES (1, '') -- for tests
+;''']
 	for table in tables:
 		try:
 			cursor.execute(table)
