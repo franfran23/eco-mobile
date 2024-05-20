@@ -10,6 +10,9 @@
 
 <body>
     <a href= "/"><img src="/static/Images/logo.png" class="logo" alt="Logo" /></a>
+    <button class="buttonLog" id="buttonLogIn" onclick="location.href='/login'">Login</button>
+    <button class="buttonLog" id="buttonLogOut" onclick="location.href='/logout'">Logout</button>
+    
     <h1 class="main-title">Vos Contacts</h1>
     <div class="contactContainer">
     {% for contact in contacts %}

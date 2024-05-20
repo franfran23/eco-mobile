@@ -11,8 +11,6 @@
 	
 	<header>
 		<nav>
-			<a href= "/"><img src="/static/Images/logo.png" class="logo" alt="Logo" /></a>
-			<a href= "/contacts"><button class="button">Retour aux contacts</button></a>
 		</nav>
 	</header>
 
@@ -24,6 +22,11 @@
 </head>
 
 <body>
+	<a href= "/"><img src="/static/Images/logo.png" class="logo" alt="Logo" /></a>
+	<button class="buttonLog" id="buttonLogIn" onclick="location.href='/login'">Login</button>
+	<button class="buttonLog" id="buttonLogOut" onclick="location.href='/logout'">Logout</button>
+	<a href= "/contacts"><button id="headerButton" class="button">Retour aux contacts</button></a>
+
 	<div class="info-message">{{ message }}</div>
 	<div class="info-message">{{ connexion }}</div>
     <div id="chat-box" class="chat-container">
@@ -33,7 +36,7 @@
 				<p class="username">{{ name }}</p>
 			</div>
 		</div>
-		<div id="messages">{{ message }}</div>
+		<p id="messages">{{ message }}</p>
 		<form onsubmit="return false">
 			<input class="searchInput" id="messageInput" type="text" placeholder="Entrer un message ...">
 			<button id="sendButton" onclick="sendMessage()"><img src="/static/Images/send.png" class="send"></button>
