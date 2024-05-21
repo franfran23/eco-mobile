@@ -49,7 +49,16 @@ def gen_db():
 );''',
 '''INSERT INTO zone
 VALUES (1, '') -- for tests
-;''']
+;''',
+'''CREATE TABLE horaires (
+	user_id INT, 
+	jour INT NOT NULL, 
+	horaire VARCHAR(11), 
+	semaine VARCHAR(1),
+
+	PRIMARY KEY(user_id, jour),
+	FOREIGN KEY(user_id) REFERENCES identifiants(id)
+);''']
 	for table in tables:
 		try:
 			cursor.execute(table)
@@ -138,6 +147,7 @@ def signup():
 			username = request.form['email']
 			numero = request.form['numero'][:10]
 			zone = request.form['zone']
+			horaires = request.form['horaires']
 			password = generate_password_hash(request.form['password'])
 			
 			cursor.execute(f"SELECT COUNT(*) FROM identifiants WHERE username = '{username}';")
@@ -223,6 +233,11 @@ def chat():
 	session['receiver'] = receiver
 	session['me'] = sender
 	return render_template('chat.html', name=receiver)
+
+
+@app.route('/account')
+def account():
+	return render_template('account.html')
 
 # SOCKETIO SERVER
 
