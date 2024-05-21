@@ -179,7 +179,7 @@ input#messageInput::placeholder{color: #000000;}
 
 /* Form en transparence */
 .login-form{
-    margin-top: 50px;
+    margin-top: 25px;
     margin-bottom: 50px;
     width: 400px;
     background-color: rgba(255,255,255,0.13);
