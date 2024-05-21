@@ -99,7 +99,7 @@ def check_credentials(username, password):
 				db.commit()
 			return valid_auth
 	except Exception as e:
-		# print(e)
+		print(e)
 		pass
 	return False
 
