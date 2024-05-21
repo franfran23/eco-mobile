@@ -67,15 +67,16 @@ nav {
 .buttonLog {
     position: absolute;
     justify-content: space-between;
-    height: 50px;
-    width: 100px;
-    margin-inline: 10px;
+    height: 60px;
+    width: 90px;
+    margin-inline: 20px;
     text-decoration: none;
     color: #ffffff;
     background-color: #344e41; 
     border-radius:15px;
     box-shadow: 2px 3px 12px #444444;
     border: none;
+    margin-top: 10px;
 }
 #buttonLogOut {
     top: 25px;
@@ -336,7 +337,7 @@ a{
         border-radius: 24px;
         box-shadow: 2px 3px 12px #444444;
         border: none;
-        margin-left: 20px;
+        margin-left: 300px;
 }
 .search icon {
     margin-right: 1px;
@@ -409,12 +410,15 @@ img.fav{
 }
 
 header {
+    background-color: #b62e2e;
+    padding:0 20px;
     background-color: #a3b18a;
     padding: 4px;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    background-image : url("fondEntete.JPG");
+    justify-content: space-between;
+    background-image : url("/static/Images/fondEntete.JPG");
+    align-items: center;
    
 }
 header img {
@@ -424,17 +428,36 @@ header nav {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 75%;
+    width: 60%;
     margin: auto;
     height: 20%;
+    align-items: center;
 }
 
 header nav a {
-    width: 30%;
+    width: 3%;
     text-align: center;
+    order: 5;
+    border-left: 2px solid rgb(15, 15, 15);
+    margin-right: 10px;
+    height: 120px;
+    bottom: 50px;
+}
+#msgbutton {
+    bottom: 30px;
 }
 
 .Searchinput{
-    width: 25px;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    width: 100px;
+
+}
+
+header nav img{
+    width: 7%;
+    width: right 30px;
+    right: 40px;
 
 }
