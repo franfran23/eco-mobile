@@ -12,7 +12,7 @@ body {
 
 nav {
     min-width: 500px;
-    max-width: 1000px;
+    max-width: 1200px;
     display: flex;
     justify-content: space-around;
     list-style: none;
