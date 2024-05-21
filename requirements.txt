@@ -5,3 +5,6 @@ Werkzeug
 cryptography
 gevent
 gevent-websocket
+
+osrm-py
+geopy
