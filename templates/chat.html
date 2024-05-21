@@ -11,7 +11,6 @@
 	
 	<header>
 		<nav>
-			<a href= "/"><img src="/static/Images/logo.png" class="logo" alt="Logo" /></a>
 		</nav>
 	</header>
 
@@ -23,16 +22,27 @@
 </head>
 
 <body>
-	
+	<a href= "/"><img src="/static/Images/logo.png" class="logo" alt="Logo" /></a>
+	<button class="buttonLog" id="buttonLogIn" onclick="location.href='/login'">Login</button>
+	<button class="buttonLog" id="buttonLogOut" onclick="location.href='/logout'">Logout</button>
+	<a href= "/contacts"><button id="headerButton" class="button">Retour aux contacts</button></a>
+
 	<div class="info-message">{{ message }}</div>
 	<div class="info-message">{{ connexion }}</div>
     <div id="chat-box" class="chat-container">
+		<div class="container" id="UserChat">
+			<div id="usersInfo">
+				<h2>Contact : </h2>
+				<p class="username">{{ name }}</p>
+			</div>
+		</div>
+		<p id="messages">{{ message }}</p>
+		<form onsubmit="return false">
+			<input class="searchInput" id="messageInput" type="text" placeholder="Entrer un message ...">
+			<button id="sendButton" onclick="sendMessage()"><img src="/static/Images/send.png" class="send"></button>
+		</form>
     </div>
-	<div id="messages">{{ message }}</div>
-	<form onsubmit="return false">
-		<input class="searchInput" id="messageInput" type="text" placeholder="Entrer un message ...">
-		<button id="sendButton" onclick="sendMessage()"><img src="/static/Images/send.png" class="send"></button>
-	</form>
+	
 	<script type="text/javascript">
         var socket = io();
 		var chatBox = document.getElementById('chat-box');
@@ -58,12 +68,7 @@
             addMessage(message);
         });
     </script>
-
-<div class="container" id="UserChat">
-	<h2>Contact</h2>
-	<div id="usersInfo">
-		<p class="username">{{ name }}</p>
-	</div>
+	
 </div>
 </body>
 

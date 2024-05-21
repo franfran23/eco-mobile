@@ -49,7 +49,16 @@ def gen_db():
 );''',
 '''INSERT INTO zone
 VALUES (1, '') -- for tests
-;''']
+;''',
+'''CREATE TABLE horaires (
+	user_id INT, 
+	jour INT NOT NULL, 
+	horaire VARCHAR(11), 
+	semaine VARCHAR(1),
+
+	PRIMARY KEY(user_id, jour),
+	FOREIGN KEY(user_id) REFERENCES identifiants(id)
+);''']
 	for table in tables:
 		try:
 			cursor.execute(table)
@@ -70,7 +79,7 @@ socketio = SocketIO(app, async_mode='gevent', cors_allowed_origins="*")
 
 @app.before_request
 def before_request():
-	if not get_username(request) and not (request.path.endswith('.css') or request.path.endswith('.png') or request.path.endswith('.ico') or request.path.startswith('/login') or request.path.startswith('/signup') or request.path.startswith('/verif')):
+	if not get_username(request) and not (request.path.endswith('.css') or request.path.endswith('.png') or request.path.endswith('.jpg') or request.path.endswith('.ico') or request.path.startswith('/login') or request.path.startswith('/signup') or request.path.startswith('/verif')):
 		return redirect('/login?message=Veuillez vous connecter pour continuer')
 
 
@@ -138,6 +147,7 @@ def signup():
 			username = request.form['email']
 			numero = request.form['numero'][:10]
 			zone = request.form['zone']
+			horaires = request.form['horaires']
 			password = generate_password_hash(request.form['password'])
 			
 			cursor.execute(f"SELECT COUNT(*) FROM identifiants WHERE username = '{username}';")
@@ -207,7 +217,7 @@ def logout():
 @app.route('/contacts')
 def contacts():
 	db, cursor = connect_db()
-	cursor.execute(f"SELECT nom, prenom, username FROM identifiants WHERE username != '{get_username(request)}' SORT BY last_login;")
+	cursor.execute(f"SELECT nom, prenom, username FROM identifiants WHERE username != '{get_username(request)}' ORDER BY last_login;")
 	contacts = cursor.fetchall()
 	return render_template('contacts.html', contacts=contacts)
 
@@ -223,6 +233,11 @@ def chat():
 	session['receiver'] = receiver
 	session['me'] = sender
 	return render_template('chat.html', name=receiver)
+
+
+@app.route('/account')
+def account():
+	return render_template('account.html')
 
 # SOCKETIO SERVER
 
