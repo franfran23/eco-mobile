@@ -146,8 +146,8 @@ def signup():
 			prenom = request.form['prenom']
 			username = request.form['email']
 			numero = request.form['numero'][:10]
-			zone = request.form['zone']
-			horaires = request.form['horaires']
+			zone = int(request.form['zone'])
+			# horaires = request.form['horaires']
 			password = generate_password_hash(request.form['password'])
 			
 			cursor.execute(f"SELECT COUNT(*) FROM identifiants WHERE username = '{username}';")
@@ -155,7 +155,7 @@ def signup():
 				return redirect('/?message=Un utilisateur a déjà été créé avec cette adresse mail. Veuillez réessayer.')
 			
 			# vérifie l'existence de la zone
-			cursor.execute(f"SELECT id FROM zone WHERE name = '{zone}';")
+			cursor.execute(f"SELECT id FROM zone WHERE id = '{zone}';")
 			data = cursor.fetchone()
 			if data is None:
 				return redirect('/?message=Une erreur est survenue. Veuillez réessayer.')
