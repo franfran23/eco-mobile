@@ -232,7 +232,7 @@ img.close:hover{
     padding: 20px 35px;
 }
 #popup{
-    top: 70%;
+    top: 450px;
     display: none;
 }
 #openPopup{
@@ -381,12 +381,12 @@ a{
 /* Contacts bare latérale */
 .contactFavContainer{
     width: 300px;
-    height: 85%;
+    height: 90%;
     position: absolute;
     padding: 20px;
     right: 0px;
     top: 0px;
-    margin-top: 110px;
+    margin-top: 125px;
     backdrop-filter: blur(10px);
     border: 2px solid rgba(255,255,255,0.1);
     box-shadow: 0 0 20px rgba(8,7,16,0.6);
@@ -404,7 +404,7 @@ img.fav{
     height: 450px; 
     border: none; 
     position: relative;
-    left: 50%;
+    left: 40%;
     top: 300px;
     transform: translate(-50%, -50%);
 }
@@ -439,12 +439,12 @@ header nav a {
     text-align: center;
     order: 5;
     border-left: 2px solid rgb(15, 15, 15);
-    margin-right: 10px;
+    margin-right: 35px;
     height: 120px;
     bottom: 50px;
 }
 #msgbutton {
-    bottom: 30px;
+    margin-bottom: 25px;
 }
 
 .Searchinput{
