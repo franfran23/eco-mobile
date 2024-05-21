@@ -6,8 +6,8 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
     color: black;
-    background-color: #3f6d52;
-    background-image: url("/static/Images/background.jpg");
+    background-color: #e0e1e1;
+    /*background-image: url("/static/Images/background.jpg");*/
     background-repeat: no-repeat;
 }
 
@@ -360,4 +360,35 @@ a{
     left: 50%;
     top: 250px;
     transform: translate(-50%, -50%);
+}
+
+header {
+    background-color: #878383;
+    padding: 4px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-image : url("fondEntete.JPG");
+   
+}
+header img {
+    margin: auto;
+}
+header nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 75%;
+    margin: auto;
+    height: 20%;
+}
+
+header nav a {
+    width: 30%;
+    text-align: center;
+}
+
+.Searchinput{
+    width: 25px;
+
 }
