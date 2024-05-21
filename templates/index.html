@@ -20,16 +20,16 @@
 	</script>
 
 	<header>
+		<a href= "/"><img src="/static/Images/logo.png" class="logo" alt="Logo" /></a>
 		<nav>
-			<a href= "/"><img src="/static/Images/logo.png" class="logo" alt="Logo" /></a>
 			<a href= "/contacts"><button class="button">Messages</button></a>
 			<form id="searchForm" action="" method="GET">
 				<input class="Searchinput" style="background-image:url(/static/Images/search.png); background-position:right; background-repeat:no-repeat; background-size: 20px auto; margin-right: 38px; width: 175px;" id="searchInput" name="search" class="searchInput" placeholder="entrer un itinéraire ...">
 				<!-- <img class="search icon" src="/static/Images/search.png" alt="search" onclick="submitForm()"> -->
 			</form>
+			<button class="buttonLog" id="buttonLogIn" onclick="location.href='/login'">Login</button><br />
+			<button class="buttonLog" id="buttonLogOut" onclick="location.href='/logout'">Logout</button><br />
 			<img src="/static/Images/user.png" class="user" alt="User" />
-			<button class="buttonLog" id="buttonLogIn" onclick="location.href='/login'">Login</button>
-			<button class="buttonLog" id="buttonLogOut" onclick="location.href='/logout'">Logout</button>
 		</nav>
 	</header>
 </head>
