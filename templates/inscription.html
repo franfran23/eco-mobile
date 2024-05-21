@@ -9,28 +9,28 @@
 	<a href= "/"><img src="/static/Images/logo.png" class="logo" alt="Logo" /></a>
 </head>
 
-<center>
-		<body>
-			<form action="" method="post" class="login-form">
-				<h1 class="main-title">S'INSCRIRE</h1>
-				<div class="login">
-					<input type="text"class="login" placeholder="Nom" name="nom" required>
-					<input type="text"class="login" placeholder="Prénom" name="prenom" required><br />
-					<input type="text"class="login" placeholder="Numéro de téléphone" name="numero" required><br />
-					<input type="hidden"class="login" name="zone" value="">
-					<select name = "menu deroulant">
-					<option value = "zone1"> Zone 1 </option>
-					<option value = "zone2"> Zone 2 </option>
-					<option value = "zone3"> Zone 3 </option>
-					<input type="text"class="login" placeholder="E-mail" name="email" required><br />
-					<input type="password"class="login" placeholder="Mot de passe" name="password" required><br />git
-					<button type="submit">VALIDER</button><br />
-					<br/>
-					<a href="/login">Je possède déjà un compte, je souhaite <b>me connecter</b></a><br/>
-				</div>
-			</form>
-		</body>
-</center>
+
+<body>
+	<center>
+		<form action="" method="post" class="login-form">
+			<h1 class="main-title">S'INSCRIRE</h1>
+			<div class="login">
+				<input type="text" class="login" placeholder="Nom" name="nom" required>
+				<input type="text" class="login" placeholder="Prénom" name="prenom" required><br />
+				<input type="text" class="login" placeholder="Numéro de téléphone" name="numero" required><br />
+				<select class="login" name="zone" required>
+					<option value="">Zone géographique</option>
+					<option value=1>Default</option>
+				<input type="text" class="login" placeholder="E-mail" name="email" required><br />
+				<input type="password" class="login" placeholder="Mot de passe" name="password" required><br />
+				<button type="submit">VALIDER</button><br />
+				<br/>
+				<a href="/login">Je possède déjà un compte, je souhaite <b>me connecter</b></a><br/>
+			</div>
+		</form>
+	</center>
+</body>
+
 		
 	
 
