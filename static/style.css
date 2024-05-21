@@ -261,9 +261,10 @@ img.close:hover{
 input.code{
     width: 150px;
     padding: 12px;
+    border-bottom: 15px;
     border-radius: 5px;
     background-color: rgba(255, 255, 255, 0.8);
-    border: none;    
+    border: 2px;    
 }
 
 button[type="submit"] {
@@ -377,7 +378,7 @@ a{
 img.fav{
     position: absolute;
     right: 50px;
-    widht: 25px;
+    width: 25px;
     height: 25px;
 }
 
