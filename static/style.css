@@ -11,8 +11,10 @@ body {
 }
 
 nav {
+    min-width: 500px;
+    max-width: 1000px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     list-style: none;
   }
 
@@ -60,8 +62,7 @@ nav {
 }
 
 .buttonLog {
-    position: sticky;
-    top: 0;
+    position: absolute;
     justify-content: space-between;
     height: 50px;
     width: 100px;
@@ -73,11 +74,11 @@ nav {
     box-shadow: 2px 3px 12px #444444;
     border: none;
 }
-#buttonLogIn {
+#buttonLogOut {
     top: 25px;
     right: 25px;
 }
-#buttonLogOut {
+#buttonLogIn {
     top: 25px;
     right: 150px;
 }
@@ -313,6 +314,6 @@ a{
     border: none; 
     position: relative;
     left: 50%;
-    top: 400px;
+    top: 300px;
     transform: translate(-50%, -50%);
 }
