@@ -15,10 +15,36 @@
 	<button class="buttonLog" id="buttonLogOut" onclick="location.href='/logout'">Logout</button>
 	<a href= "/contacts"><button id="headerButton" class="button">Retour aux contacts</button></a>
 
-    <form action="" method="post" class="login-form">
-        <p>Lundi</p>
-        <input type="time" name="Heure de début" required>
-        <input type="time" name="Heure de fin" required>
-    </form>
+    <form action="" method="post" class="formAccount">
+        <p>Changer la photo de profil : <input type="file" accept="image/*"></p>
+        <div class="JoursContainer">
+            <div class="formAccountJour" required>
+                <p>Lundi : </p> <p>Cocher si pas cours <input type="checkbox"> </p>   
+                <p>Heure de début <input type="time" name="Heure de début"> </p>
+                <p>Heure de fin <input type="time" name="Heure de fin"> </p>
+            </div>
+            <div class="formAccountJour" required>
+                <p>Mardi : </p> <p>Cocher si pas cours <input type="checkbox"> </p>   
+                <p>Heure de début <input type="time" name="Heure de début"> </p>
+                <p>Heure de fin <input type="time" name="Heure de fin"> </p>
+            </div>
+            <div class="formAccountJour" required>
+                <p>Mercredi : </p> <p>Cocher si pas cours <input type="checkbox"> </p>   
+                <p>Heure de début <input type="time" name="Heure de début"> </p>
+                <p>Heure de fin <input type="time" name="Heure de fin"> </p>
+            </div>
+            <div class="formAccountJour" required>
+                <p>Jeudi : </p> <p>Cocher si pas cours <input type="checkbox"> </p>   
+                <p>Heure de début <input type="time" name="Heure de début"> </p>
+                <p>Heure de fin <input type="time" name="Heure de fin"> </p>
+            </div>
+            <div class="formAccountJour" required>
+                <p>Vendredi : </p> <p>Cocher si pas cours <input type="checkbox"> </p>   
+                <p>Heure de début <input type="time" name="Heure de début"> </p>
+                <p>Heure de fin <input type="time" name="Heure de fin"> </p>
+            </div>
+            <button type="submit">VALIDER</button>
+        </div>
+    </form><br>
 </body>
 </html>
