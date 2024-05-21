@@ -14,9 +14,11 @@
 	<button class="buttonLog" id="buttonLogIn" onclick="location.href='/login'">Login</button>
 	<button class="buttonLog" id="buttonLogOut" onclick="location.href='/logout'">Logout</button>
 	<a href= "/contacts"><button id="headerButton" class="button">Retour aux contacts</button></a>
-
+    
+    <p>Changer la photo de profil : <input type="file" accept="image/*"></p>
+    
+<!--
     <form action="" method="post" class="formAccount">
-        <p>Changer la photo de profil : <input type="file" accept="image/*"></p>
         <div class="JoursContainer">
             <div class="formAccountJour" required>
                 <p>Lundi : </p> <p>Cocher si pas cours <input type="checkbox"> </p>   
@@ -46,5 +48,58 @@
             <button type="submit">VALIDER</button>
         </div>
     </form><br>
+ -->
+ 
+    <button class="button" id="openPopup">Modifier mes horraires</button>
+
+	<form action="" method="post" class="formAccount" id="popup">
+		<img src="/static/Images/close.png" class="close" id="closePopup">
+        <div class="JoursContainer">
+            <div class="formAccountJour" required>
+                <p>Lundi : </p> <p>Cocher si pas cours <input type="checkbox"> </p>   
+                <p>Heure de début <input type="time" name="Heure de début"> </p>
+                <p>Heure de fin <input type="time" name="Heure de fin"> </p>
+            </div>
+            <div class="formAccountJour" required>
+                <p>Mardi : </p> <p>Cocher si pas cours <input type="checkbox"> </p>   
+                <p>Heure de début <input type="time" name="Heure de début"> </p>
+                <p>Heure de fin <input type="time" name="Heure de fin"> </p>
+            </div>
+            <div class="formAccountJour" required>
+                <p>Mercredi : </p> <p>Cocher si pas cours <input type="checkbox"> </p>   
+                <p>Heure de début <input type="time" name="Heure de début"> </p>
+                <p>Heure de fin <input type="time" name="Heure de fin"> </p>
+            </div>
+            <div class="formAccountJour" required>
+                <p>Jeudi : </p> <p>Cocher si pas cours <input type="checkbox"> </p>   
+                <p>Heure de début <input type="time" name="Heure de début"> </p>
+                <p>Heure de fin <input type="time" name="Heure de fin"> </p>
+            </div>
+            <div class="formAccountJour" required>
+                <p>Vendredi : </p> <p>Cocher si pas cours <input type="checkbox"> </p>   
+                <p>Heure de début <input type="time" name="Heure de début"> </p>
+                <p>Heure de fin <input type="time" name="Heure de fin"> </p>
+            </div>
+            <button type="submit">MODIFIER</button>
+        </div>
+    </form><br>
+
+	<script>
+		let bopen = document.querySelector('#openPopup');
+		let bclose = document.querySelector('#closePopup');
+
+
+		//function
+		function afficher() {
+			document.querySelector('#popup').style.display = "flex";
+		}
+
+		function masquer() {
+			document.querySelector('#popup').style.display = "none";
+		}
+
+		bopen.addEventListener('click',afficher);
+		bclose.addEventListener('click',masquer);
+	</script>
 </body>
 </html>

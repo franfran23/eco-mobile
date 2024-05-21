@@ -1,19 +1,20 @@
 /* style pour toutes les pages */
 body {
-    padding: 15px;
     margin-bottom: 10px;
     margin: 0 auto;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
     color: black;
-    background-color: #e0e1e1;
+    background-color: #dad7cd;
     /*background-image: url("/static/Images/background.jpg");*/
     background-repeat: no-repeat;
+    background-size: cover;
 }
 
 nav {
     min-width: 500px;
-    max-width: 1200px;
+    max-width: 1100px;
+    width: 1050px;
     display: flex;
     justify-content: space-around;
     list-style: none;
@@ -43,7 +44,7 @@ nav {
     padding: 10px;
     font-family: arial;
     font-size: 1em;
-    color: #000000;
+    color: #344e41; 
     background-color: #ffffff; 
     border-radius: 24px;
     box-shadow: 2px 3px 12px #444444;
@@ -54,7 +55,8 @@ nav {
 .button:hover {
     padding: 10px;
     color: #FFFFFF;
-    background-color: #9bbb59;
+    background-color: #588157; 
+    ;
     box-shadow: 1px 1px 4px #777777;
 }
 
@@ -70,7 +72,7 @@ nav {
     margin-inline: 20px;
     text-decoration: none;
     color: #ffffff;
-    background-color: #42443f; 
+    background-color: #344e41; 
     border-radius:15px;
     box-shadow: 2px 3px 12px #444444;
     border: none;
@@ -87,7 +89,7 @@ nav {
 
 .buttonLog:hover{
     background-color: #ffffff;
-    color: #000000;
+    color: #344e41;
 }
 
 .searchInput{
@@ -96,7 +98,7 @@ nav {
     font-family: arial;
     font-size: 1em;
     color: #000000;
-    background-color: #acacac; 
+    background-color: #a3b18a; 
     border-radius: 24px;
     box-shadow: 2px 3px 12px #444444;
     border: none;
@@ -114,7 +116,9 @@ input#messageInput::placeholder{color: #000000;}
 .chat-container{
     position: absolute;
     padding: 10px;
-    background-color: #FFFFFF;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 40px rgba(8,7,16,0.6);
     width: 65%;
     height: 70%;
     border-radius: 15px;
@@ -175,6 +179,8 @@ input#messageInput::placeholder{color: #000000;}
 
 /* Form en transparence */
 .login-form{
+    margin-top: 50px;
+    margin-bottom: 50px;
     width: 400px;
     background-color: rgba(255,255,255,0.13);
     position: absolute;
@@ -188,27 +194,48 @@ input#messageInput::placeholder{color: #000000;}
     padding: 50px 35px;
 }
 
-input.login {
+input.login, select.login{
     width: 90%;
     padding: 12px;
     margin-top: 15px;
     border-radius: 20px;
     background-color: rgba(255, 255, 255, 0.8);
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+
+img.close{
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    top: 25px;
+    right: 25px;
+    cursor: pointer;
+}
+img.close:hover{
+    color: red;
 }
 
 .formAccount{
+    margin-top: 50px;
+    margin-bottom: 50px;
     width: 800px;
     background-color: rgba(255,255,255,0.13);
     position: absolute;
     transform: translate(-50%,-50%);
-    top: 70%;
+    top: 50%;
     left: 50%;
     border-radius: 10px;
     backdrop-filter: blur(10px);
     border: 2px solid rgba(255,255,255,0.1);
     box-shadow: 0 0 40px rgba(8,7,16,0.6);
     padding: 20px 35px;
+}
+#popup{
+    display: none;
+}
+#openPopup{
+    margin-top: 15px;
 }
 .formAccountJour{
     width: 200px;
@@ -236,16 +263,17 @@ input.login {
 input.code{
     width: 150px;
     padding: 12px;
+    border-bottom: 15px;
     border-radius: 5px;
     background-color: rgba(255, 255, 255, 0.8);
-    border: none;    
+    border: 2px;    
 }
 
 button[type="submit"] {
     width: 100%;
     padding: 12px;
     border-radius: 20px;
-    background-color: #1c1e1d;
+    background-color: #344e41;
     color: white;
     font-size: 16px;
     font-weight: bold;
@@ -254,13 +282,17 @@ button[type="submit"] {
     border-radius: 35em;
     width: 220px;
     margin-top: 15px;
+    border: none;
 }
 
 button[type="submit"]:hover {
-    background-color: #4a8544;
+    color: #344e41;
+    background-color: #ffffff;    
+    box-shadow: 0 0 20px rgba(8,7,16,0.6);
 }
 h1{
     margin-top:15px;
+    border: none;
 }
 
 img.send{
@@ -272,7 +304,7 @@ img.send{
 }
 
 #sendButton{
-    background-color: #acacac; 
+    background-color: #a3b18a; 
     border-radius: 50px;
     box-shadow: 2px 3px 12px #444444;
     border: none;
@@ -344,6 +376,26 @@ a{
     grid-template-columns: repeat(auto-fill,
     minmax(400px, 1fr));
 }
+/* Contacts bare latérale */
+.contactFavContainer{
+    width: 300px;
+    height: 85%;
+    position: absolute;
+    padding: 20px;
+    right: 0px;
+    top: 0px;
+    margin-top: 110px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 20px rgba(8,7,16,0.6);
+}
+
+img.fav{
+    position: absolute;
+    right: 50px;
+    width: 25px;
+    height: 25px;
+}
 
 #googleMap{
     width:600px ; 
@@ -358,6 +410,8 @@ a{
 header {
     background-color: #b62e2e;
     padding:0 20px;
+    background-color: #a3b18a;
+    padding: 4px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -384,7 +438,7 @@ header nav a {
     order: 5;
     border-left: 2px solid rgb(15, 15, 15);
     margin-right: 10px;
-    height: 115px;
+    height: 120px;
     bottom: 50px;
 }
 #msgbutton {
