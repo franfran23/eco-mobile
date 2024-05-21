@@ -17,6 +17,7 @@
     <div class="contactContainer">
     {% for contact in contacts %}
         <form action="/chat" method="get" class="formContacts">
+                <img src="/static/Images/star.png" class="fav">
                 <p>Nom: <b> {{ contact[0] }} </b><br>
                     Prénom: <b> {{ contact[1] }} </b><br>
                     Username: <b> {{ contact[2] }} </b></p>
