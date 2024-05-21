@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" type="text/css" href="/static/style.css" />
+	<link rel="icon" type="image/png" href="/static/Images/logo.ico">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.js"></script>
+</head>
+
+<body>
+	<a href= "/"><img src="/static/Images/logo.png" class="logo" alt="Logo" /></a>
+	<button class="buttonLog" id="buttonLogIn" onclick="location.href='/login'">Login</button>
+	<button class="buttonLog" id="buttonLogOut" onclick="location.href='/logout'">Logout</button>
+	<a href= "/contacts"><button id="headerButton" class="button">Retour aux contacts</button></a>
+
+    <form action="" method="post" class="login-form">
+        <p>Lundi</p>
+        <input type="time" name="Heure de début" required>
+        <input type="time" name="Heure de fin" required>
+    </form>
+</body>
+</html>
