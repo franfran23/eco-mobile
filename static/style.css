@@ -231,11 +231,13 @@ img.close:hover{
     padding: 20px 35px;
 }
 #popup{
+    top: 70%;
     display: none;
 }
 #openPopup{
     margin-top: 15px;
 }
+
 .formAccountJour{
     width: 200px;
     background-color: rgba(255,255,255,0.13);
