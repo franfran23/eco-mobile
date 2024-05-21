@@ -29,20 +29,20 @@ cette page contiendra un formulaire post avec un élément caché nommé "userna
 ## DataBase
 (créer un fichier .txt avec toutes les requêtes de création de tables, une par ligne)  
 - Ecrire les requêtes sql pour:  
-  [ ] créer la table horaires:  
+  - [x] créer la table horaires:  
     - id unique auto incrémenté  
     - id de l'utilisateur (clé secondaire)  
     - une colonne pour chaque jours de la semaine  
     - horaires formatés (ex: "08:00/18:00")  
     - prendre en compte les semaines A/B ? (créer d'autres colonnes ou utiliser un formatage différent, ex: "08:00/18:00//09:00/17:00" (semA//semB))  
-[ ] créer la table messages:  
+  - [ ] créer la table messages:  
     - id unique autoincrémenté  
     - id de l'émetteur du message (id d'utilisateur, clé secondaire)  
     - id du receveur (same)  
     - contenu du msg (éventuellement crypté)  
     - date/heure du msg (timestamp) (pour récupérer les msg dans l'ordre)  
     - (statut du message (lu/non lu))  
-[ ] créer la table zone:  
+  - [x] créer la table zone:  
     - id unique autoincrémenté  
     - nom de la zone (ex: Tourcoing Nord-Est) (les zones seront dabord définies manuellement, puis éventuellement automatisées avec une API google Maps par exemple)  
 
