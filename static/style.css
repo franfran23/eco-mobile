@@ -5,7 +5,7 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
     color: black;
-    background-color: #e0e1e1;
+    background-color: #dad7cd;
     /*background-image: url("/static/Images/background.jpg");*/
     background-repeat: no-repeat;
     background-size: cover;
@@ -44,7 +44,7 @@ nav {
     padding: 10px;
     font-family: arial;
     font-size: 1em;
-    color: #2c2c2c;
+    color: #344e41; 
     background-color: #ffffff; 
     border-radius: 24px;
     box-shadow: 2px 3px 12px #444444;
@@ -55,7 +55,8 @@ nav {
 .button:hover {
     padding: 10px;
     color: #FFFFFF;
-    background-color: #2c2c2c;
+    background-color: #588157; 
+    ;
     box-shadow: 1px 1px 4px #777777;
 }
 
@@ -71,7 +72,7 @@ nav {
     margin-inline: 10px;
     text-decoration: none;
     color: #ffffff;
-    background-color: #2c2c2c; 
+    background-color: #344e41; 
     border-radius:15px;
     box-shadow: 2px 3px 12px #444444;
     border: none;
@@ -87,7 +88,7 @@ nav {
 
 .buttonLog:hover{
     background-color: #ffffff;
-    color: #000000;
+    color: #344e41;
 }
 
 .searchInput{
@@ -96,7 +97,7 @@ nav {
     font-family: arial;
     font-size: 1em;
     color: #000000;
-    background-color: #acacac; 
+    background-color: #a3b18a; 
     border-radius: 24px;
     box-shadow: 2px 3px 12px #444444;
     border: none;
@@ -271,7 +272,7 @@ button[type="submit"] {
     width: 100%;
     padding: 12px;
     border-radius: 20px;
-    background-color: #2c2c2c;
+    background-color: #344e41;
     color: white;
     font-size: 16px;
     font-weight: bold;
@@ -284,7 +285,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    color: #000000;
+    color: #344e41;
     background-color: #ffffff;    
     box-shadow: 0 0 20px rgba(8,7,16,0.6);
 }
@@ -302,7 +303,7 @@ img.send{
 }
 
 #sendButton{
-    background-color: #acacac; 
+    background-color: #a3b18a; 
     border-radius: 50px;
     box-shadow: 2px 3px 12px #444444;
     border: none;
@@ -374,6 +375,19 @@ a{
     grid-template-columns: repeat(auto-fill,
     minmax(400px, 1fr));
 }
+/* Contacts bare latérale */
+.contactFavContainer{
+    width: 300px;
+    height: 85%;
+    position: absolute;
+    padding: 20px;
+    right: 0px;
+    top: 0px;
+    margin-top: 110px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 20px rgba(8,7,16,0.6);
+}
 
 img.fav{
     position: absolute;
@@ -388,12 +402,12 @@ img.fav{
     border: none; 
     position: relative;
     left: 50%;
-    top: 250px;
+    top: 300px;
     transform: translate(-50%, -50%);
 }
 
 header {
-    background-color: #878383;
+    background-color: #a3b18a;
     padding: 4px;
     display: flex;
     flex-direction: row;
