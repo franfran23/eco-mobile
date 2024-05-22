@@ -1,4 +1,22 @@
-<form method='post' action="">
-	<input type="hidden" name="username" value="{{ username }}">
-	<input type="text" name="code" placeholder="Code de vérification...">
-</form>
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" type="text/css" href="/static/style.css" />
+	<link rel="icon" type="image/png" href="/static/Images/logo.ico">
+	<title>Verif</title>
+</head>
+
+<body>	
+	<a href= "/signup"><img src="/static/Images/logo.png" class="logo" alt="Logo" /></a>
+	<div class="info-message">{{ message }}</div>
+	<form class="login-form" method='post' action="">
+		<p>Veuillez entrer le code reçu par E-mail : </p>
+		<input type="hidden" name="username" value="{{ username }}">
+		<input class="code" type="text" name="code" placeholder="Code de vérification...">
+		<button type="submit" >VALIDER</button> </br>
+		<button >Renvoyer le code</button>		
+	</form>
+</body>

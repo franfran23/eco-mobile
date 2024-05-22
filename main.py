@@ -1,21 +1,19 @@
-from flask import Flask, url_for, request, redirect, render_template, make_response
+from flask import Flask, url_for, request, redirect, render_template, make_response, session
 from random import randint
-# from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO, emit, join_room
 # from flask_cors import CORS
 # import mysql.connector
+from os.path import exists
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 import secrets
 from cryptography.fernet import Fernet, InvalidToken
 
-from cryptage import generate_fernet_key, get_messages_fernet
+
+from cryptage import *
 MASTER_KEY = '_XB2fwMJpusNiZrnXZ8KLwHdL1_ld8G8XbAKJHZuMzk=' # Fernet.generate_key() # une nouvelle clé déconnectera toutes les sessions utilisateurs en cours
 
-# pour encrypter les cookies (de session)
-cookies_seed = 'cookies' # graine de génération de la clé de cryptage des cookies # on définira une vraie clé plus tard # une nouvelle clé déconnectera toutes les sessions utilisateurs en cours
-cookies_key = generate_fernet_key(MASTER_KEY, cookies_seed) # clé de cryptage des cookies
-# print('cookies key', cookies_key) #
-cookies_fernet = Fernet(cookies_key)
+cookies_fernet = get_cookies_fernet(MASTER_KEY)
 
 
 '''
@@ -36,40 +34,54 @@ def gen_db():
 	nom VARCHAR(100),
 	prenom VARCHAR(100),
 	numero VARCHAR(10),
+	zone INTEGER,
 	username VARCHAR(255), -- Longueur maximale standard pour une adresse e-mail
 	password VARCHAR(255), -- Longueur maximale pour le mot de passe
 	creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	last_login TIMESTAMP,
 	status BOOLEAN DEFAULT 0, -- TRUE pour activé, FALSE pour désactivé
-	is_admin BOOLEAN DEFAULT 0 -- TRUE pour administrateur, FALSE pour utilisateur standard
+	is_admin BOOLEAN DEFAULT 0, -- TRUE pour administrateur, FALSE pour utilisateur standard
+		   
+	FOREIGN KEY(zone) REFERENCES zone(id)
 );''',
-'''CREATE TABLE messages (
-	id INTEGER PRIMARY KEY AUTOINCREMENT,
-	sender INTEGER,
-	receiver INTEGER,
-	message VARCHAR(2048), -- longueur maximum d'un message (crypté)
-	date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	
-	FOREIGN KEY(sender) REFERENCES identifiants(id),
-	FOREIGN KEY(receiver) REFERENCES identifiants(id)
+'''CREATE TABLE zone (
+	id INTEGER PRIMARY KEY AUTOINCREMENT, 
+	name VARCHAR(50)
+);''',
+'''INSERT INTO zone
+VALUES (1, '') -- for tests
+;''',
+'''CREATE TABLE horaires (
+	user_id INT, 
+	jour INT NOT NULL, 
+	horaire VARCHAR(11), 
+	semaine VARCHAR(1),
+
+	PRIMARY KEY(user_id, jour),
+	FOREIGN KEY(user_id) REFERENCES identifiants(id)
 );''']
 	for table in tables:
 		try:
 			cursor.execute(table)
-		except:
+		except Exception as e:
 			pass
 	db.commit()
 
-db, cursor = connect_db()
 
+db, cursor = connect_db()
 gen_db()
 
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'secret'
 app.secret_key = secrets.token_hex(16)
-## socketio = SocketIO(app)
+socketio = SocketIO(app, async_mode='gevent', cors_allowed_origins="*")
 ## CORS(app)
 
+@app.before_request
+def before_request():
+	if not get_username(request) and not (request.path.endswith('.css') or request.path.endswith('.png') or request.path.endswith('.jpg') or request.path.endswith('.ico') or request.path.startswith('/login') or request.path.startswith('/signup') or request.path.startswith('/verif')):
+		return redirect('/login?message=Veuillez vous connecter pour continuer')
 
 # FUNCTIONS
 
@@ -88,16 +100,16 @@ def check_credentials(username, password):
 				db.commit()
 			return valid_auth
 	except Exception as e:
-		# print(e)
+		print(e)
 		pass
 	return False
 
-COOKIE_NAME = 'eco-mobile_login'
+
 def get_username(request): # get username from crypted cookie
 	try:
 		cookie = request.cookies.get(COOKIE_NAME)
 		if cookie is not None:
-			username = cookies_fernet.decrypt(cookie.encode('utf-8')).decode('utf-8')
+			username = get_cookies_fernet(MASTER_KEY).decrypt(cookie.encode('utf-8')).decode('utf-8')
 		else:
 			username = None
 	except InvalidToken:
@@ -141,35 +153,48 @@ def get_message(message_id):
 @app.route('/')
 def index():
 	message = request.args.get('message') or ''
-	
 	username = get_username(request)
-	
 	if username is None:
-		username = 'Not Connected'
+		username = 'Déconnecté(e)'
 	else:
-		username = 'Connected as ' + str(username)
+		username = 'Connecté(e) en tant que ' + str(username)
+	
 	return render_template('index.html', message=message, connexion=username)
 
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
 	if request.method == 'POST':
-		db, cursor = connect_db()
-		nom = request.form['nom']
-		prenom = request.form['prenom']
-		username = request.form['email']
-		numero = request.form['numero'][:10]
-		password = generate_password_hash(request.form['password'])
-		
-		cursor.execute(f"SELECT COUNT(*) FROM identifiants WHERE username = '{username}';")
-		if int(cursor.fetchone()[0]) > 0:
-			return redirect('/?message=Un utilisateur a déjà été créé avec cette addresse mail. Veuillez ressayer.')
-		
-		code = str(randint(1000, 9999))
-		send_email(username, code)
-		cursor.execute(f"INSERT INTO identifiants (nom, prenom, numero, username, password, status) VALUES ('{nom}','{prenom}','{numero}','{username}','{password}', '{'0'+generate_password_hash(code)}');")
-		db.commit()
-		return redirect(f'/verif?username={username}')
+		try:
+			db, cursor = connect_db()
+			nom = request.form['nom']
+			prenom = request.form['prenom']
+			username = request.form['email']
+			numero = request.form['numero'][:10]
+			zone = int(request.form['zone'])
+			# horaires = request.form['horaires']
+			password = generate_password_hash(request.form['password'])
+			
+			cursor.execute(f"SELECT COUNT(*) FROM identifiants WHERE username = '{username}';")
+			if int(cursor.fetchone()[0]) > 0:
+				return redirect('/?message=Un utilisateur a déjà été créé avec cette adresse mail. Veuillez réessayer.')
+			
+			# vérifie l'existence de la zone
+			cursor.execute(f"SELECT id FROM zone WHERE id = '{zone}';")
+			data = cursor.fetchone()
+			if data is None:
+				return redirect('/?message=Une erreur est survenue. Veuillez réessayer.')
+
+			code = str(randint(1000, 9999))
+			send_email(username, code)
+			
+			cursor.execute(f"INSERT INTO identifiants (nom, prenom, numero, zone, username, password, status) VALUES ('{nom}','{prenom}','{numero}','{zone}','{username}','{password}', '{'0'+generate_password_hash(code)}');")
+			db.commit()
+
+			return redirect(f'/verif?username={username}')
+		except Exception as e:
+			print('Erreur dans le traitement de l\'inscription de', username, ': ', e)
+			return redirect('/?message=Une erreur est survenue.')
 	
 	return render_template('inscription.html')
 
@@ -186,12 +211,12 @@ def verif():
 			if check_password_hash(hashed_code, code):
 				cursor.execute(f"UPDATE identifiants SET status = 1 WHERE username = '{username}';")
 				db.commit()
-				return redirect('/?message=Votre compte à bien été activé, vous pouvez vous connecter')
-			return redirect('/?message=Le code que vous avez entré est incorrecte, veuillez réessayer.')
+				return redirect('/?message=Votre compte a bien été activé, vous pouvez vous connecter')
+			return redirect('/verif?message=Le code que vous avez entré est incorrect. Veuillez réessayer.')
 		else:
-			return redirect('/?message=Erreur à l\'inscription, veuillez contacter un administrateur.')
+			return redirect('/?message=Erreur à l\'inscription. Veuillez contacter un administrateur.')
 	
-	return render_template('verif.html', username=request.args.get('username'))
+	return render_template('verif.html', username=request.args.get('username'), message=request.args.get('message') or '')
 
 
 
@@ -201,51 +226,84 @@ def login():
 		username = request.form['username']
 		password = request.form['password']
 		if check_credentials(username, password):
-			response = make_response(redirect('/?message=Login Successful'))
-			response.set_cookie(COOKIE_NAME, cookies_fernet.encrypt(username.encode('utf-8')).decode('utf-8'), secure=True, httponly=True)
+			response = store_session_cookie(username, MASTER_KEY)
 			return response
-		return redirect('/?message=Invalid username or password (Maybe your account is disabled. If the issue persist, please contact an administrator)')
+		return redirect('/?message=Identifiant et/ou mot de passe invalide(s). Il se peut que votre compte soit désactivé. Dans ce cas, merci de contacter un administrateur.')
 
 	return render_template('login.html')
 
 @app.route('/logout')
 def logout():
-	response = make_response(redirect('/?message=Logout Successful'))
-	response.delete_cookie(COOKIE_NAME)
+	response = make_response(redirect('/?message=Déconnecté(e)'))
+	remove_cookie(response)
 	return response
 
 
-# developpement test
-'''
-@app.route('/save')
-def save_msg():
-	message = request.args.get('msg')
-	save_message(1, 2, message.encode('utf-8'))
-	return 'done'
-@app.route('/see')
-def see():
-	id = int(request.args.get('id'))
-	return get_message(id)
-'''
 
+@app.route('/contacts')
+def contacts():
+	db, cursor = connect_db()
+	cursor.execute(f"SELECT nom, prenom, username FROM identifiants WHERE username != '{get_username(request)}' ORDER BY last_login;")
+	contacts = cursor.fetchall()
+	return render_template('contacts.html', contacts=contacts)
+
+@app.route('/chat')
+def chat():
+	sender = get_username(request)
+	if sender is None:
+		return redirect('/?message=Vous n\'êtes pas connecté(e).')
+	receiver = request.args.get('contact') or None
+	if receiver is None:
+		receiver = 'username'
+		# sélection du contact le plus récent
+	session['receiver'] = receiver
+	session['me'] = sender
+	return render_template('chat.html', name=receiver)
+
+
+@app.route('/account')
+def account():
+	return render_template('account.html')
 
 # SOCKETIO SERVER
-'''
+
 @socketio.on('connect')
 def handle_connect():
-	print('Connected')
+	# print(session['me'], 'connected to', session['receiver'])
+	join_room(session['me'])
+
 
 @socketio.on('disconnect')
 def handle_disconnect():
-	print('Disconnected')
+	# print(session['me'], 'disconnected', session['receiver'])
+	pass
 
 @socketio.on('message')
-def handle_message(message):
-	print('Received message:', message)
-	emit('message', message, broadcast=True)
-'''
+def handle_message(message: str):
+	# print('Received message :', message, 'from', session['me'], 'to', session['receiver'])
+	emit('message', message, room=session['receiver'])
+
+	# save message
+	db, cursor = connect_db()
+	def get_user_id(username):
+		cursor.execute(f"SELECT id FROM identifiants WHERE username = '{username}';")
+		data = cursor.fetchone()
+		if data is None:
+			print('Error while saving message:')
+			print('From', session['me'], 'to', session['receiver'])
+			print('message:', message)
+			return None
+		return int(data[0])
+	sender_id = get_user_id(session['me'])
+	receiver_id = get_user_id(session['receiver'])
+	if sender_id is None or receiver_id is None:
+		return 'message not saved, error occured'
+	
+	fernet = get_cookies_fernet(sender_id, receiver_id, MASTER_KEY)
+	cursor.execute(f"INSERT INTO messages (message, sender, receiver) VALUES ('{fernet.encrypt(message.encode('utf-8')).decode('utf-8')}', {sender_id}, {receiver_id});")
+	db.commit()
 
 if __name__ == '__main__':
-	app.run(debug=True)
-	# socketio.run(app, debug=True, use_reloader=True, allow_unsafe_werkzeug=True)
+	# app.run(debug=True)
+	socketio.run(app, debug=True)
 	

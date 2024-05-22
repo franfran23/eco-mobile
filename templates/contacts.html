@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Contacts</title>
+	<link rel="stylesheet" href="/static/style.css">
+    <link rel="icon" type="image/png" href="/static/Images/logo.ico" />
+</head>
+
+<body>
+    <a href= "/"><img src="/static/Images/logo.png" class="logo" alt="Logo" /></a>
+    <button class="buttonLog" id="buttonLogIn" onclick="location.href='/login'">Login</button>
+    <button class="buttonLog" id="buttonLogOut" onclick="location.href='/logout'">Logout</button>
+    
+    <h1 class="main-title">Vos Contacts</h1>
+    <div class="contactContainer">
+    {% for contact in contacts %}
+        <form action="/chat" method="get" class="formContacts">
+                <img src="/static/Images/star.png" class="fav">
+                <p>Nom: <b> {{ contact[0] }} </b><br>
+                    Prénom: <b> {{ contact[1] }} </b><br>
+                    E-mail: <b> {{ contact[2] }} </b></p>
+                <input name="contact" type="hidden" value="{{ contact[2] }}">
+
+                <center><button type="submit">Contacter</button></center>
+        </form>
+    {% endfor %}
+    </div>
+
+</body>
+
+</html>
+
