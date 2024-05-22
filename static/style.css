@@ -153,15 +153,24 @@ input#messageInput::placeholder{color: #000000;}
     box-shadow: 2px 3px 12px #444444;
     border: none;
 }*/
+/* messages en grande quantité, nécessité d'une classe
 #messages{
     color: red;
-}
+}*/
 .messages{
     width: 80%;
 }
 
 .username{
     color: black;
+}
+
+.my-msg {
+	/* design de "mes" messages */
+}
+
+.your-msg {
+	/* design des messages de l'autre utilisateur */
 }
 
 /* Form vert de base */
