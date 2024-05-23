@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" type="text/css" href="/static/style.css" />
+	<link rel="icon" type="image/png" href="/static/Images/logo.ico">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.js"></script>
+	<title>Messagerie</title>
+	
+	<script>
+		function submitForm() {
+			document.getElementById("ChatForm").submit();
+		}
+	</script>
+</head>
+
+<body>
+	<a href= "/"><img src="/static/Images/logo.png" class="logo" alt="Logo" /></a>
+	<button class="buttonLog" id="buttonLogIn" onclick="location.href='/login'">Login</button>
+	<button class="buttonLog" id="buttonLogOut" onclick="location.href='/logout'">Logout</button>
+	<a href= "/contacts"><button id="headerButton" class="button">Retour aux contacts</button></a>
+
+	<div class="info-message">{{ message }}</div>
+	<div class="info-message">{{ connexion }}</div>
+    <div id="chat-box" class="chat-container">
+		<div class="container" id="UserChat">
+			<div id="usersInfo">
+				<h2>Contact : </h2>
+				<p class="username">{{ name }}</p>
+			</div>
+			<div id="message-box" class="message-container"></div>
+		</div>
+		<form onsubmit="return false">
+			<input class="searchInput" id="messageInput" type="text" placeholder="Entrer un message ...">
+			<button id="sendButton" onclick="sendMessage()"><img src="/static/Images/send.png" class="send"></button>
+		</form>
+    </div>
+	
+	<script type="text/javascript">
+        var socket = io();
+		var messageBox = document.getElementById('message-box');
+
+		function addMessage(message, classe) {
+			var messageElement = document.createElement('div');
+            messageElement.textContent = message;
+            messageElement.classList.add(classe);
+			messageElement.classList.add("messages");
+            messageBox.appendChild(messageElement);
+            // Scroll to bottom
+            messageBox.scrollTop = messageBox.scrollHeight;
+		}
+
+        // Send message
+        function sendMessage() {
+            var message = document.getElementById('messageInput').value;
+            socket.emit('message', message);
+            document.getElementById('messageInput').value = ''; // Clear input field
+			addMessage(message, 'my-msg');
+        }
+
+        // Receive message
+        socket.on('message', function(message) {
+            addMessage(message, 'your-msg');
+        });
+    </script>
+	
+</div>
+</body>
+
+</html>
