@@ -2,7 +2,7 @@
 CREATE TABLE zone (id_zone INT AUTO-INCREMENT PRIMARY KEY NOT NULL, zone VARCHAR(50));
 INSERT INTO zone VALUES ('n°id','zone à définir');
 SELECT nom FROM zone WHERE zone = 'endroit à définir';
-    # Requêtes SQL pour la table "identifiant" :
+    # Requêtes SQL pour la table "identifiants" :
 CREATE TABLE identifiant (id_identifiants INT AUTO-INCREMENT PRIMARY KEY NOT NULL, nom VARCHAR(30), prenom VARCHAR(20), tel VARCHAR(10), mail VARCHAR(30), mdp VARCHAR(50));
 SELECT mdp FROM identifiant WHERE nom = 'personne à définir';
 INSERT INTO identifiant VALUES ('n°id_identifiants à définir','nom à définir','prénom à définir','numéro de téléphone à définir','e-mail à définir','mot de passe à définir');
