@@ -461,3 +461,12 @@ header nav img{
     right: 40px;
 
 }
+
+img.userFav{
+    width: 80px;
+    height: 80px;
+    padding: 25px;
+}
+.userFav{
+    display: inline-block;
+}
