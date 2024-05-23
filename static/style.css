@@ -469,8 +469,8 @@ header img {
 header nav {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    width: 60%;
+    justify-content: space-around;
+    width: 50%;
     margin: auto;
     height: 20%;
     align-items: center;
@@ -480,26 +480,38 @@ header nav a {
     width: 3%;
     text-align: center;
     order: 5;
+    height: 15px;
     border-left: 2px solid rgb(15, 15, 15);
-    margin-right: 35px;
-    height: 120px;
-    bottom: 50px;
+    border-spacing: 10%;
+    margin-right: 70px;
+    height: 110px;
+    margin-top: 7px;
+    
+    
+}
+header nav button{
+    height: 90px;
+    bottom: 60px;
+    border-spacing: 10px;
 }
 #msgbutton {
-    margin-bottom: 25px;
+    margin-bottom: 10px;
+    position:relative;
+    left: 5px;
 }
 
 .Searchinput{
-    flex: 1;
-    display: flex;
-    justify-content: center;
+    left: 50px;
+    flex: 1 1 auto;
+    
+    justify-content:center ;
     width: 100px;
 
 }
 
 header nav img{
     width: 7%;
-    width: right 30px;
+    width: left 30px;
     right: 40px;
 
 }
@@ -511,4 +523,7 @@ img.userFav{
 }
 .userFav{
     display: inline-block;
+}
+header nav button{
+    bottom:auto
 }
