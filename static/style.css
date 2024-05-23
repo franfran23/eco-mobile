@@ -153,15 +153,24 @@ input#messageInput::placeholder{color: #000000;}
     box-shadow: 2px 3px 12px #444444;
     border: none;
 }*/
+/* messages en grande quantité, nécessité d'une classe
 #messages{
     color: red;
-}
+}*/
 .messages{
     width: 80%;
 }
 
 .username{
     color: black;
+}
+
+.my-msg {
+	/* design de "mes" messages */
+}
+
+.your-msg {
+	/* design des messages de l'autre utilisateur */
 }
 
 /* Form vert de base */
@@ -179,7 +188,7 @@ input#messageInput::placeholder{color: #000000;}
 
 /* Form en transparence */
 .login-form{
-    margin-top: 50px;
+    margin-top: 25px;
     margin-bottom: 50px;
     width: 400px;
     background-color: rgba(255,255,255,0.13);
@@ -232,11 +241,13 @@ img.close:hover{
     padding: 20px 35px;
 }
 #popup{
+    top: 450px;
     display: none;
 }
 #openPopup{
     margin-top: 15px;
 }
+
 .formAccountJour{
     width: 200px;
     background-color: rgba(255,255,255,0.13);
@@ -379,12 +390,12 @@ a{
 /* Contacts bare latérale */
 .contactFavContainer{
     width: 300px;
-    height: 85%;
+    height: 90%;
     position: absolute;
     padding: 20px;
     right: 0px;
     top: 0px;
-    margin-top: 110px;
+    margin-top: 125px;
     backdrop-filter: blur(10px);
     border: 2px solid rgba(255,255,255,0.1);
     box-shadow: 0 0 20px rgba(8,7,16,0.6);
@@ -402,7 +413,7 @@ img.fav{
     height: 450px; 
     border: none; 
     position: relative;
-    left: 50%;
+    left: 40%;
     top: 300px;
     transform: translate(-50%, -50%);
 }
@@ -437,12 +448,12 @@ header nav a {
     text-align: center;
     order: 5;
     border-left: 2px solid rgb(15, 15, 15);
-    margin-right: 10px;
+    margin-right: 35px;
     height: 120px;
     bottom: 50px;
 }
 #msgbutton {
-    bottom: 30px;
+    margin-bottom: 25px;
 }
 
 .Searchinput{
@@ -458,4 +469,13 @@ header nav img{
     width: left 30px;
     right: 40px;
 
+}
+
+img.userFav{
+    width: 80px;
+    height: 80px;
+    padding: 25px;
+}
+.userFav{
+    display: inline-block;
 }

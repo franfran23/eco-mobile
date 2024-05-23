@@ -19,7 +19,8 @@
 				<input type="text" class="login" placeholder="Prénom" name="prenom" required><br />
 				<input type="text" class="login" placeholder="Numéro de téléphone" name="numero" required><br />
 				<select class="login" name="zone" required>
-					<option value="">Zone géographique</option>
+					<option value="">-- Zone géographique --</option>
+					<option hidden value=0>Default</option>
 					<option value=1>Tourcoing</option>
 					<option value=2>Roubaix</option>
 					<option value=3>Wattrelos</option>
@@ -75,7 +76,7 @@
     </form><br>
 
 	<script>
-		let bopen = document.querySelector('#openPopup');
+		let bopen = document.querySelector('#openPopupInscription');
 		let bclose = document.querySelector('#closePopup');
 
 

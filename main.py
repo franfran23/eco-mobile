@@ -9,6 +9,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import secrets
 from cryptography.fernet import Fernet, InvalidToken
 
+
 from cryptage import *
 MASTER_KEY = '_XB2fwMJpusNiZrnXZ8KLwHdL1_ld8G8XbAKJHZuMzk=' # Fernet.generate_key() # une nouvelle clé déconnectera toutes les sessions utilisateurs en cours
 
@@ -82,7 +83,7 @@ def before_request():
 	if not get_username(request) and not (request.path.endswith('.css') or request.path.endswith('.png') or request.path.endswith('.jpg') or request.path.endswith('.ico') or request.path.startswith('/login') or request.path.startswith('/signup') or request.path.startswith('/verif')):
 		return redirect('/login?message=Veuillez vous connecter pour continuer')
 
-
+# FUNCTIONS
 
 def check_credentials(username, password):
 	# check les identifiants dans la db
@@ -115,11 +116,35 @@ def get_username(request): # get username from crypted cookie
 		username = None
 	return username
 
-
 def send_email(username, code):
 	# send an email with the random code inside
+	# username is an e-mail address
 	# (return if it works or not)
 	print('code:', code)
+
+def save_message(id_sender, id_receiver, message_clair):
+	db, cursor = connect_db()
+	fernet = get_messages_fernet(id_sender, id_receiver, MASTER_KEY) # objet fernet de cryptage entre id1 et id2
+	message = fernet.encrypt(message_clair).decode('utf-8') # cryptage du message, stockage en utf-8
+	cursor.execute(f"INSERT INTO messages (sender, receiver, message) VALUES ({id_sender}, {id_receiver}, '{message}');")
+	db.commit()
+
+def get_message(message_id):
+	'''renvoie le message décrypté (prend l'id du message en paramètre)'''
+	db, cursor = connect_db()
+	cursor.execute(f"SELECT message, sender, receiver FROM messages WHERE id = {message_id};")
+	data = cursor.fetchone()
+	if data is None:
+		return 'Wrong id'
+	crypted_message = data[0].encode('utf-8')
+	id_sender = data[1]
+	id_receiver = data[2]
+	
+	fernet = get_messages_fernet(id_sender, id_receiver, MASTER_KEY)
+	try:
+		return fernet.decrypt(crypted_message).decode('utf-8')
+	except InvalidToken:
+		return ''
 
 
 
@@ -212,6 +237,7 @@ def logout():
 	response = make_response(redirect('/?message=Déconnecté(e)'))
 	remove_cookie(response)
 	return response
+
 
 
 @app.route('/contacts')
