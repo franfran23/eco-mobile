@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Map with Search and Single Waypoint</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <style>
+        #map { height: 500px; width: 100%; }
+        .search-bar {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="search-bar">
+        <form onsubmit="return false;">
+            <input type="text" id="search" placeholder="Search for a place..." />
+            <button type="submit" onclick="searchLocation()">Search</button>
+        </form>
+    </div>
+    <div id="map"></div>
+    <form method="post">
+        <input id="lat" type="hidden" name="lat">
+        <input id="long" type="hidden" name="long">
+        <button type="submit">Valider</button>
+    </form>
+    <script>
+        // Initialize the map
+        var map = L.map('map').setView([52.517037, 13.388860], 13);
+
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        var marker; // To keep track of the single marker
+        var waypoint; // Variable to store the coordinates of the waypoint
+
+        // Add marker on click
+        map.on('click', function(e) {
+            if (marker) {
+                map.removeLayer(marker); // Remove existing marker
+            }
+            marker = L.marker(e.latlng).addTo(map);
+            map.setView(e.latlng, 13); // Center the map on the new marker
+            waypoint = e.latlng;
+            document.getElementById('lat').value = e.latlng.lat;
+            document.getElementById('long').value = e.latlng.lng;
+        });
+
+        // Search for a location and add it as a waypoint
+        function searchLocation() {
+            var searchText = document.getElementById('search').value;
+            fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + searchText)
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.length > 0) {
+                        var firstResult = data[0];
+                        var latLng = [firstResult.lat, firstResult.lon];
+
+                        // Remove existing marker if any
+                        if (marker) {
+                            map.removeLayer(marker);
+                        }
+
+                        // Add new waypoint marker
+                        marker = L.marker(latLng).addTo(map).bindPopup(firstResult.display_name).openPopup();
+                        map.setView(latLng, 13); // Center the map on the new marker
+
+                        // Store the coordinates in waypoint variable
+                        waypoint = L.latLng(firstResult.lat, firstResult.lon);
+                        document.getElementById('lat').value = firstResult.lat;
+                        document.getElementById('long').value = firstResult.lon;
+                    } else {
+                        alert('Location not found');
+                    }
+                });
+        }
+    </script>
+</body>
+</html>
