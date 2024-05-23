@@ -42,9 +42,10 @@
         var socket = io();
 		var chatBox = document.getElementById('chat-box');
 
-		function addMessage(message) {
+		function addMessage(message, classe) {
 			var messageElement = document.createElement('div');
             messageElement.textContent = message;
+            messageElement.classList.add(classe);
             chatBox.appendChild(messageElement);
             // Scroll to bottom
             chatBox.scrollTop = chatBox.scrollHeight;
@@ -55,12 +56,12 @@
             var message = document.getElementById('messageInput').value;
             socket.emit('message', message);
             document.getElementById('messageInput').value = ''; // Clear input field
-			addMessage(message);
+			addMessage(message, 'my-msg');
         }
 
         // Receive message
         socket.on('message', function(message) {
-            addMessage(message);
+            addMessage(message, 'your-msg');
         });
     </script>
 	
