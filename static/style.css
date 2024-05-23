@@ -466,7 +466,16 @@ header nav a {
 
 header nav img{
     width: 7%;
-    width: right 30px;
+    width: left 30px;
     right: 40px;
 
+}
+
+img.userFav{
+    width: 80px;
+    height: 80px;
+    padding: 25px;
+}
+.userFav{
+    display: inline-block;
 }
