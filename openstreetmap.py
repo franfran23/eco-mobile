@@ -1,11 +1,8 @@
+import osrm
 from geopy.distance import geodesic
 
 def calculate_distance(coord1, coord2):
     return geodesic(coord1, coord2).meters
-
-
-
-import osrm
 
 def is_point_close_to_route(route, point, threshold=100):  # threshold in meters
     for step in route['routes'][0]['legs'][0]['steps']:
@@ -16,23 +13,21 @@ def is_point_close_to_route(route, point, threshold=100):  # threshold in meters
                 return True
     return False
 
-
-
-
-
 def check_proximity_to_point(start, waypoint, end, threshold=100):
     client = osrm.Client(host='http://router.project-osrm.org')
     
     # Route from start to end
     route_1_to_3 = client.route(
         coordinates=[start, end],
-        overview=osrm.overview.full
+        overview=osrm.overview.full,
+        steps=True
     )
     
     # Route from waypoint to end
     route_2_to_3 = client.route(
         coordinates=[waypoint, end],
-        overview=osrm.overview.full
+        overview=osrm.overview.full,
+        steps=True
     )
     
     # Check if waypoint is close to route from start to end
@@ -43,12 +38,7 @@ def check_proximity_to_point(start, waypoint, end, threshold=100):
     
     return pass_close_to_waypoint_1_to_3, pass_close_to_start_2_to_3
 
-
-
-
-
-
-# Coordinates in (longitude, latitude)
+# Example usage
 point_1 = (13.388860, 52.517037)  # Example: Berlin
 point_2 = (13.397634, 52.529407)  # Example: Berlin
 point_3 = (13.428555, 52.523219)  # Example: Berlin

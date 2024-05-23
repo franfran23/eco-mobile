@@ -265,6 +265,16 @@ def chat():
 def account():
 	return render_template('account.html')
 
+
+@app.route('/gps', methods=['GET', 'POST'])
+def gps():
+	if request.method == 'POST':
+		lat = request.form['lat']
+		long = request.form['long']
+		return f'latitude: {lat}, longitude: {long}'
+	return render_template('openstreetmap_test.html')
+
+
 # SOCKETIO SERVER
 
 @socketio.on('connect')
