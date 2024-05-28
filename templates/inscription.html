@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="/static/style.css">
 	<link rel="icon" type="image/png" href="/static/Images/logo.ico" />
 	<a href= "/"><img src="/static/Images/logo.png" class="logo" alt="Logo" /></a>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 </head>
 
 
@@ -17,7 +18,8 @@
 			<div class="login">
 				<input type="text" class="login" placeholder="Nom" name="nom" required>
 				<input type="text" class="login" placeholder="Prénom" name="prenom" required><br />
-				<input type="text" class="login" placeholder="Numéro de téléphone" name="numero" required><br />
+			    <input type="text" class="login" placeholder="Numéro de téléphone" name="numero" required><br />
+		<!--	<input type="text" class="login" id="Ville" placeholder="Veuillez renseigner votre ville de domicile ... " onkeyup="convertirEnMinuscules(this);"> -->
 				<select class="login" name="zone" required>
 					<option value="">-- Zone géographique --</option>
 					<option hidden value=0>Default</option>
@@ -43,6 +45,16 @@
 			</div>
 		</form>
 	</center>
+
+<!-- Js pour rentrer automatiquement en minuscule dans l'input ville -->
+<!-- Pas besoin en fait prsq remplacé par gps
+	<script>
+		function convertirEnMinuscules(input) {
+			input.value = input.value.toLowerCase();
+		}
+	</script>
+-->	
+
 	<form action="" method="post" class="formAccount" id="popup">
 		<img src="/static/Images/close.png" class="close" id="closePopup">
         <div class="JoursContainer">
@@ -76,16 +88,16 @@
     </form><br>
 
 	<script>
-		let bopen = document.querySelector('#openPopupInscription');
+		let bopen = document.querySelector('#openPopup');
 		let bclose = document.querySelector('#closePopup');
 
 
 		//function
 		function afficher() {
-			document.querySelector('#popup').style.display = "flex";
+			document.querySelector('#popup').style.display = "block";
 		}
 
-		function afficher() {
+		function masquer() {
 			document.querySelector('#popup').style.display = "none";
 		}
 
