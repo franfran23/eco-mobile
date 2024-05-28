@@ -313,7 +313,7 @@ input.code{
     border: 2px;    
 }
 
-button[type="submit"] {
+button[type="submit"],.valider {
     width: 100%;
     padding: 12px;
     border-radius: 20px;
