@@ -108,9 +108,11 @@ input#messageInput::placeholder{color: #000000;}
 #messageInput{
     width: 65%;
     position: absolute;
-    left: 50%;
+    left: 45%;
     top: 90%;
     transform: translate(-50%, -50%);
+    max-width: 500px;
+    min-width: 150px;
 }
 
 .chat-container{
@@ -119,7 +121,9 @@ input#messageInput::placeholder{color: #000000;}
     backdrop-filter: blur(10px);
     border: 2px solid rgba(255,255,255,0.1);
     box-shadow: 0 0 40px rgba(8,7,16,0.6);
-    width: 65%;
+    max-width: 800px;
+    min-width: 250px;
+    width: 30%;
     height: 70%;
     border-radius: 15px;
     left: 50%;
@@ -167,7 +171,7 @@ input#messageInput::placeholder{color: #000000;}
     position: relative;
     display: inline-block;
     padding: 10px;
-    border-radius: 24px;
+    border-radius: 15px;
     box-shadow: 2px 3px 8px #444444;
     background-color: #a3b18a;
     border: none;
@@ -177,7 +181,8 @@ input#messageInput::placeholder{color: #000000;}
     margin-bottom: 10px;
     max-width: 50%;
     word-wrap: break-word;
-    width: min-content;
+    width: fit-content;
+    min-width: 20px;
 }
 
 .username{
@@ -188,12 +193,15 @@ input#messageInput::placeholder{color: #000000;}
 	/* design de "mes" messages */
     margin-left: auto;
     text-align: right;
+    border-bottom-left-radius: 0.1rem 0.7rem;
+    background-color: #588157
 }
 
 .your-msg {
 	/* design des messages de l'autre utilisateur */
     margin-right: auto;
     text-align: left;
+    border-bottom-right-radius: 0.1rem 0.7rem;
 }
 /*
 .my-msg:hover{
