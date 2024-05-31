@@ -17,7 +17,8 @@
     <div class="contactContainer">
     {% for contact in contacts %}
         <form action="/chat" method="get" class="formContacts">
-                <img src="/static/Images/star.png" class="fav">
+                <img src="/static/Images/star.png" id="imgNonefav" class="defaut-fav" onclick="changeClass()">
+                <img src="/static/Images/starFull.png" id="imgfav" class="fav" onclick="changeClassfav()">
                 <p>Nom: <b> {{ contact[0] }} </b><br>
                     Prénom: <b> {{ contact[1] }} </b><br>
                     E-mail: <b> {{ contact[2] }} </b></p>
@@ -28,6 +29,15 @@
     {% endfor %}
     </div>
 
+<!-- Pour changer l'etat de l'étoile quand on clique dessus -->
+    <script>
+        function changeClassfav() { 
+            document.getElementById('imgfav').className = "fav"; 
+        }
+        function changeClass() { 
+            document.getElementById('imgfav').className = "defaut-fav"; 
+        }
+    </script>
 </body>
 
 </html>

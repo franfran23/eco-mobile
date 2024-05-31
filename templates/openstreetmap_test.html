@@ -3,34 +3,25 @@
 <head>
     <title>Map with Search and Single Waypoint</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="/static/style.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <style>
-        #map { height: 500px; width: 100%; }
-        .search-bar {
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1000;
-            background: white;
-            padding: 10px;
-            border-radius: 5px;
-        }
-    </style>
 </head>
 <body>
-    <div class="search-bar">
-        <form onsubmit="return false;">
-            <input type="text" id="search" placeholder="Search for a place..." />
-            <button type="submit" onclick="searchLocation()">Search</button>
+    <div class="map-container">
+        <div class="search-bar">
+            <form onsubmit="return false;">
+                <input type="text" id="search" placeholder="Search for a place..." />
+                <button type="submit" onclick="searchLocation()">Search</button>
+            </form>
+        </div>
+        <div id="map"></div>
+        <form method="post">
+            <input id="lat" type="hidden" name="lat">
+            <input id="long" type="hidden" name="long">
+            <button type="submit">Valider</button>
         </form>
     </div>
-    <div id="map"></div>
-    <form method="post">
-        <input id="lat" type="hidden" name="lat">
-        <input id="long" type="hidden" name="long">
-        <button type="submit">Valider</button>
-    </form>
+    
     <script src="/static/openstreetmap.js"></script>
 </body>
 </html>
