@@ -549,6 +549,8 @@ header nav button{
 
 /* GPS */
 .map-container{
+    display: none;
+
     position: relative;
     width: 80%;
     height: 50%;
