@@ -21,33 +21,6 @@
 				<input type="text" class="login" placeholder="Prénom" name="prenom" required><br />
 			    <input type="text" class="login" placeholder="Numéro de téléphone" name="numero" required><br />
 		<!--	<input type="text" class="login" id="Ville" placeholder="Veuillez renseigner votre ville de domicile ... " onkeyup="convertirEnMinuscules(this);"> -->
-<<<<<<< HEAD
-=======
-				<button type="button" id="showMap">Selctionner mon addresse</button>
-				<script>
-					document.getElementById('showMap').addEventListener('click', function() {
-						document.getElementById('mapContainer').style.display = 'block';
-					});
-				</script>
-				<script src="/static/openstreetmap.js"></script>
-				<div id="mapContainer" class="map-container">
-					<div class="search-bar">
-						<form onsubmit="return false;">
-							<input type="text" id="search" placeholder="Search for a place..." />
-							<button type="submit" onclick="searchLocation()">Search</button>
-						</form>
-					</div>
-					<div id="map"></div>
-					<input id="lat" type="hidden" name="lat">
-					<input id="long" type="hidden" name="long">
-					<button type="button" id="hideMap">Valider<button>
-					<script>
-						document.getElementById('hideMap').addEventListener('click', function() {
-							document.getElementById('mapContainer').style.display = 'none';
-						});
-					</script>
-				</div>
->>>>>>> 1dbd3e23ea1c5ea7ea4a4c6ba187aaf68089043b
 				<input type="text" class="login" placeholder="E-mail" name="email" required><br />
 				<input type="password" class="login" placeholder="Mot de passe" name="password" required><br />
 				<button type="button" class="button" id="showMap">Renseigner mon domicile</button>
