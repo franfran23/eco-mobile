@@ -230,8 +230,6 @@ input#messageInput::placeholder{color: #000000;}
 
 /* Form en transparence */
 .login-form{
-    margin-top: 25px;
-    margin-bottom: 50px;
     width: 400px;
     background-color: rgba(255,255,255,0.13);
     position: absolute;
@@ -284,7 +282,6 @@ img.close:hover{
     padding: 20px 35px;
 }
 #popup{
-    top: 450px;
     display: none;
 }
 #openPopup{
@@ -524,7 +521,6 @@ header nav button{
     
     justify-content:center ;
     width: 100px;
-
 }
 
 header nav img{
@@ -551,19 +547,17 @@ header nav button{
 .map-container{
     display: none;
 
-    position: relative;
-    width: 80%;
-    height: 50%;
+    position: absolute;
+    width: 70%;
+    height: 75%;
     padding: 15px;
     backdrop-filter: blur(10px);
     box-shadow: 0 0 20px rgba(8,7,16,0.6);
     border-radius: 15px;
     
-    top: 50px;
-    right: 32.5%;
+    right: 50%;
     transform: translateX(50%);
 }
-
 #map { height: 500px; width: 100%; }
 .search-bar {
     position: absolute;
@@ -573,6 +567,7 @@ header nav button{
     z-index: 1000;
     background: white;
     padding: 10px;
+    padding-bottom: 20px;
     border-radius: 5px;
 }
 /*je pense c'est mieux sans ?*/

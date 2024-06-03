@@ -21,40 +21,41 @@
 				<input type="text" class="login" placeholder="Prénom" name="prenom" required><br />
 			    <input type="text" class="login" placeholder="Numéro de téléphone" name="numero" required><br />
 		<!--	<input type="text" class="login" id="Ville" placeholder="Veuillez renseigner votre ville de domicile ... " onkeyup="convertirEnMinuscules(this);"> -->
-				<button type="button" id="showMap">Selctionner mon addresse</button>
-				<script>
-					document.getElementById('showMap').addEventListener('click', function() {
-						document.getElementById('mapContainer').style.display = 'block';
-					});
-				</script>
-				<div id="mapContainer" class="map-container">
-					<div class="search-bar">
-						<form onsubmit="return false;">
-							<input type="text" id="search" placeholder="Search for a place..." />
-							<button type="submit" onclick="searchLocation()">Search</button>
-						</form>
-					</div>
-					<div id="map"></div>
-					<input id="lat" type="hidden" name="lat">
-					<input id="long" type="hidden" name="long">
-					<button type="button" id="hideMap">Valider<button>
-					<script>
-						document.getElementById('hideMap').addEventListener('click', function() {
-							document.getElementById('mapContainer').style.display = 'none';
-						});
-					</script>
-				</div>
 				<input type="text" class="login" placeholder="E-mail" name="email" required><br />
 				<input type="password" class="login" placeholder="Mot de passe" name="password" required><br />
+				<button type="button" class="button" id="showMap">Renseigner mon domicile</button>
 				<button type="button" class="button" id="openPopup">Renseigner mes horraires</button>
-				<button type="button" class="button" id="openGPS">Renseigner mon domicile</button>
 				<p>Ajouter une photo de profil : <input type="file" accept="image/*"></p>
 				<button type="submit">VALIDER</button><br />
 				<br/>
 				<a href="/login">Je possède déjà un compte, je souhaite <b>me connecter</b></a><br/>
 			</div>
-		</form>
+		</form>	
 	</center>
+		<script>
+			document.getElementById('showMap').addEventListener('click', function() {
+				document.getElementById('mapContainer').style.display = 'block';
+			});
+		</script>
+		<div id="mapContainer" class="map-container">					
+			<img src="/static/Images/close.png" class="close" id="hideMap">
+			<div class="search-bar">
+				<form onsubmit="return false;">
+					<input type="text" id="search" placeholder="Search for a place..." />
+					<button type="submit" onclick="searchLocation()">Search</button>
+				</form>
+			</div>
+			<div id="map"></div>
+			<input id="lat" type="hidden" name="lat">
+			<input id="long" type="hidden" name="long">
+			<button type="button" class="button" id="hideMap">Valider</button>
+			<script>
+				document.getElementById('hideMap').addEventListener('click', function() {
+					document.getElementById('mapContainer').style.display = 'none';
+				});
+			</script>
+			<script src="/static/openstreetmap.js"></script>
+		</div>
 
 <!-- Js pour rentrer automatiquement en minuscule dans l'input ville -->
 <!-- Pas besoin en fait prsq remplacé par gps
