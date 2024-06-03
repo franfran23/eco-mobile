@@ -8,6 +8,7 @@
 	<link rel="icon" type="image/png" href="/static/Images/logo.ico" />
 	<a href= "/"><img src="/static/Images/logo.png" class="logo" alt="Logo" /></a>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 </head>
 
 
@@ -20,21 +21,29 @@
 				<input type="text" class="login" placeholder="Prénom" name="prenom" required><br />
 			    <input type="text" class="login" placeholder="Numéro de téléphone" name="numero" required><br />
 		<!--	<input type="text" class="login" id="Ville" placeholder="Veuillez renseigner votre ville de domicile ... " onkeyup="convertirEnMinuscules(this);"> -->
-				<select class="login" name="zone" required>
-					<option value="">-- Zone géographique --</option>
-					<option hidden value=0>Default</option>
-					<option value=1>Tourcoing</option>
-					<option value=2>Roubaix</option>
-					<option value=3>Wattrelos</option>
-					<option value=4>Mouvaux</option>
-					<option value=5>Marcq-en-Barœul</option>
-					<option value=6>Croix</option>
-					<option value=7>Ronq</option>
-					<option value=8>Bondues</option>
-					<option value=9>Halluin</option>
-					<option value=10>Wervik</option>
-					<option value=11>Comines</option>
-					<option value=12>Autres</option>
+				<button type="button" id="showMap">Selctionner mon addresse</button>
+				<script>
+					document.getElementById('showMap').addEventListener('click', function() {
+						document.getElementById('mapContainer').style.display = block;
+					});
+				</script>
+				<div id="mapContainer" class="map-container">
+					<div class="search-bar">
+						<form onsubmit="return false;">
+							<input type="text" id="search" placeholder="Search for a place..." />
+							<button type="submit" onclick="searchLocation()">Search</button>
+						</form>
+					</div>
+					<div id="map"></div>
+					<input id="lat" type="hidden" name="lat">
+					<input id="long" type="hidden" name="long">
+					<button type="button" id="hideMap">Valider<button>
+					<script>
+						document.getElementById('hideMap').addEventListener('click', function() {
+							document.getElementById('mapContainer').style.display = none;
+						});
+					</script>
+				</div>
 				<input type="text" class="login" placeholder="E-mail" name="email" required><br />
 				<input type="password" class="login" placeholder="Mot de passe" name="password" required><br />
 				<button type="button" class="button" id="openPopup">Renseigner mes horraires</button>
