@@ -4,29 +4,19 @@ from flask_socketio import SocketIO, emit, join_room
 # from flask_cors import CORS
 # import mysql.connector
 from os.path import exists
-import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 import secrets
 from cryptography.fernet import Fernet, InvalidToken
 
 
 from cryptage import *
+from openstreetmap import *
 MASTER_KEY = '_XB2fwMJpusNiZrnXZ8KLwHdL1_ld8G8XbAKJHZuMzk=' # Fernet.generate_key() # une nouvelle clé déconnectera toutes les sessions utilisateurs en cours
 
 cookies_fernet = get_cookies_fernet(MASTER_KEY)
 
-
-'''
-def connect_db(host='localhost', user='root', password='', db=None):
-	return mysql.connector.connect(
-		host=host,
-		user=user,
-		password=password,
-		database=db)
-'''
-def connect_db(name='db.sqlite'):
-	connection = sqlite3.connect(name)
-	return connection, connection.cursor()
+from func import *
+eic = (50.720550200000005, 3.150640888902045)
 
 def gen_db():
 	tables = ['''CREATE TABLE identifiants (
@@ -145,12 +135,32 @@ def get_message(message_id):
 def index():
 	message = request.args.get('message') or ''
 	username = get_username(request)
+	db, cursor = connect_db()
 	if username is None:
-		username = 'Déconnecté(e)'
+		welcome = 'Déconnecté(e)'
 	else:
-		username = 'Connecté(e) en tant que ' + str(username)
+		welcome = 'Connecté(e) en tant que ' + str(username)
 	
-	return render_template('index.html', message=message, connexion=username)
+	can_drive_you = []
+	you_can_drive = []
+	cursor.execute(f"SELECT lat, long FROM identifiants WHERE username = '{username}';")
+	my_loc = cursor.fetchone()
+	assert isinstance(my_loc, tuple)
+	for user in list_users_except(username):
+		cursor.execute(f"SELECT lat, long FROM identifiants WHERE username = '{user}';")
+		other_loc = cursor.fetchone()
+		try: # prevent clocking if someone doesn't have location
+			assert isinstance(my_loc, tuple)
+		except AssertionError:
+			continue
+
+		you_can, he_can = check_proximity_to_point(my_loc, other_loc, eic)
+		if you_can:
+			you_can_drive.append(user)
+		if he_can:
+			can_drive_you.append(user)
+
+	return render_template('index.html', message=message, connexion=welcome, can_drive_you=can_drive_you, you_can_drive=you_can_drive)
 
 
 @app.route('/signup', methods=['GET', 'POST'])
