@@ -60,9 +60,6 @@
 				<button type="button" class="button" id="showMap">Renseigner mon domicile</button>
 				<button type="button" class="button" id="openPopup">Renseigner mes horraires</button>
 				<p>Ajouter une photo de profil : <input type="file" accept="image/*"></p>
-				<button type="submit">VALIDER</button><br />
-				<br/>
-				<a href="/login">Je possède déjà un compte, je souhaite <b>me connecter</b></a><br/>
 			</div>
 
 <!-- Js pour rentrer automatiquement en minuscule dans l'input ville -->
@@ -80,16 +77,31 @@
 		 <div class="map-container" id="mapContainer">			
 			<img src="/static/Images/close.png" class="close" id="hideMap">
 			<div class="search-bar">
-				<form onsubmit="return false;">
+				<div>
 					<input type="text" id="search" placeholder="Search for a place..." />
-					<button type="submit" onclick="searchLocation()">Search</button>
-				</form>
+					<button id="location-search" type="button" onclick="searchLocation()">Search</button>
+				</div>
+				<script>
+					// allow searching with 'enter'
+					$(document).ready(function(){
+						$('#search').keypress(function(e){
+							if(e.keyCode==13) {
+								event.preventDefault();
+								$('#location-search').click();
+							}
+						});
+					});
+				</script>
 			</div>
 			<div id="map"></div>
 			<input id="lat" type="hidden" name="lat">
 			<input id="long" type="hidden" name="long">
 			<script src="/static/openstreetmap.js"></script>
 		</div>
+		<button type="submit">VALIDER</button><br />
+		<br/>
+		<a href="/login">Je possède déjà un compte, je souhaite <b>me connecter</b></a><br/>
+	</center>
 	</form><br>
 </center>
 
