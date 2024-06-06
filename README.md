@@ -5,26 +5,27 @@ format de l'adresse mail pour le code de validation à définir (pour garder une
 
 # todo list
 ## frontend
-- [ ] page d'accueil  
-- [ ] page de connexion  
-- [ ] page d'inscription  
-- [ ] page de messagerie
-- [ ] Il faudra ajouter une page avec un message ({{ }}, formatage python) et un input pour un nombre entier: code de vérification par email (verif.html ?)
+- [x] page d'accueil  
+- [x] page de connexion  
+- [x] page d'inscription  
+- [x] page de messagerie
+- [x] Il faudra ajouter une page avec un message ({{ }}, formatage python) et un input pour un nombre entier: code de vérification par email (verif.html ?)
 cette page contiendra un formulaire post avec un élément caché nommé "username" dont la valeur sera {{ username }}. L'input pour le code aura le nom "code"
-- [ ] Update de inscription.html pour ajouter la sélection de la zone géographique (name="zone") et des horaires de cours (à voir comment c'est mis en place)
+- [x] Update de inscription.html pour ajouter la sélection de la zone géographique (name="zone") et des horaires de cours (à voir comment c'est mis en place)
 
 - [ ] Page verif faire fonctionner les bouttons en plus
 - [ ] Sauvegarder les messages dans le chat
 - [ ] Les messages dépassent du chat quand il y en as bcp
-- [ ] Ajouter un id différent pour les messages envoyés et les messages reçus pour pouvoir les différencier
+- [x] Ajouter un id différent pour les messages envoyés et les messages reçus pour pouvoir les différencier
 
 ## backend
 - [x] système de login
 - [x] système d'inscription (update en cours mais fonctionnel)
-- [ ] messagerie
-- [ ] update signup pour enregistrer la zone géographique et les horaires de cours
+- [x] messagerie
+- [x] update signup pour enregistrer la zone géographique et les horaires de cours
 - [x] update la requête de création de la table identifiants pour inclure l'id de la zone géographique (quand la table zone sera créée)
 - [x] (si les messages doivent être cryptés dans la db, trouver un format pour générer les clés, ex: utiliser les id des utilisateurs comme graine de génération d'une clé (le résultat sera toujours le même))
+- [ ] calcul de qui est compatible au covoiturage  
 
 ## DataBase
 (créer un fichier .txt avec toutes les requêtes de création de tables, une par ligne)  
