@@ -550,11 +550,13 @@ header nav button{
 
     position: relative;
     top: 50%;
-    width: 600px;
+    width: 150%;
+    transform: translate(-17%);
     height: 75%;
     box-shadow: 0 0 20px rgba(8,7,16,0.6);
     border-radius: 15px;
     border: none;
+    padding: 5px;
 
 }
 #map {
@@ -566,8 +568,6 @@ header nav button{
 .search-bar {
     position: relative;
     top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
     z-index: 1000;
     background: white;
     padding: 10px;
