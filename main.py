@@ -34,28 +34,19 @@ def gen_db():
 	nom VARCHAR(100),
 	prenom VARCHAR(100),
 	numero VARCHAR(10),
-	zone INTEGER,
+	lat REAL,
+	long REAL,
 	username VARCHAR(255), -- Longueur maximale standard pour une adresse e-mail
 	password VARCHAR(255), -- Longueur maximale pour le mot de passe
 	creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	last_login TIMESTAMP,
 	status BOOLEAN DEFAULT 0, -- TRUE pour activé, FALSE pour désactivé
-	is_admin BOOLEAN DEFAULT 0, -- TRUE pour administrateur, FALSE pour utilisateur standard
-		   
-	FOREIGN KEY(zone) REFERENCES zone(id)
+	is_admin BOOLEAN DEFAULT 0 -- TRUE pour administrateur, FALSE pour utilisateur standard
 );''',
-'''CREATE TABLE zone (
-	id INTEGER PRIMARY KEY AUTOINCREMENT, 
-	name VARCHAR(50)
-);''',
-'''INSERT INTO zone
-VALUES (1, '') -- for tests
-;''',
 '''CREATE TABLE horaires (
 	user_id INT, 
 	jour INT NOT NULL, 
 	horaire VARCHAR(11), 
-	semaine VARCHAR(1),
 
 	PRIMARY KEY(user_id, jour),
 	FOREIGN KEY(user_id) REFERENCES identifiants(id)
@@ -80,7 +71,7 @@ socketio = SocketIO(app, async_mode='gevent', cors_allowed_origins="*")
 
 @app.before_request
 def before_request():
-	if not get_username(request) and not (request.path.endswith('.css') or request.path.endswith('.js') or request.path.endswith('.png') or request.path.endswith('.jpg') or request.path.endswith('.ico') or request.path.startswith('/login') or request.path.startswith('/signup') or request.path.startswith('/verif')):
+	if not get_username(request) and not (request.path.endswith('.css') or request.path.endswith('.js') or request.path.endswith('.png') or request.path.endswith('.jpg') or request.path.endswith('.ico') or request.path.startswith('/login') or request.path.startswith('/signup') or request.path.startswith('/verif') or request.path.startswith('/')):
 		return redirect('/login?message=Veuillez vous connecter pour continuer')
 
 # FUNCTIONS
@@ -92,7 +83,7 @@ def check_credentials(username, password):
 		cursor.execute(f"SELECT password, status FROM identifiants WHERE username = '{username}';")
 		data = cursor.fetchone()
 		hashed_pwd = data[0]
-		status = bool(str(data[1])[0])
+		status = bool(int(str(data[1])[0]))
 		if status:
 			valid_auth = check_password_hash(hashed_pwd, password)
 			if valid_auth:
@@ -167,28 +158,38 @@ def signup():
 	if request.method == 'POST':
 		try:
 			db, cursor = connect_db()
+			# print('form', request.form)
 			nom = request.form['nom']
 			prenom = request.form['prenom']
 			username = request.form['email']
 			numero = request.form['numero'][:10]
-			zone = int(request.form['zone'])
-			# horaires = request.form['horaires']
+			lat = request.form['lat']
+			long = request.form['long']
+			# horaires gérés plus tard
 			password = generate_password_hash(request.form['password'])
 			
 			cursor.execute(f"SELECT COUNT(*) FROM identifiants WHERE username = '{username}';")
 			if int(cursor.fetchone()[0]) > 0:
 				return redirect('/?message=Un utilisateur a déjà été créé avec cette adresse mail. Veuillez réessayer.')
-			
-			# vérifie l'existence de la zone
-			cursor.execute(f"SELECT id FROM zone WHERE id = '{zone}';")
-			data = cursor.fetchone()
-			if data is None:
-				return redirect('/?message=Une erreur est survenue. Veuillez réessayer.')
 
 			code = str(randint(1000, 9999))
 			send_email(username, code)
 			
-			cursor.execute(f"INSERT INTO identifiants (nom, prenom, numero, zone, username, password, status) VALUES ('{nom}','{prenom}','{numero}','{zone}','{username}','{password}', '{'0'+generate_password_hash(code)}');")
+			cursor.execute(f"INSERT INTO identifiants (nom, prenom, numero, lat, long, username, password, status) VALUES ('{nom}','{prenom}','{numero}',{lat},{long},'{username}','{password}', '{'0'+generate_password_hash(code)}');")
+			db.commit()
+			cursor.execute(f"SELECT id FROM identifiants WHERE username = '{username}';")
+			user_id = cursor.fetchone()[0]
+			if user_id is None:
+				return redirect("/?message=Erreur dans l'enregistrement de votre compte, veuillez contacter un administrateur.")
+			
+			jours = {'Lundi': 1,
+			'Mardi': 2,
+			'Mercredi': 3,
+			'Jeudi': 4,
+			'Vendredi': 5}
+
+			for jour in ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi']:
+				cursor.execute(f"INSERT INTO horaires (user_id, jour, horaire) VALUES ({user_id}, {jours[jour]}, '{request.form['start' + jour] + '-' + request.form['end' + jour]}');")
 			db.commit()
 
 			return redirect(f'/verif?username={username}')
@@ -216,7 +217,7 @@ def verif():
 		else:
 			return redirect('/?message=Erreur à l\'inscription. Veuillez contacter un administrateur.')
 	
-	return render_template('verif.html', username=request.args.get('username'), message=request.args.get('message') or '')
+	return render_template('verif.html', username=request.args.get('username'), message=(request.args.get('message') or ''))
 
 
 
