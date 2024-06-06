@@ -13,10 +13,43 @@
 </head>
 
 
-<body>
+<body><center>
 	<form action="" method="post" class="login-form">
-		<center>
-			<h1 class="main-title">S'INSCRIRE</h1>
+		<h1 class="main-title">S'INSCRIRE</h1>
+
+		<div class="formAccount" id="popup">
+			<img src="/static/Images/close.png" class="close" id="closePopup">
+			<div class="JoursContainer">
+				<div class="formAccountJour" required>
+					<p><b>Lundi : </b></p> <p>Cocher si pas cours <input type="checkbox"> </p>   
+					<p>Heure de début <input type="time" name="startLundi" step="900"> </p>
+					<p>Heure de fin <input type="time" name="endLundi" step="900"> </p>
+				</div>
+				<div class="formAccountJour" required>
+					<p><b>Mardi : </b></p> <p>Cocher si pas cours <input type="checkbox"> </p>   
+					<p>Heure de début <input type="time" name="startMardi" step="900"> </p>
+					<p>Heure de fin <input type="time" name="endMardi" step="900"> </p>
+				</div>
+				<div class="formAccountJour" required>
+					<p><b>Mercredi : </b></p> <p>Cocher si pas cours <input type="checkbox"> </p>   
+					<p>Heure de début <input type="time" name="startMercredi" step="900"> </p>
+					<p>Heure de fin <input type="time" name="endMercredi" step="900"> </p>
+				</div>
+				<div class="formAccountJour" required>
+					<p><b>Jeudi : </b></p> <p>Cocher si pas cours <input type="checkbox"> </p>   
+					<p>Heure de début <input type="time" name="startJeudi" step="900"> </p>
+					<p>Heure de fin <input type="time" name="endJeudi" step="900"> </p>
+				</div>
+				<div class="formAccountJour" required>
+					<p><b>Vendredi : </b></p> <p>Cocher si pas cours <input type="checkbox"> </p>   
+					<p>Heure de début <input type="time" name="startVendredi" step="900"> </p>
+					<p>Heure de fin <input type="time" name="endVendredi" step="900"> </p>
+				</div>
+				<button type="button" class="valider" onclick="masquer()">VALIDER</button>
+			</div>
+
+		</div>
+		
 			<div class="login">
 				<input type="text" class="login" placeholder="Nom" name="nom" required>
 				<input type="text" class="login" placeholder="Prénom" name="prenom" required><br />
@@ -31,7 +64,6 @@
 				<br/>
 				<a href="/login">Je possède déjà un compte, je souhaite <b>me connecter</b></a><br/>
 			</div>
-		</center>
 
 <!-- Js pour rentrer automatiquement en minuscule dans l'input ville -->
 <!-- Pas besoin en fait prsq remplacé par gps
@@ -42,41 +74,11 @@
 	</script>
 -->	
 
-		<div class="formAccount" id="popup">
-			<img src="/static/Images/close.png" class="close" id="closePopup">
-			<div class="JoursContainer">
-				<div class="formAccountJour" required>
-					<p>Lundi : </p> <p>Cocher si pas cours <input type="checkbox"> </p>   
-					<p>Heure de début <input type="time" name="startLundi" step="900"> </p>
-					<p>Heure de fin <input type="time" name="endLundi" step="900"> </p>
-				</div>
-				<div class="formAccountJour" required>
-					<p>Mardi : </p> <p>Cocher si pas cours <input type="checkbox"> </p>   
-					<p>Heure de début <input type="time" name="startMardi" step="900"> </p>
-					<p>Heure de fin <input type="time" name="endMardi" step="900"> </p>
-				</div>
-				<div class="formAccountJour" required>
-					<p>Mercredi : </p> <p>Cocher si pas cours <input type="checkbox"> </p>   
-					<p>Heure de début <input type="time" name="startMercredi" step="900"> </p>
-					<p>Heure de fin <input type="time" name="endMercredi" step="900"> </p>
-				</div>
-				<div class="formAccountJour" required>
-					<p>Jeudi : </p> <p>Cocher si pas cours <input type="checkbox"> </p>   
-					<p>Heure de début <input type="time" name="startJeudi" step="900"> </p>
-					<p>Heure de fin <input type="time" name="endJeudi" step="900"> </p>
-				</div>
-				<div class="formAccountJour" required>
-					<p>Vendredi : </p> <p>Cocher si pas cours <input type="checkbox"> </p>   
-					<p>Heure de début <input type="time" name="startVendredi" step="900"> </p>
-					<p>Heure de fin <input type="time" name="endVendredi" step="900"> </p>
-				</div>
-				<button type="button" class="valider" onclick="masquer()">VALIDER</button>
-			</div>
-
-		</div>
+		
 
 		<!-- sélecteur d'addresse -->
-		 <div class="map-container">
+		 <div class="map-container" id="mapContainer">			
+			<img src="/static/Images/close.png" class="close" id="hideMap">
 			<div class="search-bar">
 				<form onsubmit="return false;">
 					<input type="text" id="search" placeholder="Search for a place..." />
@@ -89,11 +91,13 @@
 			<script src="/static/openstreetmap.js"></script>
 		</div>
 	</form><br>
+</center>
 
 	<script>
 		let bopen = document.querySelector('#openPopup');
 		let bclose = document.querySelector('#closePopup');
-
+		let openMap = document.querySelector('#showMap');
+		let closeMap = document.querySelector('#hideMap');
 
 		//function
 		function afficher() {
@@ -104,10 +108,20 @@
 			document.querySelector('#popup').style.display = "none";
 		}
 
+		function afficherMap() {
+			document.querySelector('#mapContainer').style.display = "block";
+		}
+
+		function masquerMap() {
+			document.querySelector('#mapContainer').style.display = "none";
+		}
+
 		bopen.addEventListener("click",afficher);
 		bclose.addEventListener("click",masquer);
+		openMap.addEventListener("click",afficherMap);
+		closeMap.addEventListener("click",masquerMap);
 	</script>
-</body>
+</center></body>
 
 		
 	
