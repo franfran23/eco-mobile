@@ -230,9 +230,9 @@ input#messageInput::placeholder{color: #000000;}
 
 /* Form en transparence */
 .login-form{
-    margin-top: 50px;
+/*    margin-top: 50px; */
     margin-bottom: 50px;
-    width: 400px;
+    width: 500px;
     background-color: rgba(255,255,255,0.13);
     position: relative;
     top: 50%;
@@ -269,7 +269,7 @@ img.close:hover{
 .formAccount{
     margin-top: 50px;
     margin-bottom: 50px;
-    width: 800px;
+    width: 450px;
     background-color: rgba(255,255,255,0.25);
     position: relative;
     transform: translate(-50%,0);
@@ -360,9 +360,9 @@ img.send{
     border-radius: 50px;
     box-shadow: 2px 3px 12px #444444;
     border: none;
-    position: relative;
+    position: absolute;
     left: 88%;
-    top: 90%;
+    top: 85%;
     transform: translate(-50%, 0);
 }
 
@@ -550,8 +550,7 @@ header nav button{
 
     position: relative;
     top: 50%;
-    width: 150%;
-    transform: translate(-17%);
+    width: 100%;
     height: 75%;
     box-shadow: 0 0 20px rgba(8,7,16,0.6);
     border-radius: 15px;
@@ -561,7 +560,7 @@ header nav button{
 }
 #map {
     position: relative;
-    height: 500px; 
+    height: 400px; 
     width: 100%;
 }
 
