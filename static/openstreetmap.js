@@ -15,7 +15,7 @@ map.on('click', function(e) {
         map.removeLayer(marker); // Remove existing marker
     }
     marker = L.marker(e.latlng).addTo(map);
-    map.setView(e.latlng, 13); // Center the map on the new marker
+    // map.setView(e.latlng, 13); // Center the map on the new marker
     waypoint = e.latlng;
     document.getElementById('lat').value = e.latlng.lat;
     document.getElementById('long').value = e.latlng.lng;

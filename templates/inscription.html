@@ -5,6 +5,7 @@
 	<meta charset="UTF-8">
 	<title>Page d'inscription</title>
 	<link rel="stylesheet" href="/static/style.css">
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 	<link rel="icon" type="image/png" href="/static/Images/logo.ico" />
 	<a href= "/"><img src="/static/Images/logo.png" class="logo" alt="Logo" /></a>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -13,8 +14,8 @@
 
 
 <body>
-	<center>
-		<form action="" method="post" class="login-form">
+	<form action="" method="post" class="login-form">
+		<center>
 			<h1 class="main-title">S'INSCRIRE</h1>
 			<div class="login">
 				<input type="text" class="login" placeholder="Nom" name="nom" required>
@@ -30,32 +31,7 @@
 				<br/>
 				<a href="/login">Je possède déjà un compte, je souhaite <b>me connecter</b></a><br/>
 			</div>
-		</form>	
-	</center>
-		<script>
-			document.getElementById('showMap').addEventListener('click', function() {
-				document.getElementById('mapContainer').style.display = 'block';
-			});
-		</script>
-		<div id="mapContainer" class="map-container">					
-			<img src="/static/Images/close.png" class="close" id="hideMap">
-			<div class="search-bar">
-				<form onsubmit="return false;">
-					<input type="text" id="search" placeholder="Search for a place..." />
-					<button type="submit" onclick="searchLocation()">Search</button>
-				</form>
-			</div>
-			<div id="map"></div>
-			<input id="lat" type="hidden" name="lat">
-			<input id="long" type="hidden" name="long">
-			<button type="button" class="button" id="hideMap">Valider</button>
-			<script>
-				document.getElementById('hideMap').addEventListener('click', function() {
-					document.getElementById('mapContainer').style.display = 'none';
-				});
-			</script>
-			<script src="/static/openstreetmap.js"></script>
-		</div>
+		</center>
 
 <!-- Js pour rentrer automatiquement en minuscule dans l'input ville -->
 <!-- Pas besoin en fait prsq remplacé par gps
@@ -66,37 +42,53 @@
 	</script>
 -->	
 
-	<form action="" method="post" class="formAccount" id="popup">
-		<img src="/static/Images/close.png" class="close" id="closePopup">
-        <div class="JoursContainer">
-            <div class="formAccountJour" required>
-                <p>Lundi : </p> <p>Cocher si pas cours <input type="checkbox"> </p>   
-                <p>Heure de début <input type="time" name="startLundi" step="900"> </p>
-                <p>Heure de fin <input type="time" name="endLundi" step="900"> </p>
-            </div>
-            <div class="formAccountJour" required>
-                <p>Mardi : </p> <p>Cocher si pas cours <input type="checkbox"> </p>   
-                <p>Heure de début <input type="time" name="startMardi" step="900"> </p>
-                <p>Heure de fin <input type="time" name="endMardi" step="900"> </p>
-            </div>
-            <div class="formAccountJour" required>
-                <p>Mercredi : </p> <p>Cocher si pas cours <input type="checkbox"> </p>   
-                <p>Heure de début <input type="time" name="startMercredi" step="900"> </p>
-                <p>Heure de fin <input type="time" name="endMercredi" step="900"> </p>
-            </div>
-            <div class="formAccountJour" required>
-                <p>Jeudi : </p> <p>Cocher si pas cours <input type="checkbox"> </p>   
-                <p>Heure de début <input type="time" name="startJeudi" step="900"> </p>
-                <p>Heure de fin <input type="time" name="endJeudi" step="900"> </p>
-            </div>
-            <div class="formAccountJour" required>
-                <p>Vendredi : </p> <p>Cocher si pas cours <input type="checkbox"> </p>   
-                <p>Heure de début <input type="time" name="startVendredi" step="900"> </p>
-                <p>Heure de fin <input type="time" name="endVendredi" step="900"> </p>
-            </div>
-            <button type="button" class="valider" onclick="masquer()">VALIDER</button>
-        </div>
-    </form><br>
+		<div class="formAccount" id="popup">
+			<img src="/static/Images/close.png" class="close" id="closePopup">
+			<div class="JoursContainer">
+				<div class="formAccountJour" required>
+					<p>Lundi : </p> <p>Cocher si pas cours <input type="checkbox"> </p>   
+					<p>Heure de début <input type="time" name="startLundi" step="900"> </p>
+					<p>Heure de fin <input type="time" name="endLundi" step="900"> </p>
+				</div>
+				<div class="formAccountJour" required>
+					<p>Mardi : </p> <p>Cocher si pas cours <input type="checkbox"> </p>   
+					<p>Heure de début <input type="time" name="startMardi" step="900"> </p>
+					<p>Heure de fin <input type="time" name="endMardi" step="900"> </p>
+				</div>
+				<div class="formAccountJour" required>
+					<p>Mercredi : </p> <p>Cocher si pas cours <input type="checkbox"> </p>   
+					<p>Heure de début <input type="time" name="startMercredi" step="900"> </p>
+					<p>Heure de fin <input type="time" name="endMercredi" step="900"> </p>
+				</div>
+				<div class="formAccountJour" required>
+					<p>Jeudi : </p> <p>Cocher si pas cours <input type="checkbox"> </p>   
+					<p>Heure de début <input type="time" name="startJeudi" step="900"> </p>
+					<p>Heure de fin <input type="time" name="endJeudi" step="900"> </p>
+				</div>
+				<div class="formAccountJour" required>
+					<p>Vendredi : </p> <p>Cocher si pas cours <input type="checkbox"> </p>   
+					<p>Heure de début <input type="time" name="startVendredi" step="900"> </p>
+					<p>Heure de fin <input type="time" name="endVendredi" step="900"> </p>
+				</div>
+				<button type="button" class="valider" onclick="masquer()">VALIDER</button>
+			</div>
+
+		</div>
+
+		<!-- sélecteur d'addresse -->
+		 <div class="map-container">
+			<div class="search-bar">
+				<form onsubmit="return false;">
+					<input type="text" id="search" placeholder="Search for a place..." />
+					<button type="submit" onclick="searchLocation()">Search</button>
+				</form>
+			</div>
+			<div id="map"></div>
+			<input id="lat" type="hidden" name="lat">
+			<input id="long" type="hidden" name="long">
+			<script src="/static/openstreetmap.js"></script>
+		</div>
+	</form><br>
 
 	<script>
 		let bopen = document.querySelector('#openPopup');
