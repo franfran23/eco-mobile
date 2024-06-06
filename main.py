@@ -71,7 +71,9 @@ socketio = SocketIO(app, async_mode='gevent', cors_allowed_origins="*")
 
 @app.before_request
 def before_request():
-	if not get_username(request) and not (request.path.endswith('.css') or request.path.endswith('.js') or request.path.endswith('.png') or request.path.endswith('.jpg') or request.path.endswith('.ico') or request.path.startswith('/login') or request.path.startswith('/signup') or request.path.startswith('/verif') or request.path.startswith('/')):
+	print('path is', request.path)
+	print(get_username(request))
+	if not get_username(request) and not (request.path.endswith('.css') or request.path.endswith('.js') or request.path.endswith('.png') or request.path.endswith('.jpg') or request.path.endswith('.ico') or request.path.startswith('/login') or request.path.startswith('/signup') or request.path.startswith('/verif')):
 		return redirect('/login?message=Veuillez vous connecter pour continuer')
 
 # FUNCTIONS

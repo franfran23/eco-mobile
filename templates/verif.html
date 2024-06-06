@@ -12,11 +12,13 @@
 <body>	
 	<a href= "/signup"><img src="/static/Images/logo.png" class="logo" alt="Logo" /></a>
 	<div class="info-message">{{ message }}</div>
-	<form class="login-form" method='post' action="">
-		<p>Veuillez entrer le code reçu par E-mail : </p>
-		<input type="hidden" name="username" value="{{ username }}">
-		<input class="code" type="text" name="code" placeholder="Code de vérification...">
-		<button type="submit" >VALIDER</button> </br>
-		<button >Renvoyer le code</button>		
-	</form>
+	<center>
+		<form class="login-form" method='post' action="">
+			<p>Veuillez entrer le code reçu par E-mail : </p>
+			<input type="hidden" name="username" value="{{ username }}">
+			<input class="code" type="text" name="code" placeholder="Code de vérification...">
+			<button type="submit" >VALIDER</button> </br>
+			<button >Renvoyer le code</button>		
+		</form>
+	</center>
 </body>

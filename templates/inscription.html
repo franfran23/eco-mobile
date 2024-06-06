@@ -122,6 +122,8 @@
 
 		function afficherMap() {
 			document.querySelector('#mapContainer').style.display = "block";
+			document.getElementById('mapContainer').scrollIntoView({ behaviour: 'smooth', block: 'center' });
+			resizeMap();
 		}
 
 		function masquerMap() {
@@ -132,6 +134,11 @@
 		bclose.addEventListener("click",masquer);
 		openMap.addEventListener("click",afficherMap);
 		closeMap.addEventListener("click",masquerMap);
+		
+		
+		window.addEventListener('resize', function() {
+			resizeMap();
+		});
 	</script>
 </center></body>
 

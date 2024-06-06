@@ -21,6 +21,13 @@ map.on('click', function(e) {
     document.getElementById('long').value = e.latlng.lng;
 });
 
+// resize map to center it correctly
+function resizeMap() {
+    setTimeout(function() {
+        map.invalidateSize();
+    }, 200);
+}
+
 // Search for a location and add it as a waypoint
 function searchLocation() {
     var searchText = document.getElementById('search').value;
