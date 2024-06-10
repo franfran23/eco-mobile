@@ -146,19 +146,20 @@ def index():
 	cursor.execute(f"SELECT lat, long FROM identifiants WHERE username = '{username}';")
 	my_loc = cursor.fetchone()
 	assert isinstance(my_loc, tuple)
-	for user in list_users_except(username):
-		cursor.execute(f"SELECT lat, long FROM identifiants WHERE username = '{user}';")
-		other_loc = cursor.fetchone()
+	cursor.execute(f"SELECT username, lat, long FROM identifiants WHERE username != '{username}';")
+	data = cursor.fetchall()
+	print(data)
+	for loc in data:
 		try: # prevent clocking if someone doesn't have location
-			assert isinstance(my_loc, tuple)
+			assert isinstance(loc[1:], tuple)
 		except AssertionError:
 			continue
 
-		you_can, he_can = check_proximity_to_point(my_loc, other_loc, eic)
+		you_can, he_can = check_proximity_to_point(my_loc, loc[1:], eic)
 		if you_can:
-			you_can_drive.append(user)
+			you_can_drive.append(loc[0])
 		if he_can:
-			can_drive_you.append(user)
+			can_drive_you.append(loc[0])
 
 	return render_template('index.html', message=message, connexion=welcome, can_drive_you=can_drive_you, you_can_drive=you_can_drive)
 
