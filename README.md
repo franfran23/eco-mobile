@@ -17,6 +17,7 @@ cette page contiendra un formulaire post avec un élément caché nommé "userna
 - [ ] Sauvegarder les messages dans le chat
 - [ ] Les messages dépassent du chat quand il y en as bcp
 - [x] Ajouter un id différent pour les messages envoyés et les messages reçus pour pouvoir les différencier
+- [ ] refont de la page d'accueil (virer tout le absolute -> page responsive)
 
 ## backend
 - [x] système de login
@@ -25,7 +26,7 @@ cette page contiendra un formulaire post avec un élément caché nommé "userna
 - [x] update signup pour enregistrer la zone géographique et les horaires de cours
 - [x] update la requête de création de la table identifiants pour inclure l'id de la zone géographique (quand la table zone sera créée)
 - [x] (si les messages doivent être cryptés dans la db, trouver un format pour générer les clés, ex: utiliser les id des utilisateurs comme graine de génération d'une clé (le résultat sera toujours le même))
-- [ ] calcul de qui est compatible au covoiturage  
+- [x] calcul de qui est compatible au covoiturage  
 
 ## DataBase
 (créer un fichier .txt avec toutes les requêtes de création de tables, une par ligne)  
