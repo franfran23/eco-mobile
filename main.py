@@ -145,21 +145,32 @@ def index():
 	you_can_drive = []
 	cursor.execute(f"SELECT lat, long FROM identifiants WHERE username = '{username}';")
 	my_loc = cursor.fetchone()
+	cursor.execute(f"SELECT jour, horaire FROM horaires JOIN identifiants ON identifiants.id=horaires.user_id WHERE identifiants.username = '{username}';")
+	mes_horaires = sorted(cursor.fetchall())
 	assert isinstance(my_loc, tuple)
 	cursor.execute(f"SELECT username, lat, long FROM identifiants WHERE username != '{username}';")
 	data = cursor.fetchall()
-	print(data)
-	for loc in data:
+	# print('data', data) #
+	users = str(tuple([each[0] for each in data])).replace("'", '"') # uniquement des "
+	# print('users', users) #
+	cursor.execute(f"SELECT identifiants.username, jour, horaire FROM horaires JOIN identifiants ON identifiants.id=horaires.user_id WHERE identifiants.username IN {users};")
+	autres_horaires = cursor.fetchall()
+	for i in range(len(data)):
+		loc = data[i][1:]
+		user = data[i][0]
 		try: # prevent clocking if someone doesn't have location
-			assert isinstance(loc[1:], tuple)
+			assert isinstance(loc, tuple)
 		except AssertionError:
 			continue
 
-		you_can, he_can = check_proximity_to_point(my_loc, loc[1:], eic)
-		if you_can:
-			you_can_drive.append(loc[0])
-		if he_can:
-			can_drive_you.append(loc[0])
+		you_can, he_can = check_proximity_to_point(my_loc, loc, eic)
+		# print('try for', user) #
+		days = check_horaires(mes_horaires, sorted([horaire[1:] for horaire in autres_horaires if horaire[0] == user]))
+		if days != '': # sinon aucun horaire ne correspond
+			if you_can:
+				you_can_drive.append(user + ': ' + days[:-2])
+			if he_can:
+				can_drive_you.append(user + ': ' + days[:-2])
 
 	return render_template('index.html', message=message, connexion=welcome, can_drive_you=can_drive_you, you_can_drive=you_can_drive)
 
@@ -199,7 +210,7 @@ def signup():
 			'Jeudi': 4,
 			'Vendredi': 5}
 
-			for jour in ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi']:
+			for jour in jours:
 				cursor.execute(f"INSERT INTO horaires (user_id, jour, horaire) VALUES ({user_id}, {jours[jour]}, '{request.form['start' + jour] + '-' + request.form['end' + jour]}');")
 			db.commit()
 
