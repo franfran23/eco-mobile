@@ -4,29 +4,19 @@ from flask_socketio import SocketIO, emit, join_room
 # from flask_cors import CORS
 # import mysql.connector
 from os.path import exists
-import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 import secrets
 from cryptography.fernet import Fernet, InvalidToken
 
 
 from cryptage import *
+from openstreetmap import *
 MASTER_KEY = '_XB2fwMJpusNiZrnXZ8KLwHdL1_ld8G8XbAKJHZuMzk=' # Fernet.generate_key() # une nouvelle clé déconnectera toutes les sessions utilisateurs en cours
 
 cookies_fernet = get_cookies_fernet(MASTER_KEY)
 
-
-'''
-def connect_db(host='localhost', user='root', password='', db=None):
-	return mysql.connector.connect(
-		host=host,
-		user=user,
-		password=password,
-		database=db)
-'''
-def connect_db(name='db.sqlite'):
-	connection = sqlite3.connect(name)
-	return connection, connection.cursor()
+from func import *
+eic = (50.720550200000005, 3.150640888902045)
 
 def gen_db():
 	tables = ['''CREATE TABLE identifiants (
@@ -71,8 +61,6 @@ socketio = SocketIO(app, async_mode='gevent', cors_allowed_origins="*")
 
 @app.before_request
 def before_request():
-	print('path is', request.path)
-	print(get_username(request))
 	if not get_username(request) and not (request.path.endswith('.css') or request.path.endswith('.js') or request.path.endswith('.png') or request.path.endswith('.jpg') or request.path.endswith('.ico') or request.path.startswith('/login') or request.path.startswith('/signup') or request.path.startswith('/verif')):
 		return redirect('/login?message=Veuillez vous connecter pour continuer')
 
@@ -147,12 +135,44 @@ def get_message(message_id):
 def index():
 	message = request.args.get('message') or ''
 	username = get_username(request)
+	db, cursor = connect_db()
 	if username is None:
-		username = 'Déconnecté(e)'
+		welcome = 'Déconnecté(e)'
 	else:
-		username = 'Connecté(e) en tant que ' + str(username)
+		welcome = 'Connecté(e) en tant que ' + str(username)
 	
-	return render_template('index.html', message=message, connexion=username)
+	can_drive_you = []
+	you_can_drive = []
+	cursor.execute(f"SELECT lat, long FROM identifiants WHERE username = '{username}';")
+	my_loc = cursor.fetchone()
+	cursor.execute(f"SELECT jour, horaire FROM horaires JOIN identifiants ON identifiants.id=horaires.user_id WHERE identifiants.username = '{username}';")
+	mes_horaires = sorted(cursor.fetchall())
+	assert isinstance(my_loc, tuple)
+	cursor.execute(f"SELECT username, lat, long FROM identifiants WHERE username != '{username}';")
+	data = cursor.fetchall()
+	# print('data', data) #
+	users = str(tuple([each[0] for each in data])).replace("'", '"') # uniquement des "
+	# print('users', users) #
+	cursor.execute(f"SELECT identifiants.username, jour, horaire FROM horaires JOIN identifiants ON identifiants.id=horaires.user_id WHERE identifiants.username IN {users};")
+	autres_horaires = cursor.fetchall()
+	for i in range(len(data)):
+		loc = data[i][1:]
+		user = data[i][0]
+		try: # prevent clocking if someone doesn't have location
+			assert isinstance(loc, tuple)
+		except AssertionError:
+			continue
+
+		you_can, he_can = check_proximity_to_point(my_loc, loc, eic)
+		# print('try for', user) #
+		days = check_horaires(mes_horaires, sorted([horaire[1:] for horaire in autres_horaires if horaire[0] == user]))
+		if days != '': # sinon aucun horaire ne correspond
+			if you_can:
+				you_can_drive.append(user + ': ' + days[:-2])
+			if he_can:
+				can_drive_you.append(user + ': ' + days[:-2])
+
+	return render_template('index.html', message=message, connexion=welcome, can_drive_you=can_drive_you, you_can_drive=you_can_drive)
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -190,7 +210,7 @@ def signup():
 			'Jeudi': 4,
 			'Vendredi': 5}
 
-			for jour in ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi']:
+			for jour in jours:
 				cursor.execute(f"INSERT INTO horaires (user_id, jour, horaire) VALUES ({user_id}, {jours[jour]}, '{request.form['start' + jour] + '-' + request.form['end' + jour]}');")
 			db.commit()
 
@@ -312,7 +332,7 @@ def handle_message(message: str):
 	if sender_id is None or receiver_id is None:
 		return 'message not saved, error occured'
 	
-	fernet = get_cookies_fernet(sender_id, receiver_id, MASTER_KEY)
+	fernet = get_messages_fernet(sender_id, receiver_id, MASTER_KEY)
 	cursor.execute(f"INSERT INTO messages (message, sender, receiver) VALUES ('{fernet.encrypt(message.encode('utf-8')).decode('utf-8')}', {sender_id}, {receiver_id});")
 	db.commit()
 
