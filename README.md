@@ -6,7 +6,14 @@ Ce projet à été imaginé par les éleves de Terminale de la filière Professi
 
 Ce projet est voué à évoluer et être amélioré grâce aux éléves volontaires de la spétialité NSI
 
-## Petit Guide de Démarrage : Comment utiliser GitHub ?
+## Documentaion
+### Presentaion PDF du Projet
+https://drive.google.com/file/d/1KzbczTO7kPLg5W2m3l6jtp6aXVcfHa1e/view?usp=sharing
+### Maquette Figma
+https://www.figma.com/design/hUS6Kx48YHU2iJ5T4XY9mr/Maquette-covoit?t=s9rQkhk0ho0aDUd8-1
+
+# Petit Guide de Démarrage : 
+## Comment utiliser GitHub ?
 ### Comment coder ?
 Il suffit d'appuyer sur le bouton vert '<> Code', puis aller dans la section Codespaces et créer son codesapace.
 ### Comment voir les changements que je suis entrain de coder sur le site ?
@@ -19,11 +26,6 @@ Allez dans le troisième onglet vertical à gauche de votre écran puis appuyer 
 
 Noubliez pas de syncroniser les modifications.
 
-# Documentaion
-### Presentaion PDF du Projet
-https://drive.google.com/file/d/1KzbczTO7kPLg5W2m3l6jtp6aXVcfHa1e/view?usp=sharing
-### Maquette Figma
-https://www.figma.com/design/hUS6Kx48YHU2iJ5T4XY9mr/Maquette-covoit?t=s9rQkhk0ho0aDUd8-1
 
 # Info Commits
 format de l'adresse mail pour le code de validation à définir (pour garder une cohérence avec une éventuelle adresse de contact) --> demander au client 
