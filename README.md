@@ -1,25 +1,5 @@
 # Eco-mobile
-## Presentaion du Projet
-Eco-Mobile est un site de Covoiturage créer pour les membres de l'enseignement à l'EIC dans le but de faciliter le trajet amenant au lycée afin de désengorger le trafic routier ainsi que de réduire le taux d'emmision de gaz a effet de serre.
 
-Ce projet à été imaginé par les éleves de Terminale de la filière Professionnelle dans le cadre de leur chef-d'oeuvre et développé par des Terminales dans le cadre de la spéciailité NSI.
-
-Ce projet est voué à évoluer et être amélioré grâce aux éléves volontaires de la spétialité NSI
-
-## Petit Guide de Démarrage : Comment utiliser GitHub ?
-### Comment coder ?
-Il suffit d'appuyer sur le bouton vert '<> Code', puis aller dans la section Codespaces et créer son codesapace.
-### Comment voir les changements que je suis entrain de coder sur le site ?
-Entrez la comande suivante dans le terminal: 'python3 main.py'
-Puis un popup và s'ouvrir vous pouvez cliquer sur 'ouvrir dans un navigateur' une nouvelle fenêtre và s'ouvrir.
-### Comment envoyer mes modifications et recevoir les dernières modification enregistrées?
-Allez dans le troisième onglet vertical à gauche de votre écran puis appuyer sur le bouton 'validation' puis entrez votre commit (les modification que vous avez apporter) pour ensuite valider.
-
-(ou simplement depuis la console avec la commande suivante: 'git push' (pour envoyer) et 'git pull' (pour recevoir))
-
-Noubliez pas de syncroniser les modifications.
-
-# Info Commits
 format de l'adresse mail pour le code de validation à définir (pour garder une cohérence avec une éventuelle adresse de contact) --> demander au client 
 
 # todo list
