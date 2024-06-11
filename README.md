@@ -13,11 +13,17 @@ Il suffit d'appuyer sur le bouton vert '<> Code', puis aller dans la section Cod
 Entrez la comande suivante dans le terminal: 'python3 main.py'
 Puis un popup và s'ouvrir vous pouvez cliquer sur 'ouvrir dans un navigateur' une nouvelle fenêtre và s'ouvrir.
 ### Comment envoyer mes modifications et recevoir les dernières modification enregistrées?
-Allez dans le troisième onglet vertical à gauche de votre écran puis appuyer sur le bouton 'validation' puis entrez votre commit (les modification que vous avez apporter) pour ensuite valider.
+Allez dans le troisième onglet vertical à gauche de votre écran puis appuyer sur le bouton 'validation' puis entrez votre commit (les modification que vous avez apportez) pour ensuite valider.
 
-(ou simplement depuis la console avec la commande suivante: 'git push' (pour envoyer) et 'git pull' (pour recevoir))
+(ou simplement depuis le terminal avec la commande suivante: 'git push' (pour envoyer) et 'git pull' (pour recevoir))
 
 Noubliez pas de syncroniser les modifications.
+
+# Documentaion
+### Presentaion PDF du Projet
+https://drive.google.com/file/d/1KzbczTO7kPLg5W2m3l6jtp6aXVcfHa1e/view?usp=sharing
+### Maquette Figma
+https://www.figma.com/design/hUS6Kx48YHU2iJ5T4XY9mr/Maquette-covoit?t=s9rQkhk0ho0aDUd8-1
 
 # Info Commits
 format de l'adresse mail pour le code de validation à définir (pour garder une cohérence avec une éventuelle adresse de contact) --> demander au client 
