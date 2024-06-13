@@ -8,21 +8,21 @@ Ce projet est voué à évoluer et être amélioré grâce aux éléves volontai
 
 ## Documentaion
 ### Presentaion PDF du Projet
-https://drive.google.com/file/d/1KzbczTO7kPLg5W2m3l6jtp6aXVcfHa1e/view?usp=sharing
+- https://drive.google.com/file/d/1KzbczTO7kPLg5W2m3l6jtp6aXVcfHa1e/view?usp=sharing
 ### Maquette Figma
-https://www.figma.com/design/hUS6Kx48YHU2iJ5T4XY9mr/Maquette-covoit?t=s9rQkhk0ho0aDUd8-1
+- https://www.figma.com/design/hUS6Kx48YHU2iJ5T4XY9mr/Maquette-covoit?t=s9rQkhk0ho0aDUd8-1
 
 # Petit Guide de Démarrage : 
 ## Comment utiliser GitHub ?
 ### Comment coder ?
 Il suffit d'appuyer sur le bouton vert '<> Code', puis aller dans la section Codespaces et créer son codesapace.
 ### Comment voir les changements que je suis entrain de coder sur le site ?
-Entrez la comande suivante dans le terminal: 'python3 main.py'
+Entrez la comande suivante dans le terminal: `python3 main.py`
 Puis un popup và s'ouvrir vous pouvez cliquer sur 'ouvrir dans un navigateur' une nouvelle fenêtre và s'ouvrir.
 ### Comment envoyer mes modifications et recevoir les dernières modification enregistrées?
 Allez dans le troisième onglet vertical à gauche de votre écran puis appuyer sur le bouton 'validation' puis entrez votre commit (les modification que vous avez apportez) pour ensuite valider.
 
-(ou simplement depuis le terminal avec la commande suivante: 'git push' (pour envoyer) et 'git pull' (pour recevoir))
+(ou simplement depuis le terminal avec la commande suivante: `git push` (pour envoyer) et `git pull` (pour recevoir))
 
 Noubliez pas de syncroniser les modifications.
 
@@ -56,7 +56,7 @@ cette page contiendra un formulaire post avec un élément caché nommé "userna
 - [ ] Sauvegarder les messages dans le chat
 - [ ] créer un smtp pour la connexion avec les e-mails
 - [ ] ajouter un mdp oublié ?
-- [ ] faire fonctionner le message de notification
+- [ ] faire fonctionner le message de notification + (dans terminal ne pas oublier d'installer les modules: `pip install notify-py` )
 
 ## DataBase
 (créer un fichier .txt avec toutes les requêtes de création de tables, une par ligne)  
