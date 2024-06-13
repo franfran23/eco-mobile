@@ -1,6 +1,6 @@
 # Eco-mobile
 ## Presentaion du Projet
-Eco-Mobile est un site de Covoiturage créer pour les membres de l'enseignement à l'EIC dans le but de faciliter le trajet amenant au lycée afin de désengorger le trafic routier ainsi que de réduire le taux d'emmision de gaz a effet de serre.
+Eco-Mobile est un site de Covoiturage créé pour les membres de l'enseignement à l'EIC dans le but de faciliter le trajet amenant au lycée afin de désengorger le trafic routier ainsi que de réduire le taux d'emmision de gaz a effet de serre.
 
 Ce projet à été imaginé par les éleves de Terminale de la filière Professionnelle dans le cadre de leur chef-d'oeuvre et développé par des Terminales dans le cadre de la spéciailité NSI.
 
@@ -81,3 +81,18 @@ cette page contiendra un formulaire post avec un élément caché nommé "userna
 [ ] Récupérer les n derniers messages entre user1 et user2 (donc triés par date)  
 
 
+# Auteurs
+## Idée du Projet
+* **DELVALLEE Thomas**
+* **DELLI Nelya**
+* **DEMEYER Rachel**
+* **HARIRECHE Kahina**
+* **ZOUARI Ines**
+
+## Developpement
+* **CAUS François** _alias_ [@franfran23](https://github.com/franfran23)
+* **DESTAILLEUR Simon** _alias_ [@6mond](https://github.com/6mond)
+* **GHAZLI Abdelilah** _alias_ [@AbdeGzl](https://github.com/AbdeGzl)
+* **VANBREMEERSCH Eric** _alias_ [@Eric-Vanbremeersch](https://github.com/Eric-Vanbremeersch)
+
+Merci du Soutien que nous as apporté Mme Julien ainsi que les membres du Cube-EIC.
