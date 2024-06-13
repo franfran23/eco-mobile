@@ -41,8 +41,7 @@ cette page contiendra un formulaire post avec un élément caché nommé "userna
 - [x] Update de inscription.html pour ajouter la sélection de la zone géographique (name="zone") et des horaires de cours (à voir comment c'est mis en place)
 
 - [ ] Page verif faire fonctionner les bouttons en plus
-- [ ] Sauvegarder les messages dans le chat
-- [ ] Les messages dépassent du chat quand il y en as bcp
+- [x] Les messages dépassent du chat quand il y en as bcp
 - [x] Ajouter un id différent pour les messages envoyés et les messages reçus pour pouvoir les différencier
 - [ ] refont de la page d'accueil (virer tout le absolute -> page responsive)
 
@@ -54,6 +53,10 @@ cette page contiendra un formulaire post avec un élément caché nommé "userna
 - [x] update la requête de création de la table identifiants pour inclure l'id de la zone géographique (quand la table zone sera créée)
 - [x] (si les messages doivent être cryptés dans la db, trouver un format pour générer les clés, ex: utiliser les id des utilisateurs comme graine de génération d'une clé (le résultat sera toujours le même))
 - [x] calcul de qui est compatible au covoiturage  
+- [ ] Sauvegarder les messages dans le chat
+- [ ] créer un smtp pour la connexion avec les e-mails
+- [ ] ajouter un mdp oublié ?
+- [ ] faire fonctionner le message de notification
 
 ## DataBase
 (créer un fichier .txt avec toutes les requêtes de création de tables, une par ligne)  
