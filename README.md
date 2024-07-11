@@ -26,11 +26,19 @@ Allez dans le troisième onglet vertical à gauche de votre écran puis appuyer 
 
 Noubliez pas de syncroniser les modifications.
 
+# Mots de passe Importatnts
+### Compte admin
+id: admin
+mdp: 123456
+### Adresse - mail
+eiccovoit@gmail.com
+mdp: J'41meLeCovoit24
 
 # Info Commits
-format de l'adresse mail pour le code de validation à définir (pour garder une cohérence avec une éventuelle adresse de contact) --> demander au client 
+Il faudrait louer un nom de domaine pour le site pour pouvoir l'heberger sur le raspberry pi
 
 # todo list
+format de l'adresse mail pour le code de validation à définir (pour garder une cohérence avec une éventuelle adresse de contact) --> demander au client 
 ## frontend
 - [x] page d'accueil  
 - [x] page de connexion  
@@ -90,9 +98,12 @@ cette page contiendra un formulaire post avec un élément caché nommé "userna
 * **ZOUARI Ines**
 
 ## Developpement
+### 1ère année de développement
 * **CAUS François** _alias_ [@franfran23](https://github.com/franfran23)
 * **DESTAILLEUR Simon** _alias_ [@6mond](https://github.com/6mond)
 * **GHAZLI Abdelilah** _alias_ [@AbdeGzl](https://github.com/AbdeGzl)
 * **VANBREMEERSCH Eric** _alias_ [@Eric-Vanbremeersch](https://github.com/Eric-Vanbremeersch)
+### 2ème année
+[Inserez ici vos noms]
 
 Merci du Soutien que nous as apporté Mme Julien ainsi que les membres du Cube-EIC.
