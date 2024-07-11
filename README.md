@@ -22,7 +22,11 @@ Puis un popup và s'ouvrir vous pouvez cliquer sur 'ouvrir dans un navigateur' u
 ### Comment envoyer mes modifications et recevoir les dernières modification enregistrées?
 Allez dans le troisième onglet vertical à gauche de votre écran puis appuyer sur le bouton 'validation' puis entrez votre commit (les modification que vous avez apportez) pour ensuite valider.
 
-(ou simplement depuis le terminal avec la commande suivante: `git push` (pour envoyer) et `git pull` (pour recevoir))
+(ou depuis le terminal avec les commandes suivantes: 
+`git add .` pour ajouter les fichiers modifiés à l'historique
+`git commit -m "message"` pour enregistrer les modifications avec le message "message" (qui décrit succintement les modifications apportées)
+`git push` pour synchroniser les modifications locales avec le dépot distant
+et `git pull` pour recevoir les modifications depuis le dépot distant)
 
 Noubliez pas de syncroniser les modifications.
 
