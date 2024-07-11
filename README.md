@@ -18,7 +18,7 @@ Ce projet est voué à évoluer et être amélioré grâce aux éléves volontai
 Il suffit d'appuyer sur le bouton vert '<> Code', puis aller dans la section Codespaces et créer son codesapace. Une fois le codespace initialisé, taper dans le terminal `./dependances.sh` pour installer tous les modules nécessaires.
 ### Comment voir les changements que je suis entrain de coder sur le site ?
 Entrez la comande suivante dans le terminal: `python3 main.py`
-Puis un popup và s'ouvrir vous pouvez cliquer sur 'ouvrir dans un navigateur' une nouvelle fenêtre và s'ouvrir.
+Puis un popup và s'ouvrir vous pouvez cliquer sur 'ouvrir dans un navigateur' une nouvelle fenêtre và s'ouvrir. (Ctrl+C permet d'arrêter le serveur pour le redémarrer.)
 ### Comment envoyer mes modifications et recevoir les dernières modification enregistrées?
 Allez dans le troisième onglet vertical à gauche de votre écran puis appuyer sur le bouton 'validation' puis entrez votre commit (les modification que vous avez apportez) pour ensuite valider.
 
