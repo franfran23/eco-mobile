@@ -1,13 +1,13 @@
 # Eco-mobile
-## Presentaion du Projet
-Eco-Mobile est un site de Covoiturage créé pour les membres de l'enseignement à l'EIC dans le but de faciliter le trajet amenant au lycée afin de désengorger le trafic routier ainsi que de réduire le taux d'emmision de gaz a effet de serre.
+## Présentation du Projet
+Eco-Mobile est un site de Covoiturage créé pour les membres de l'enseignement à l'EIC dans le but de faciliter le trajet amenant au lycée afin de désengorger le trafic routier ainsi que de réduire le taux d'émission de gaz a effet de serre.
 
-Ce projet à été imaginé par les éleves de Terminale de la filière Professionnelle dans le cadre de leur chef-d'oeuvre et développé par des Terminales dans le cadre de la spéciailité NSI.
+Ce projet a été imaginé par les éleves de Terminale de la filière Professionnelle dans le cadre de leur chef-d'oeuvre et développé par des Terminales dans le cadre de la spécialité NSI.
 
-Ce projet est voué à évoluer et être amélioré grâce aux éléves volontaires de la spétialité NSI
+Ce projet est voué à évoluer et être amélioré grâce aux éléves volontaires de la spécialité NSI
 
 ## Documentaion
-### Presentaion PDF du Projet
+### Présentation PDF du Projet
 - https://drive.google.com/file/d/1KzbczTO7kPLg5W2m3l6jtp6aXVcfHa1e/view?usp=sharing
 ### Maquette Figma
 - https://www.figma.com/design/hUS6Kx48YHU2iJ5T4XY9mr/Maquette-covoit?t=s9rQkhk0ho0aDUd8-1
@@ -16,11 +16,11 @@ Ce projet est voué à évoluer et être amélioré grâce aux éléves volontai
 ## Comment utiliser GitHub ?
 ### Comment coder ?
 Il suffit d'appuyer sur le bouton vert '<> Code', puis aller dans la section Codespaces et créer son codesapace. Une fois le codespace initialisé, taper dans le terminal `./dependances.sh` pour installer tous les modules nécessaires.
-### Comment voir les changements que je suis entrain de coder sur le site ?
+### Comment voir les changements que je suis en train de coder sur le site ?
 Entrez la comande suivante dans le terminal: `python3 main.py`
 Puis un popup và s'ouvrir vous pouvez cliquer sur 'ouvrir dans un navigateur' une nouvelle fenêtre và s'ouvrir. (Ctrl+C permet d'arrêter le serveur pour le redémarrer.)
-### Comment envoyer mes modifications et recevoir les dernières modification enregistrées?
-Allez dans le troisième onglet vertical à gauche de votre écran puis appuyer sur le bouton 'validation' puis entrez votre commit (les modification que vous avez apportez) pour ensuite valider.
+### Comment envoyer mes modifications et recevoir les dernières modifications enregistrées?
+Allez dans le troisième onglet vertical à gauche de votre écran puis appuyez sur le bouton 'validation' puis entrez votre commit (les modifications que vous avez apportées) pour ensuite valider.
 
 (ou depuis le terminal avec les commandes suivantes: 
 `git add .` pour ajouter les fichiers modifiés à l'historique
@@ -28,7 +28,7 @@ Allez dans le troisième onglet vertical à gauche de votre écran puis appuyer 
 `git push` pour synchroniser les modifications locales avec le dépot distant
 et `git pull` pour recevoir les modifications depuis le dépot distant)
 
-Noubliez pas de syncroniser les modifications.
+N'oubliez pas de syncroniser les modifications.
 
 # Mots de passe Importatnts
 ### Compte admin
@@ -39,7 +39,7 @@ eiccovoit@gmail.com
 mdp: J'41meLeCovoit24
 
 # Info Commits
-Il faudrait louer un nom de domaine pour le site pour pouvoir l'heberger sur le raspberry pi
+Il faudrait louer un nom de domaine pour le site pour pouvoir l'éeberger sur le Raspberry Pi
 
 # todo list
 format de l'adresse mail pour le code de validation à définir (pour garder une cohérence avec une éventuelle adresse de contact) --> demander au client 
