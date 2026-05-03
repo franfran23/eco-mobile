@@ -110,4 +110,4 @@ cette page contiendra un formulaire post avec un élément caché nommé "userna
 ### 2ème année
 [Inserez ici vos noms]
 
-Merci du Soutien que nous as apporté Mme Julien ainsi que les membres du Cube-EIC.
+Merci du soutien que nous a apporté Mme Julien ainsi que les membres du Cube-EIC.
